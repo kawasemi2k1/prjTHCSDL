@@ -8,20 +8,54 @@ package GUI;
 import java.awt.Window;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
+import java.sql.*;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author ADMIN
  */
 public class QuanLyKhachHang extends javax.swing.JPanel {
-
+    DefaultTableModel tbn = new DefaultTableModel();
     /**
      * Creates new form QuanLyKhachHang
      */
     public QuanLyKhachHang() {
         initComponents();
+        loadData();
     }
 
+    public void loadData(){
+        try{
+            Connect a = new Connect();
+            Connection con = a.getConnectDB();
+            int number;
+            Vector row, column;
+            column = new Vector();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("Select * from sales.customers");
+            ResultSetMetaData metadata = rs.getMetaData();
+            number = metadata.getColumnCount();
+            
+            for(int i = 1; i <= number; i++){
+                column.add(metadata.getColumnName(i));
+            }
+            tbn.setColumnIdentifiers(column);
+            
+            while(rs.next()){
+                row = new Vector();
+                for(int i = 1; i <= number; i++){
+                    row.addElement(rs.getString(i));
+                }
+                tbn.addRow(row);
+                jTable1.setModel(tbn);
+            }
+        }catch(Exception ex){
+            System.out.println(ex.toString());
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
