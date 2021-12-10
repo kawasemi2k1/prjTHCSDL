@@ -10,6 +10,8 @@ import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 import java.sql.*;
 import java.util.Vector;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -51,6 +53,20 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                 tbn.addRow(row);
                 jTable1.setModel(tbn);
             }
+            
+            jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    if(jTable1.getSelectedRow() >= 0) {
+                        txtName.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 1) + "");
+                        txtBirthday.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 2) + "");
+                        txtAddress.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 3) + "");
+                        txtPhone.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 4) + "");
+                        txtEmail.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 5) + "");
+                    }
+                }
+            });
+            
         }catch(Exception ex){
             System.out.println(ex.toString());
         }
