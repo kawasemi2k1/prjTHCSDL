@@ -397,14 +397,13 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                             + "address = ?, "
                             + "phone = ?, "
                             + "email = ? "
-                            + "where email like ? or phone like ?");
+                            + "where customer_id = ?");
             ps.setString(1, txtName.getText());
             ps.setObject(2, jDateChooser1.getDate());
             ps.setString(3, txtAddress.getText());
             ps.setString(4, txtPhone.getText());
             ps.setString(5, txtEmail.getText());
-            ps.setString(6, txtEmail.getText());
-            ps.setString(7, txtPhone.getText());
+            ps.setString(6, jTable1.getValueAt(jTable1.getSelectedRow(), 0) + "");
             
             int check = ps.executeUpdate();
             if(check > 0) {
@@ -412,10 +411,15 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                 tbn.setRowCount(0);
                 loadData();
             } else {
-                JOptionPane.showMessageDialog(this, "Updated Failed Successfully.");
+                JOptionPane.showMessageDialog(this, "Can not update Email and PhoneNumber at the same time.");
             }
         } catch (Exception ex) {
             System.out.println(ex.toString());
+            if(ex.toString().contains("UQ1")) {
+                JOptionPane.showMessageDialog(this, "This Email has already existed.");
+            } else if (ex.toString().contains("UQ0")) {
+                JOptionPane.showMessageDialog(this, "This PhoneNumber has already existed.");
+            }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
