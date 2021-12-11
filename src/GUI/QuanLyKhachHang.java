@@ -180,8 +180,6 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             }
         });
 
-        txtSearch.setText("Keyword");
-
         jComboBoxSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Name", "Birthday", "Address", "Phone", "Email", " " }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -310,6 +308,11 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             }
         } catch (Exception ex) {
             System.out.println(ex.toString());
+            if(ex.toString().contains("UQ__customer__AB6E6164BA407B99")) {
+                JOptionPane.showMessageDialog(this, "This Email has already existed.");
+            } else if (ex.toString().contains("UQ__customer__B43B145FC6AA931D")) {
+                JOptionPane.showMessageDialog(this, "This PhoneNumber has already existed.");
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

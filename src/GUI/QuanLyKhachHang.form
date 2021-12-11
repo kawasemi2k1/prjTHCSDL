@@ -268,9 +268,6 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtSearch">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Keyword"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="jComboBoxSearch">
       <Properties>
