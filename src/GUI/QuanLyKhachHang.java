@@ -265,7 +265,6 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                 return;
             }
             
-            
             Connect a = new Connect();
             Connection con = a.getConnectDB();
             PreparedStatement ps = con.prepareStatement("insert into sales.customers values (?, ?, ?, ?, ?)");
@@ -290,6 +289,23 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
+            if(txtName.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Name is Blank.");
+                return;
+            } else if (txtAddress.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Address is Blank.");
+                return;
+            } else if (txtPhone.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Phone is Blank.");
+                return;
+            } else if (txtEmail.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Email is Blank.");
+                return;
+            } else if (date.getYear() - jDateChooser1.getDate().getYear() < 10 ) {
+                JOptionPane.showMessageDialog(this, "Not old enough.");
+                return;
+            }
+            
             Connect a = new Connect();
             Connection con = a.getConnectDB();
             PreparedStatement ps = con.prepareStatement(
