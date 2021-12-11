@@ -11,6 +11,7 @@ import javax.swing.SwingUtilities;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Period;
 import java.util.Vector;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -27,6 +28,7 @@ import javax.swing.JOptionPane;
 public class QuanLyKhachHang extends javax.swing.JPanel {
     DefaultTableModel tbn = new DefaultTableModel();
     static int indexJustDeleted = 1000000000;
+    Date date = new Date();
     
     /**
      * Creates new form QuanLyKhachHang
@@ -246,6 +248,24 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
+            if(txtName.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Name is Blank.");
+                return;
+            } else if (txtAddress.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Address is Blank.");
+                return;
+            } else if (txtPhone.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Phone is Blank.");
+                return;
+            } else if (txtEmail.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Email is Blank.");
+                return;
+            } else if (date.getYear() - jDateChooser1.getDate().getYear() < 10 ) {
+                JOptionPane.showMessageDialog(this, "Not old enough.");
+                return;
+            }
+            
+            
             Connect a = new Connect();
             Connection con = a.getConnectDB();
             PreparedStatement ps = con.prepareStatement("insert into sales.customers values (?, ?, ?, ?, ?)");
