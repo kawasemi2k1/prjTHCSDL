@@ -450,8 +450,10 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             column = new Vector();
             ResultSet rs = null;
             String str1 = null;
-            
-            if(jComboBoxSearch.getSelectedItem().toString().equals("ID")) {
+            if(txtSearch.getText().equals("")) {
+                loadData();
+                return;
+            } else if(jComboBoxSearch.getSelectedItem().toString().equals("ID")) {
                 ps = con.prepareStatement(str + "customer_id = ?");
                 ps.setString(1, txtSearch.getText());
                 rs = ps.executeQuery();
