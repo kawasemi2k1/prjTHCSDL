@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -157,6 +158,11 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         });
 
         jButton1.setText("Add");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Update");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -254,6 +260,33 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            Connect a = new Connect();
+            Connection con = a.getConnectDB();
+            PreparedStatement ps = con.prepareStatement("insert into sales.customers values (?, ?, ?, ?, ?)");
+            ps.setString(1, txtName.getText());
+            
+//            jDateChooser1.setDateFormatString("yyyy-mm-dd");
+            ps.setObject(2, jDateChooser1.getDate());
+            
+            ps.setString(3, txtAddress.getText());
+            ps.setString(4, txtPhone.getText());
+            ps.setString(5, txtEmail.getText());
+            
+            int check = ps.executeUpdate();
+            if(check > 0) {
+                JOptionPane.showMessageDialog(this, "Added Successfully.");
+                tbn.setRowCount(0);
+                loadData();
+            } else {
+                JOptionPane.showMessageDialog(this, "Added Failed Successfully.");
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
