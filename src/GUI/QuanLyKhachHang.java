@@ -26,6 +26,7 @@ import javax.swing.JOptionPane;
  */
 public class QuanLyKhachHang extends javax.swing.JPanel {
     DefaultTableModel tbn = new DefaultTableModel();
+    static int indexJustDeleted = 1000000000;
     
     /**
      * Creates new form QuanLyKhachHang
@@ -304,11 +305,21 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             Connect a = new Connect();
             Connection con = a.getConnectDB();
             PreparedStatement ps = con.prepareStatement("delete from sales.customers where customer_id = ?");
+            PreparedStatement ps1 = con.prepareStatement("DBCC CHECKIDENT ('sales.customers', RESEED, ?);");
+            
+            if(indexJustDeleted > Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0) + "") - 1) {
+                indexJustDeleted = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0) + "") - 1;
+                ps1.setInt(1, indexJustDeleted);
+            } else {
+                ps1.setInt(1, indexJustDeleted);
+            }
+            
             ps.setString(1, jTable1.getValueAt(jTable1.getSelectedRow(), 0) + "");
             
             int check = ps.executeUpdate();
             if(check > 0) {
                 JOptionPane.showMessageDialog(this, "Deleted Successfully.");
+                ps1.execute();
                 tbn.setRowCount(0);
                 loadData();
             } else {
