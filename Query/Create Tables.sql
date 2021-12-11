@@ -13,7 +13,7 @@ create table sales.customers (
 	name nvarchar(255) not null,
 	birthday date not null,
 	address nvarchar(255) not null,
-	phone varchar(25) not null,
+	phone varchar(25) unique not null,
 	email varchar(255) unique not null,
 	constraint PK0 primary key (customer_id),
 );
