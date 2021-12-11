@@ -154,6 +154,11 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         });
 
         jButton2.setText("Update");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Delete");
 
@@ -256,6 +261,38 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             System.out.println(ex.toString());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            Connect a = new Connect();
+            Connection con = a.getConnectDB();
+            PreparedStatement ps = con.prepareStatement(
+                    "update sales.customers set name = ?, "
+                            + "birthday = ?, "
+                            + "address = ?, "
+                            + "phone = ?, "
+                            + "email = ? "
+                            + "where email like ? or phone like ?");
+            ps.setString(1, txtName.getText());
+            ps.setObject(2, jDateChooser1.getDate());
+            ps.setString(3, txtAddress.getText());
+            ps.setString(4, txtPhone.getText());
+            ps.setString(5, txtEmail.getText());
+            ps.setString(6, txtEmail.getText());
+            ps.setString(7, txtPhone.getText());
+            
+            int check = ps.executeUpdate();
+            if(check > 0) {
+                JOptionPane.showMessageDialog(this, "Updated Successfully.");
+                tbn.setRowCount(0);
+                loadData();
+            } else {
+                JOptionPane.showMessageDialog(this, "Updated Failed Successfully.");
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
