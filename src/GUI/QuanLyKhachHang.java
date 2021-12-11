@@ -161,6 +161,11 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         });
 
         jButton3.setText("Delete");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -294,6 +299,25 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try {
+            Connect a = new Connect();
+            Connection con = a.getConnectDB();
+            PreparedStatement ps = con.prepareStatement("delete from sales.customers where customer_id = ?");
+            ps.setString(1, jTable1.getValueAt(jTable1.getSelectedRow(), 0) + "");
+            
+            int check = ps.executeUpdate();
+            if(check > 0) {
+                JOptionPane.showMessageDialog(this, "Deleted Successfully.");
+                tbn.setRowCount(0);
+                loadData();
+            } else {
+                JOptionPane.showMessageDialog(this, "Deleted Failed Successfully.");
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
