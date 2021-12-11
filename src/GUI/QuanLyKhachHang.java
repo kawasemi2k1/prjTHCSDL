@@ -134,11 +134,6 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                 "ID", "Name", "Birthday", "Address", "Phone", "Email"
             }
         ));
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel2.setText("Name");
@@ -151,12 +146,6 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
 
         jLabel6.setText("Email");
 
-        txtName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNameActionPerformed(evt);
-            }
-        });
-
         jButton1.setText("Add");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -165,11 +154,6 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         });
 
         jButton2.setText("Update");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
 
         jButton3.setText("Delete");
 
@@ -249,28 +233,13 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNameActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTable1MouseClicked
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             Connect a = new Connect();
             Connection con = a.getConnectDB();
             PreparedStatement ps = con.prepareStatement("insert into sales.customers values (?, ?, ?, ?, ?)");
             ps.setString(1, txtName.getText());
-            
-//            jDateChooser1.setDateFormatString("yyyy-mm-dd");
             ps.setObject(2, jDateChooser1.getDate());
-            
             ps.setString(3, txtAddress.getText());
             ps.setString(4, txtPhone.getText());
             ps.setString(5, txtEmail.getText());
