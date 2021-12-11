@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import java.awt.List;
 import java.awt.Window;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
@@ -12,6 +13,7 @@ import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -27,7 +29,7 @@ import javax.swing.JOptionPane;
  */
 public class QuanLyKhachHang extends javax.swing.JPanel {
     DefaultTableModel tbn = new DefaultTableModel();
-    static int indexJustDeleted = 1000000000;
+    static int seed = 1000000000;
     Date date = new Date();
     
     /**
@@ -88,6 +90,42 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         }catch(Exception ex){
             System.out.println(ex.toString());
         }
+    }
+    
+    private int LastSeed() {
+        int lastSeed = 0;
+        try{
+            Connect a = new Connect();
+            Connection con = a.getConnectDB();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("Select count(customer_id) as count from sales.customers");
+            while(rs.next()) lastSeed = rs.getInt(1);
+            return lastSeed;
+        }catch(Exception ex){
+            System.out.println(ex.toString());
+        }
+        return lastSeed;
+    }
+        
+    private int MissingSlot() {
+        int missingSlot = 1;
+        ArrayList<Integer> Slots = new ArrayList<Integer>();
+        try{
+            Connect a = new Connect();
+            Connection con = a.getConnectDB();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("Select customer_id from sales.customers order by customer_id");
+            while(rs.next()) Slots.add(rs.getInt(1));
+            for(int i = 0; missingSlot < Slots.size(); i++, missingSlot++){
+                if (missingSlot != Slots.get(i)){
+                    return missingSlot;
+                }
+            }
+        }catch(Exception ex){
+            System.out.println(ex.toString());
+        }
+        missingSlot = 0;
+        return missingSlot;
     }
     
     /**
@@ -291,6 +329,21 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             
             Connect a = new Connect();
             Connection con = a.getConnectDB();
+            
+            if(MissingSlot() > 0) {
+                seed = MissingSlot() - 1;
+                System.out.println("Seed: " + seed);
+                PreparedStatement ps1 = con.prepareStatement("DBCC CHECKIDENT ('sales.customers', RESEED, ?);");
+                ps1.setInt(1, seed);
+                ps1.execute();
+            } else if(seed >= LastSeed()) {
+                seed = LastSeed();
+                System.out.println("Seed: " + seed);
+                PreparedStatement ps1 = con.prepareStatement("DBCC CHECKIDENT ('sales.customers', RESEED, ?);");
+                ps1.setInt(1, seed);
+                ps1.execute();
+            }
+            
             PreparedStatement ps = con.prepareStatement("insert into sales.customers values (?, ?, ?, ?, ?)");
             ps.setString(1, txtName.getText());
             ps.setObject(2, jDateChooser1.getDate());
@@ -299,19 +352,20 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             ps.setString(5, txtEmail.getText());
             
             int check = ps.executeUpdate();
+            seed++;
             if(check > 0) {
                 JOptionPane.showMessageDialog(this, "Added Successfully.");
                 tbn.setRowCount(0);
                 loadData();
-            } else {
-                JOptionPane.showMessageDialog(this, "Added Failed Successfully.");
             }
         } catch (Exception ex) {
             System.out.println(ex.toString());
-            if(ex.toString().contains("UQ__customer__AB6E6164BA407B99")) {
+            if(ex.toString().contains("UQ1")) {
                 JOptionPane.showMessageDialog(this, "This Email has already existed.");
-            } else if (ex.toString().contains("UQ__customer__B43B145FC6AA931D")) {
+            } else if (ex.toString().contains("UQ0")) {
                 JOptionPane.showMessageDialog(this, "This PhoneNumber has already existed.");
+            } else if (ex.toString().contains("PK")) {
+                JOptionPane.showMessageDialog(this, "This Person has already existed.");
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
