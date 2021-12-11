@@ -9,10 +9,15 @@ import java.awt.Window;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Vector;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,12 +25,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class QuanLyKhachHang extends javax.swing.JPanel {
     DefaultTableModel tbn = new DefaultTableModel();
+    
     /**
      * Creates new form QuanLyKhachHang
      */
     public QuanLyKhachHang() {
         initComponents();
         loadData();
+        jDateChooser1.setDate(new Date());
     }
 
     public void loadData(){
@@ -59,7 +66,14 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                 public void valueChanged(ListSelectionEvent e) {
                     if(jTable1.getSelectedRow() >= 0) {
                         txtName.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 1) + "");
-                        txtBirthday.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 2) + "");
+                        String sDate1 = jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString();  
+                        Date date1 = null; 
+                        try {
+                            date1 = new SimpleDateFormat("yyyy-MM-dd").parse(sDate1);
+                        } catch (ParseException ex) {
+                            Logger.getLogger(QuanLyKhachHang.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        jDateChooser1.setDate(date1);
                         txtAddress.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 3) + "");
                         txtPhone.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 4) + "");
                         txtEmail.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 5) + "");
@@ -90,13 +104,13 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
-        txtBirthday = new javax.swing.JTextField();
         txtAddress = new javax.swing.JTextField();
         txtPhone = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         jLabel1.setBackground(new java.awt.Color(0, 0, 0));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
@@ -119,6 +133,11 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                 "ID", "Name", "Birthday", "Address", "Phone", "Email"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel2.setText("Name");
@@ -160,9 +179,9 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtBirthday)
                     .addComponent(txtName)
-                    .addComponent(txtAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE))
+                    .addComponent(txtAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -206,8 +225,8 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                             .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtBirthday, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,11 +251,16 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -246,7 +270,6 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtAddress;
-    private javax.swing.JTextField txtBirthday;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPhone;
