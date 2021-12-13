@@ -71,6 +71,7 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                 @Override
                 public void valueChanged(ListSelectionEvent e) {
                     if(jTable1.getSelectedRow() >= 0) {
+                        txtID.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 0) + "");
                         txtName.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 1) + "");
                         String sDate1 = jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString();  
                         Date date1 = null; 
