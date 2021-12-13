@@ -22,6 +22,8 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -91,6 +93,19 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         }catch(Exception ex){
             System.out.println(ex.toString());
         }
+    }
+    
+    private boolean isValidEmail(String email)
+    {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                            "[a-zA-Z0-9_+&*-]+)*@" +
+                            "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                            "A-Z]{2,7}$";
+                              
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
     }
     
     private int SlotToInsert() {
@@ -337,6 +352,9 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             } else if (date.getYear() - jDateChooser1.getDate().getYear() < 10 ) {
                 JOptionPane.showMessageDialog(this, "Not old enough.");
                 return;
+            } else if (!isValidEmail(txtEmail.getText())) {
+                JOptionPane.showMessageDialog(this, "Email is not valid.");
+                return;
             }
             
             Connect a = new Connect();
@@ -392,6 +410,9 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                 return;
             } else if (date.getYear() - jDateChooser1.getDate().getYear() < 10 ) {
                 JOptionPane.showMessageDialog(this, "Not old enough.");
+                return;
+            } else if (!isValidEmail(txtEmail.getText())) {
+                JOptionPane.showMessageDialog(this, "Email is not valid.");
                 return;
             }
             
