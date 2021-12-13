@@ -108,6 +108,16 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         return pat.matcher(email).matches();
     }
     
+    private boolean isValidPhone(String phone)
+    {
+        String phoneRegex = "^[0-9]{10}$";
+                              
+        Pattern pat = Pattern.compile(phoneRegex);
+        if (phone == null)
+            return false;
+        return pat.matcher(phone).matches();
+    }
+    
     private int SlotToInsert() {
         int missingSlot = 1;
         ArrayList<Integer> Slots = new ArrayList<Integer>();
@@ -355,6 +365,9 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             } else if (!isValidEmail(txtEmail.getText())) {
                 JOptionPane.showMessageDialog(this, "Email is not valid.");
                 return;
+            } else if (!isValidPhone(txtPhone.getText())) {
+                JOptionPane.showMessageDialog(this, "Phone number is not valid.");
+                return;
             }
             
             Connect a = new Connect();
@@ -413,6 +426,9 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                 return;
             } else if (!isValidEmail(txtEmail.getText())) {
                 JOptionPane.showMessageDialog(this, "Email is not valid.");
+                return;
+            } else if (!isValidPhone(txtPhone.getText())) {
+                JOptionPane.showMessageDialog(this, "Phone number is not valid.");
                 return;
             }
             
