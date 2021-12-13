@@ -416,8 +416,6 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Updated Successfully.");
                 tbn.setRowCount(0);
                 loadData();
-            } else {
-                JOptionPane.showMessageDialog(this, "Can not update Email and PhoneNumber at the same time.");
             }
         } catch (Exception ex) {
             System.out.println(ex.toString());
