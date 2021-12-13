@@ -233,6 +233,9 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
 
         jComboBoxSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Name", "Birthday", "Address", "Phone", "Email", " " }));
 
+        txtID.setEditable(false);
+        txtID.setBackground(new java.awt.Color(204, 204, 204));
+
         jLabel7.setText("ID");
 
         jButton5.setText("Refresh");
