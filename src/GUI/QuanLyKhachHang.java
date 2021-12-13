@@ -92,22 +92,7 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         }
     }
     
-    private int LastSeed() {
-        int lastSeed = 0;
-        try{
-            Connect a = new Connect();
-            Connection con = a.getConnectDB();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("Select count(customer_id) as count from sales.customers");
-            while(rs.next()) lastSeed = rs.getInt(1);
-            return lastSeed;
-        }catch(Exception ex){
-            System.out.println(ex.toString());
-        }
-        return lastSeed;
-    }
-        
-    private int MissingSlot() {
+    private int SlotToInsert() {
         int missingSlot = 1;
         ArrayList<Integer> Slots = new ArrayList<Integer>();
         try{
@@ -118,13 +103,12 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             while(rs.next()) Slots.add(rs.getInt(1));
             for(int i = 0; missingSlot < Slots.size(); i++, missingSlot++){
                 if (missingSlot != Slots.get(i)){
-                    return missingSlot;
+                    return missingSlot - 1;
                 }
             }
         }catch(Exception ex){
             System.out.println(ex.toString());
         }
-        missingSlot = 0;
         return missingSlot;
     }
     
@@ -330,14 +314,8 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             Connect a = new Connect();
             Connection con = a.getConnectDB();
             
-            if(MissingSlot() > 0) {
-                seed = MissingSlot() - 1;
-                System.out.println("Seed: " + seed);
-                PreparedStatement ps1 = con.prepareStatement("DBCC CHECKIDENT ('sales.customers', RESEED, ?);");
-                ps1.setInt(1, seed);
-                ps1.execute();
-            } else if(seed >= LastSeed()) {
-                seed = LastSeed();
+           if(SlotToInsert() > 0){
+                seed = SlotToInsert();
                 System.out.println("Seed: " + seed);
                 PreparedStatement ps1 = con.prepareStatement("DBCC CHECKIDENT ('sales.customers', RESEED, ?);");
                 ps1.setInt(1, seed);
