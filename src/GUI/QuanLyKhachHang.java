@@ -231,6 +231,12 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             }
         });
 
+        txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSearchKeyReleased(evt);
+            }
+        });
+
         jComboBoxSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Name", "Birthday", "Address", "Phone", "Email", " " }));
 
         txtID.setEditable(false);
@@ -300,8 +306,7 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jButton4)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jComboBoxSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(jComboBoxSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE)))))
@@ -502,27 +507,23 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                 loadData();
                 return;
             } else if(jComboBoxSearch.getSelectedItem().toString().equals("ID")) {
-                ps = con.prepareStatement(str + "customer_id = ?");
+                ps = con.prepareStatement(str + "customer_id like ?");
                 ps.setString(1, txtSearch.getText());
                 rs = ps.executeQuery();
             } else if (jComboBoxSearch.getSelectedItem().toString().equals("Name")) {
                 ps = con.prepareStatement(str + "name like ?");
-                str1 = "%" + txtSearch.getText() + "%";
-                ps.setString(1, str1);
+                ps.setString(1, txtSearch.getText());
                 rs = ps.executeQuery();
             } else if (jComboBoxSearch.getSelectedItem().toString().equals("Address")) {
                 ps = con.prepareStatement(str + "address like ?");
-                str1 = "%" + txtSearch.getText() + "%";
-                ps.setString(1, str1);
+                ps.setString(1, txtSearch.getText());
                 rs = ps.executeQuery();
             } else if (jComboBoxSearch.getSelectedItem().toString().equals("Phone")) {
                 ps = con.prepareStatement(str + "phone like ?");
                 ps.setString(1, txtSearch.getText());
-                rs = ps.executeQuery();
             } else if (jComboBoxSearch.getSelectedItem().toString().equals("Email")) {
                 ps = con.prepareStatement(str + "email like ?");
-                str1 = "%" + txtSearch.getText() + "%";
-                ps.setString(1, str1);
+                ps.setString(1, txtSearch.getText());
                 rs = ps.executeQuery();
             } else if (jComboBoxSearch.getSelectedItem().toString().equals("Birthday")) {
                 ps = con.prepareStatement(str + "birthday = ?");
@@ -564,6 +565,74 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         loadData();
         jDateChooser1.setDate(new Date());
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
+        try {
+            Connect a = new Connect();
+            Connection con = a.getConnectDB();
+            String str = "Select * from sales.customers where ";
+            PreparedStatement ps = null;
+            int number;
+            Vector row, column;
+            column = new Vector();
+            ResultSet rs = null;
+            String str1 = null;
+            if(txtSearch.getText().equals("")) {
+                loadData();
+                return;
+            } else if(jComboBoxSearch.getSelectedItem().toString().equals("ID")) {
+                ps = con.prepareStatement(str + "customer_id like ?");
+                str1 = "%" + txtSearch.getText() + "%";
+                ps.setString(1, str1);
+                rs = ps.executeQuery();
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Name")) {
+                ps = con.prepareStatement(str + "name like ?");
+                str1 = "%" + txtSearch.getText() + "%";
+                ps.setString(1, str1);
+                rs = ps.executeQuery();
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Address")) {
+                ps = con.prepareStatement(str + "address like ?");
+                str1 = "%" + txtSearch.getText() + "%";
+                ps.setString(1, str1);
+                rs = ps.executeQuery();
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Phone")) {
+                ps = con.prepareStatement(str + "phone like ?");
+                str1 = "%" + txtSearch.getText() + "%";
+                ps.setString(1, str1);
+                rs = ps.executeQuery();
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Email")) {
+                ps = con.prepareStatement(str + "email like ?");
+                str1 = "%" + txtSearch.getText() + "%";
+                ps.setString(1, str1);
+                rs = ps.executeQuery();
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Birthday")) {
+                ps = con.prepareStatement(str + "birthday = ?");
+                ps.setString(1, txtSearch.getText());
+                rs = ps.executeQuery();
+            } 
+            
+            tbn.setRowCount(0);
+            ResultSetMetaData metadata = rs.getMetaData();
+            number = metadata.getColumnCount();
+            
+            for(int i = 1; i <= number; i++){
+                column.add(metadata.getColumnName(i));
+            }
+            tbn.setColumnIdentifiers(column);
+            
+            while(rs.next()){
+                row = new Vector();
+                for(int i = 1; i <= number; i++){
+                    row.addElement(rs.getString(i));
+                }
+                tbn.addRow(row);
+                jTable1.setModel(tbn);
+            }
+            
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
+    }//GEN-LAST:event_txtSearchKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
