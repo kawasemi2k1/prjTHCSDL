@@ -210,6 +210,11 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         jLabel7.setText("ID");
 
         jButton5.setText("Refresh");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -336,7 +341,7 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             Connect a = new Connect();
             Connection con = a.getConnectDB();
             
-           if(SlotToInsert() > 0){
+            if(SlotToInsert() > 0){
                 seed = SlotToInsert();
                 System.out.println("Seed: " + seed);
                 PreparedStatement ps1 = con.prepareStatement("DBCC CHECKIDENT ('sales.customers', RESEED, ?);");
@@ -509,6 +514,17 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        tbn.setRowCount(0);
+        txtID.setText("");
+        txtName.setText("");
+        txtAddress.setText("");
+        txtPhone.setText("");
+        txtEmail.setText("");
+        loadData();
+        jDateChooser1.setDate(new Date());
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
