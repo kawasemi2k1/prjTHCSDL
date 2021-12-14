@@ -548,7 +548,6 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                 tbn.addRow(row);
                 jTable1.setModel(tbn);
             }
-            
         } catch (Exception ex) {
             System.out.println(ex.toString());
         }
