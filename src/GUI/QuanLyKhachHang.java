@@ -556,6 +556,8 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                 tbn.addRow(row);
                 jTable1.setModel(tbn);
             }
+            
+            if(tbn.getRowCount() == 0) JOptionPane.showMessageDialog(this, "You searched for nothing.");
         } catch (Exception ex) {
             System.out.println(ex.toString());
         }
