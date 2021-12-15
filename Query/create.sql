@@ -51,10 +51,9 @@ CREATE TABLE sales.staffs (
 	phone VARCHAR (25),
 	active tinyint NOT NULL,
 	store_id INT NOT NULL,
-	manager_id INT Not null,
+	manager_state INT Not null,
 	gender nvarchar not null,
 	FOREIGN KEY (store_id) REFERENCES sales.stores (store_id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (manager_id) REFERENCES sales.staffs (staff_id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 CREATE TABLE sales.orders (
