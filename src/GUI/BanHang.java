@@ -9,13 +9,14 @@ import java.awt.Component;
 import java.awt.Window;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author ADMIN
  */
 public class BanHang extends javax.swing.JPanel {
-
+    DefaultTableModel tbn = new DefaultTableModel();
     /**
      * Creates new form BanHang
      */
@@ -358,6 +359,15 @@ public class BanHang extends javax.swing.JPanel {
         ManagerMain main = new ManagerMain();
         main.setVisible(true);        
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        tbn.setRowCount(0);
+        jTable1.setModel(tbn);
+        jTable2.setModel(tbn);
+        jTable3.setModel(tbn);
+        txtSearchCustomer.setText("");
+        txtSearchProduct.setText("");
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
