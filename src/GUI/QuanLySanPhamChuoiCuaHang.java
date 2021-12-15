@@ -35,7 +35,7 @@ public class QuanLySanPhamChuoiCuaHang extends javax.swing.JPanel {
 
     public void loadData() {
         try {
-            ConnecttoDB a = new ConnecttoDB();
+            Connect a = new Connect();
             Connection conn = a.getConnectDB();
             int number;
             Vector row, column;
@@ -87,7 +87,7 @@ public class QuanLySanPhamChuoiCuaHang extends javax.swing.JPanel {
     public String Lay_brand_id(String brand_name) {
         String brand_id = "";
         try {
-            ConnecttoDB a = new ConnecttoDB();
+            Connect a = new Connect();
             Connection conn = a.getConnectDB();
             int number;
             Vector row, column;
@@ -130,7 +130,7 @@ public class QuanLySanPhamChuoiCuaHang extends javax.swing.JPanel {
     public String Lay_cat_id(String cat_name) {
         String cat_id = "";
         try {
-            ConnecttoDB a = new ConnecttoDB();
+            Connect a = new Connect();
             Connection conn = a.getConnectDB();
             int number;
             Vector row, column;
@@ -174,7 +174,7 @@ public class QuanLySanPhamChuoiCuaHang extends javax.swing.JPanel {
     public String Lay_product_id(String product_name) {
         String product_id = "";
         try {
-            ConnecttoDB a = new ConnecttoDB();
+            Connect a = new Connect();
             Connection conn = a.getConnectDB();
             int number;
             Vector row, column;
@@ -218,7 +218,7 @@ public class QuanLySanPhamChuoiCuaHang extends javax.swing.JPanel {
     public String Lay_brand_id_Tu_Product_Id(String product_id) {
         String brand_id = "";
         try {
-            ConnecttoDB a = new ConnecttoDB();
+            Connect a = new Connect();
             Connection conn = a.getConnectDB();
             int number;
             Vector row, column;
@@ -259,7 +259,7 @@ public class QuanLySanPhamChuoiCuaHang extends javax.swing.JPanel {
     public String Lay_cat_id_Tu_Product_Id(String product_id) {
         String cat_id = "";
         try {
-            ConnecttoDB a = new ConnecttoDB();
+            Connect a = new Connect();
             Connection conn = a.getConnectDB();
             int number;
             Vector row, column;
@@ -300,7 +300,7 @@ public class QuanLySanPhamChuoiCuaHang extends javax.swing.JPanel {
     public boolean kiemTra_brand_con_khong(String brand_id) {
         String product_id = "";
         try {
-            ConnecttoDB a = new ConnecttoDB();
+            Connect a = new Connect();
             Connection conn = a.getConnectDB();
             int number;
             Vector row, column;
@@ -343,7 +343,7 @@ public class QuanLySanPhamChuoiCuaHang extends javax.swing.JPanel {
     public boolean kiemTra_cat_con_khong(String cat_id) {
         String product_id = "";
         try {
-            ConnecttoDB a = new ConnecttoDB();
+            Connect a = new Connect();
             Connection conn = a.getConnectDB();
             int number;
             Vector row, column;
@@ -693,7 +693,7 @@ public class QuanLySanPhamChuoiCuaHang extends javax.swing.JPanel {
             return;
         }
         try {
-            ConnecttoDB a = new ConnecttoDB();
+            Connect a = new Connect();
             Connection conn = a.getConnectDB();
 
             String brand_id = null;
@@ -796,7 +796,7 @@ public class QuanLySanPhamChuoiCuaHang extends javax.swing.JPanel {
         }
 
         try {
-            ConnecttoDB a = new ConnecttoDB();
+            Connect a = new Connect();
             Connection conn = a.getConnectDB();
 
             String brand_id = null;
@@ -885,7 +885,7 @@ public class QuanLySanPhamChuoiCuaHang extends javax.swing.JPanel {
         String brand_id_copy = Lay_brand_id_Tu_Product_Id(product_id);
         String cat_id_copy = Lay_cat_id_Tu_Product_Id(product_id);
         try {
-            ConnecttoDB a = new ConnecttoDB();
+            Connect a = new Connect();
             Connection conn = a.getConnectDB();
             PreparedStatement comm = conn.prepareStatement("Delete production.products where product_id = ?");
             comm.setString(1, txt_id.getText());
@@ -937,7 +937,7 @@ public class QuanLySanPhamChuoiCuaHang extends javax.swing.JPanel {
         // TODO add your handling code here:
         
         try {
-            ConnecttoDB a = new ConnecttoDB();
+            Connect a = new Connect();
             Connection con = a.getConnectDB();
             String sql = "select product_id, product_name, price, brand_name, category_name, country from production.products\n"
                     + "inner join production.brands on production.products.brand_id = production.brands.brand_id\n"

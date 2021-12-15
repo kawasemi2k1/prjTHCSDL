@@ -9,7 +9,7 @@ import java.sql.DriverManager;
 
 /**
  *
- * @author MANH.TD194616
+ * @author MANH.TD194616 
  */
 public class Connect {
     Connection con = null;

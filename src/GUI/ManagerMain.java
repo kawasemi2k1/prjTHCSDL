@@ -12,7 +12,6 @@ import java.awt.Toolkit;
  * @author ADMIN
  */
 public class ManagerMain extends javax.swing.JFrame {
-
     /**
      * Creates new form ManagerMain
      */
