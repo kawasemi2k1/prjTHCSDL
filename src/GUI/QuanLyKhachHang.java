@@ -510,6 +510,7 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             ResultSet rs = null;
             String str1 = null;
             if(txtSearch.getText().equals("")) {
+                tbn.setRowCount(0);
                 loadData();
                 return;
             } else if(jComboBoxSearch.getSelectedItem().toString().equals("ID")) {
