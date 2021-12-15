@@ -389,7 +389,7 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             Connect a = new Connect();
             Connection con = a.getConnectDB();
             
-            if(SlotToInsert() > 0){
+            if(SlotToInsert() >= 0){
                 seed = SlotToInsert();
                 System.out.println("Seed: " + seed);
                 PreparedStatement ps1 = con.prepareStatement("DBCC CHECKIDENT ('sales.customers', RESEED, ?);");
