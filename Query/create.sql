@@ -32,7 +32,7 @@ create table sales.customers (
 	address nvarchar(255) not null,
 	phone varchar(25) not null,
 	email varchar(255) not null,
-	constraint PK0 primary key (customer_id),
+	constraint PK0 primary key (customer_id)
 );
 
 CREATE TABLE sales.stores (
@@ -41,7 +41,7 @@ CREATE TABLE sales.stores (
 	phone VARCHAR (25),
 	email VARCHAR (255),
 	address VARCHAR (255),
-	state VARCHAR (10),
+	state VARCHAR (10)
 );
 
 CREATE TABLE sales.staffs (
@@ -52,8 +52,9 @@ CREATE TABLE sales.staffs (
 	active tinyint NOT NULL,
 	store_id INT NOT NULL,
 	manager_state INT Not null,
-	gender nvarchar not null,
-	FOREIGN KEY (store_id) REFERENCES sales.stores (store_id) ON DELETE CASCADE ON UPDATE CASCADE,
+	gender nvarchar (10) not null,
+	password varchar (20) not null,
+	FOREIGN KEY (store_id) REFERENCES sales.stores (store_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE sales.orders (
@@ -96,5 +97,5 @@ CREATE TABLE sales.stocks (
 	quantity INT,
 	PRIMARY KEY (product_id, created_at_date, good_till_date),
 	FOREIGN KEY (store_id) REFERENCES sales.stores (store_id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (product_id, created_at_date, good_till_date) REFERENCES sales.products (product_id, created_at_date, good_till_date) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (product_id, created_at_date, good_till_date) REFERENCES sales.products (product_id, created_at_date, good_till_date) ON DELETE CASCADE ON UPDATE CASCADE
 );
