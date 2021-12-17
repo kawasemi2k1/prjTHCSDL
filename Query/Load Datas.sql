@@ -1,4 +1,6 @@
-﻿--1. store
+﻿use CSDL_Project;
+
+--1. store
 SET IDENTITY_INSERT sales.stores ON;
 -- insert cho store
 SET IDENTITY_INSERT sales.stores Off;
