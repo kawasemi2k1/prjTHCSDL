@@ -539,7 +539,73 @@ public class BanHang extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        
+        try {
+            Connect a = new Connect();
+            Connection con = a.getConnectDB();
+            String str = "select sales.stocks.product_id, "
+                    + "production.products.product_name, "
+                    + "production.categories.category_name, "
+                    + "production.brands.brand_name, "
+                    + "production.brands.country, "
+                    + "sales.stocks.price, "
+                    + "sales.stocks.discount from sales.stocks\n" +
+                "inner join production.products on sales.stocks.product_id = production.products.product_id\n" +
+                "inner join production.categories on production.categories.category_id = production.products.category_id\n" +
+                "inner join production.brands on production.brands.brand_id = production.products.brand_id\n"
+                    + "where ";
+            PreparedStatement ps = null;
+            int number;
+            Vector row, column;
+            column = new Vector();
+            ResultSet rs = null;
+            if(txtSearchProduct.getText().equals("")) {
+                tbnProduct.setRowCount(0);
+                loadDataProduct();
+                return;
+            } else if (jComboBoxProductSearch.getSelectedItem().toString().equals("Tên")) {
+                ps = con.prepareStatement(str + "production.products.product_name like ?");
+                ps.setString(1, txtSearchProduct.getText());
+                rs = ps.executeQuery();
+            } else if (jComboBoxProductSearch.getSelectedItem().toString().equals("ID")) {
+                ps = con.prepareStatement(str + "sales.stocks.product_id like ?");
+                ps.setString(1, txtSearchProduct.getText());
+                rs = ps.executeQuery();
+            } else if (jComboBoxProductSearch.getSelectedItem().toString().equals("Loại")) {
+                ps = con.prepareStatement(str + "production.categories.category_name like ?");
+                ps.setString(1, txtSearchProduct.getText());
+                rs = ps.executeQuery();
+            } else if (jComboBoxProductSearch.getSelectedItem().toString().equals("Hãng")) {
+                ps = con.prepareStatement(str + "production.brands.brand_name like ?");
+                ps.setString(1, txtSearchProduct.getText());
+                rs = ps.executeQuery();
+            } else if (jComboBoxProductSearch.getSelectedItem().toString().equals("Xuất xứ")) {
+                ps = con.prepareStatement(str + "production.brands.country like ?");
+                ps.setString(1, txtSearchProduct.getText());
+                rs = ps.executeQuery();
+            }
+            
+            tbnProduct.setRowCount(0);
+            ResultSetMetaData metadata = rs.getMetaData();
+            number = metadata.getColumnCount();
+            
+            for(int i = 1; i <= number; i++){
+                column.add(metadata.getColumnName(i));
+            }
+            tbnProduct.setColumnIdentifiers(column);
+            
+            while(rs.next()){
+                row = new Vector();
+                for(int i = 1; i <= number; i++){
+                    row.addElement(rs.getString(i));
+                }
+                tbnProduct.addRow(row);
+                jTableProduct.setModel(tbnProduct);
+            }
+            
+            if(tbnProduct.getRowCount() == 0) JOptionPane.showMessageDialog(this, "You searched for nothing.");
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -621,6 +687,77 @@ public class BanHang extends javax.swing.JPanel {
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         txtCustomerName.setText("");
     }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void txtSearchProductKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchProductKeyReleased
+        try {
+            Connect a = new Connect();
+            Connection con = a.getConnectDB();
+            String str = "select sales.stocks.product_id, "
+                    + "production.products.product_name, "
+                    + "production.categories.category_name, "
+                    + "production.brands.brand_name, "
+                    + "production.brands.country, "
+                    + "sales.stocks.price, "
+                    + "sales.stocks.discount from sales.stocks\n" +
+                "inner join production.products on sales.stocks.product_id = production.products.product_id\n" +
+                "inner join production.categories on production.categories.category_id = production.products.category_id\n" +
+                "inner join production.brands on production.brands.brand_id = production.products.brand_id\n"
+                    + "where ";
+            PreparedStatement ps = null;
+            int number;
+            Vector row, column;
+            column = new Vector();
+            ResultSet rs = null;
+            String str1 = null;
+            if (jComboBoxProductSearch.getSelectedItem().toString().equals("Tên")) {
+                ps = con.prepareStatement(str + "production.products.product_name like ?");
+                str1 = "%" + txtSearchProduct.getText() + "%";
+                ps.setString(1, str1);
+                rs = ps.executeQuery();
+            } else if (jComboBoxProductSearch.getSelectedItem().toString().equals("ID")) {
+                ps = con.prepareStatement(str + "sales.stocks.product_id like ?");
+                str1 = "%" + txtSearchProduct.getText() + "%";
+                ps.setString(1, str1);
+                rs = ps.executeQuery();
+            } else if (jComboBoxProductSearch.getSelectedItem().toString().equals("Loại")) {
+                ps = con.prepareStatement(str + "production.categories.category_name like ?");
+                str1 = "%" + txtSearchProduct.getText() + "%";
+                ps.setString(1, str1);
+                rs = ps.executeQuery();
+            } else if (jComboBoxProductSearch.getSelectedItem().toString().equals("Hãng")) {
+                ps = con.prepareStatement(str + "production.brands.brand_name like ?");
+                str1 = "%" + txtSearchProduct.getText() + "%";
+                ps.setString(1, str1);
+                rs = ps.executeQuery();
+            } else if (jComboBoxProductSearch.getSelectedItem().toString().equals("Xuất xứ")) {
+                ps = con.prepareStatement(str + "production.brands.country like ?");
+                str1 = "%" + txtSearchProduct.getText() + "%";
+                ps.setString(1, str1);
+                rs = ps.executeQuery();
+            }
+            
+            tbnProduct.setRowCount(0);
+            ResultSetMetaData metadata = rs.getMetaData();
+            number = metadata.getColumnCount();
+            
+//            for(int i = 1; i <= number; i++){
+//                column.add(metadata.getColumnName(i));
+//            }
+//            tbnProduct.setColumnIdentifiers(column);
+            
+            while(rs.next()){
+                row = new Vector();
+                for(int i = 1; i <= number; i++){
+                    row.addElement(rs.getString(i));
+                }
+                tbnProduct.addRow(row);
+                jTableProduct.setModel(tbnProduct);
+            }
+            
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
+    }//GEN-LAST:event_txtSearchProductKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
