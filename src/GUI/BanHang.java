@@ -126,7 +126,7 @@ public class BanHang extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableCustomer = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
-        jComboBoxSearch = new javax.swing.JComboBox<>();
+        jComboBoxCustomerSearch = new javax.swing.JComboBox<>();
         txtSearchCustomer = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
@@ -148,7 +148,7 @@ public class BanHang extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableProduct = new javax.swing.JTable();
         jButton4 = new javax.swing.JButton();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBoxProductSearch = new javax.swing.JComboBox<>();
         txtSearchProduct = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -186,7 +186,7 @@ public class BanHang extends javax.swing.JPanel {
             }
         });
 
-        jComboBoxSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tên", "SĐT", "Email" }));
+        jComboBoxCustomerSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tên", "SĐT", "Email" }));
 
         txtSearchCustomer.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -214,7 +214,7 @@ public class BanHang extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(txtSearchCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBoxSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jComboBoxCustomerSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -235,7 +235,7 @@ public class BanHang extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtSearchCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxCustomerSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3)
                     .addComponent(jButton11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -360,7 +360,13 @@ public class BanHang extends javax.swing.JPanel {
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Tên", "Loại", "Hãng", "Xuất xứ" }));
+        jComboBoxProductSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Tên", "Loại", "Hãng", "Xuất xứ" }));
+
+        txtSearchProduct.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSearchProductKeyReleased(evt);
+            }
+        });
 
         jLabel5.setText("Số lượng");
 
@@ -393,7 +399,7 @@ public class BanHang extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jComboBoxProductSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton4)
                                 .addGap(0, 0, Short.MAX_VALUE))
@@ -410,7 +416,7 @@ public class BanHang extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtSearchProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxProductSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -495,14 +501,14 @@ public class BanHang extends javax.swing.JPanel {
                 tbnCustomer.setRowCount(0);
                 loadDataCustomer();
                 return;
-            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Tên")) {
+            } else if (jComboBoxCustomerSearch.getSelectedItem().toString().equals("Tên")) {
                 ps = con.prepareStatement(str + "name like ?");
                 ps.setString(1, txtSearchCustomer.getText());
                 rs = ps.executeQuery();
-            } else if (jComboBoxSearch.getSelectedItem().toString().equals("SĐT")) {
+            } else if (jComboBoxCustomerSearch.getSelectedItem().toString().equals("SĐT")) {
                 ps = con.prepareStatement(str + "phone like ?");
                 ps.setString(1, txtSearchCustomer.getText());
-            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Email")) {
+            } else if (jComboBoxCustomerSearch.getSelectedItem().toString().equals("Email")) {
                 ps = con.prepareStatement(str + "email like ?");
                 ps.setString(1, txtSearchCustomer.getText());
                 rs = ps.executeQuery();
@@ -568,17 +574,17 @@ public class BanHang extends javax.swing.JPanel {
             column = new Vector();
             ResultSet rs = null;
             String str1 = null;
-            if (jComboBoxSearch.getSelectedItem().toString().equals("Tên")) {
+            if (jComboBoxCustomerSearch.getSelectedItem().toString().equals("Tên")) {
                 ps = con.prepareStatement(str + "name like ?");
                 str1 = "%" + txtSearchCustomer.getText() + "%";
                 ps.setString(1, str1);
                 rs = ps.executeQuery();
-            } else if (jComboBoxSearch.getSelectedItem().toString().equals("SĐT")) {
+            } else if (jComboBoxCustomerSearch.getSelectedItem().toString().equals("SĐT")) {
                 ps = con.prepareStatement(str + "phone like ?");
                 str1 = "%" + txtSearchCustomer.getText() + "%";
                 ps.setString(1, str1);
                 rs = ps.executeQuery();
-            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Email")) {
+            } else if (jComboBoxCustomerSearch.getSelectedItem().toString().equals("Email")) {
                 ps = con.prepareStatement(str + "email like ?");
                 str1 = "%" + txtSearchCustomer.getText() + "%";
                 ps.setString(1, str1);
@@ -630,8 +636,8 @@ public class BanHang extends javax.swing.JPanel {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBoxSearch;
+    private javax.swing.JComboBox<String> jComboBoxCustomerSearch;
+    private javax.swing.JComboBox<String> jComboBoxProductSearch;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
