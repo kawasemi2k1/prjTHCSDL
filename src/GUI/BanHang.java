@@ -164,7 +164,7 @@ public class BanHang extends javax.swing.JPanel {
                 "ID", "Tên", "Ngày Sinh", "Địa Chỉ", "SĐT", "Email"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableCustomer);
 
         jButton3.setText("Tìm kiếm");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -173,9 +173,22 @@ public class BanHang extends javax.swing.JPanel {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tên", "SĐT", "Email", " " }));
+        jComboBoxSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tên", "SĐT", "Email" }));
+
+        txtSearchCustomer.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSearchCustomerKeyReleased(evt);
+            }
+        });
 
         jButton6.setText("Thêm khách hàng mới");
+
+        jButton11.setText("Xác nhận");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
