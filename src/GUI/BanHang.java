@@ -80,7 +80,16 @@ public class BanHang extends javax.swing.JPanel {
             Vector row, row1, column, column1;
             column = new Vector();
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("");
+            ResultSet rs = st.executeQuery("select sales.stocks.product_id, "
+                    + "production.products.product_name, "
+                    + "production.categories.category_name, "
+                    + "production.brands.brand_name, "
+                    + "production.brands.country, "
+                    + "sales.stocks.price, "
+                    + "sales.stocks.discount from sales.stocks\n" +
+                "inner join production.products on sales.stocks.product_id = production.products.product_id\n" +
+                "inner join production.categories on production.categories.category_id = production.products.category_id\n" +
+                "inner join production.brands on production.brands.brand_id = production.products.brand_id;");
             ResultSetMetaData metadata = rs.getMetaData();
             number = metadata.getColumnCount();
             
