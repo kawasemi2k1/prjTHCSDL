@@ -7,8 +7,22 @@ package GUI;
 
 import java.awt.Component;
 import java.awt.Window;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,12 +30,76 @@ import javax.swing.table.DefaultTableModel;
  * @author ADMIN
  */
 public class BanHang extends javax.swing.JPanel {
-    DefaultTableModel tbn = new DefaultTableModel();
+    DefaultTableModel tbnCustomer = new DefaultTableModel();
+    DefaultTableModel tbnProduct = new DefaultTableModel();
+    DefaultTableModel tbnBill = new DefaultTableModel();
     /**
      * Creates new form BanHang
      */
     public BanHang() {
         initComponents();
+        loadDataCustomer();
+        loadDataProduct();
+    }
+    
+    private void loadDataCustomer(){
+        try{
+            Connect a = new Connect();
+            Connection con = a.getConnectDB();
+            int number, number1;
+            Vector row, row1, column, column1;
+            column = new Vector();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("Select * from sales.customers");
+            ResultSetMetaData metadata = rs.getMetaData();
+            number = metadata.getColumnCount();
+            
+            for(int i = 1; i <= number; i++){
+                column.add(metadata.getColumnName(i));
+            }
+            tbnCustomer.setColumnIdentifiers(column);
+            
+            while(rs.next()){
+                row = new Vector();
+                for(int i = 1; i <= number; i++){
+                    row.addElement(rs.getString(i));
+                }
+                tbnCustomer.addRow(row);
+                jTableCustomer.setModel(tbnCustomer);
+            }
+        }catch(Exception ex){
+            System.out.println(ex.toString());
+        }
+    }
+    
+    private void loadDataProduct(){
+        try{
+            Connect a = new Connect();
+            Connection con = a.getConnectDB();
+            int number, number1;
+            Vector row, row1, column, column1;
+            column = new Vector();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("");
+            ResultSetMetaData metadata = rs.getMetaData();
+            number = metadata.getColumnCount();
+            
+            for(int i = 1; i <= number; i++){
+                column.add(metadata.getColumnName(i));
+            }
+            tbnProduct.setColumnIdentifiers(column);
+            
+            while(rs.next()){
+                row = new Vector();
+                for(int i = 1; i <= number; i++){
+                    row.addElement(rs.getString(i));
+                }
+                tbnProduct.addRow(row);
+                jTableProduct.setModel(tbnProduct);
+            }
+        }catch(Exception ex){
+            System.out.println(ex.toString());
+        }
     }
 
     /**
