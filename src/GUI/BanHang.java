@@ -83,6 +83,8 @@ public class BanHang extends javax.swing.JPanel {
             ResultSet rs = st.executeQuery("select sales.stocks.product_id, "
                     + "production.products.product_name, "
                     + "production.categories.category_name, "
+                    + "sales.stocks.created_at, "
+                    + "sales.stocks.good_till,"
                     + "production.brands.brand_name, "
                     + "production.brands.country, "
                     + "sales.stocks.price, "
@@ -138,7 +140,7 @@ public class BanHang extends javax.swing.JPanel {
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtBillID = new javax.swing.JTextField();
         jButton10 = new javax.swing.JButton();
         txtCustomerName = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -151,10 +153,10 @@ public class BanHang extends javax.swing.JPanel {
         jComboBoxProductSearch = new javax.swing.JComboBox<>();
         txtSearchProduct = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtQuantity = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtDiscount = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -300,7 +302,7 @@ public class BanHang extends javax.swing.JPanel {
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                                         .addComponent(jLabel7)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField3))
+                                        .addComponent(txtBillID))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                                         .addComponent(jButton8)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -321,7 +323,7 @@ public class BanHang extends javax.swing.JPanel {
                 .addGap(9, 9, 9)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBillID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -342,13 +344,13 @@ public class BanHang extends javax.swing.JPanel {
 
         jTableProduct.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Tên", "Loại", "Hãng", "Xuất xứ", "Đơn giá", "Giảm giá"
+                "ID", "Tên", "NSX", "HSD", "Loại", "Hãng", "Xuất xứ", "Đơn giá", "Giảm giá"
             }
         ));
         jScrollPane2.setViewportView(jTableProduct);
@@ -390,11 +392,11 @@ public class BanHang extends javax.swing.JPanel {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField2))
+                                .addComponent(txtDiscount))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1))
+                                .addComponent(txtQuantity))
                             .addComponent(txtSearchProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -420,11 +422,11 @@ public class BanHang extends javax.swing.JPanel {
                     .addComponent(jButton4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDiscount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
                     .addComponent(jButton5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -545,6 +547,8 @@ public class BanHang extends javax.swing.JPanel {
             String str = "select sales.stocks.product_id, "
                     + "production.products.product_name, "
                     + "production.categories.category_name, "
+                    + "sales.stocks.created_at, "
+                    + "sales.stocks.good_till,"
                     + "production.brands.brand_name, "
                     + "production.brands.country, "
                     + "sales.stocks.price, "
@@ -740,10 +744,10 @@ public class BanHang extends javax.swing.JPanel {
             ResultSetMetaData metadata = rs.getMetaData();
             number = metadata.getColumnCount();
             
-//            for(int i = 1; i <= number; i++){
-//                column.add(metadata.getColumnName(i));
-//            }
-//            tbnProduct.setColumnIdentifiers(column);
+            for(int i = 1; i <= number; i++){
+                column.add(metadata.getColumnName(i));
+            }
+            tbnProduct.setColumnIdentifiers(column);
             
             while(rs.next()){
                 row = new Vector();
@@ -792,10 +796,10 @@ public class BanHang extends javax.swing.JPanel {
     private javax.swing.JTable jTableBill;
     private javax.swing.JTable jTableCustomer;
     private javax.swing.JTable jTableProduct;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField txtBillID;
     private javax.swing.JTextField txtCustomerName;
+    private javax.swing.JTextField txtDiscount;
+    private javax.swing.JTextField txtQuantity;
     private javax.swing.JTextField txtSearchCustomer;
     private javax.swing.JTextField txtSearchProduct;
     // End of variables declaration//GEN-END:variables
