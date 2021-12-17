@@ -467,12 +467,60 @@ public class BanHang extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(53, 53, 53))
+                .addGap(43, 43, 43))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        try {
+            Connect a = new Connect();
+            Connection con = a.getConnectDB();
+            String str = "Select * from sales.customers where ";
+            PreparedStatement ps = null;
+            int number;
+            Vector row, column;
+            column = new Vector();
+            ResultSet rs = null;
+            String str1 = null;
+            if(txtSearchCustomer.getText().equals("")) {
+                tbnCustomer.setRowCount(0);
+                loadDataCustomer();
+                return;
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Tên")) {
+                ps = con.prepareStatement(str + "name like ?");
+                ps.setString(1, txtSearchCustomer.getText());
+                rs = ps.executeQuery();
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("SĐT")) {
+                ps = con.prepareStatement(str + "phone like ?");
+                ps.setString(1, txtSearchCustomer.getText());
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Email")) {
+                ps = con.prepareStatement(str + "email like ?");
+                ps.setString(1, txtSearchCustomer.getText());
+                rs = ps.executeQuery();
+            }
+            
+            tbnCustomer.setRowCount(0);
+            ResultSetMetaData metadata = rs.getMetaData();
+            number = metadata.getColumnCount();
+            
+            for(int i = 1; i <= number; i++){
+                column.add(metadata.getColumnName(i));
+            }
+            tbnCustomer.setColumnIdentifiers(column);
+            
+            while(rs.next()){
+                row = new Vector();
+                for(int i = 1; i <= number; i++){
+                    row.addElement(rs.getString(i));
+                }
+                tbnCustomer.addRow(row);
+                jTableCustomer.setModel(tbnCustomer);
+            }
+            
+            if(tbnCustomer.getRowCount() == 0) JOptionPane.showMessageDialog(this, "You searched for nothing.");
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -488,18 +536,83 @@ public class BanHang extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        tbn.setRowCount(0);
-        jTable1.setModel(tbn);
-        jTable2.setModel(tbn);
-        jTable3.setModel(tbn);
+        tbnCustomer.setRowCount(0);
+        tbnProduct.setRowCount(0);
+        tbnBill.setRowCount(0);
+        jTableCustomer.setModel(tbnCustomer);
+        jTableProduct.setModel(tbnProduct);
+        jTableBill.setModel(tbnBill);
         txtSearchCustomer.setText("");
         txtSearchProduct.setText("");
+        txtCustomerName.setText("");
+        loadDataCustomer();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtSearchCustomerKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchCustomerKeyReleased
+        try {
+            Connect a = new Connect();
+            Connection con = a.getConnectDB();
+            String str = "Select * from sales.customers where ";
+            PreparedStatement ps = null;
+            int number;
+            Vector row, column;
+            column = new Vector();
+            ResultSet rs = null;
+            String str1 = null;
+            if (jComboBoxSearch.getSelectedItem().toString().equals("Tên")) {
+                ps = con.prepareStatement(str + "name like ?");
+                str1 = "%" + txtSearchCustomer.getText() + "%";
+                ps.setString(1, str1);
+                rs = ps.executeQuery();
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("SĐT")) {
+                ps = con.prepareStatement(str + "phone like ?");
+                str1 = "%" + txtSearchCustomer.getText() + "%";
+                ps.setString(1, str1);
+                rs = ps.executeQuery();
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Email")) {
+                ps = con.prepareStatement(str + "email like ?");
+                str1 = "%" + txtSearchCustomer.getText() + "%";
+                ps.setString(1, str1);
+                rs = ps.executeQuery();
+            } 
+            
+            tbnCustomer.setRowCount(0);
+            ResultSetMetaData metadata = rs.getMetaData();
+            number = metadata.getColumnCount();
+            
+            for(int i = 1; i <= number; i++){
+                column.add(metadata.getColumnName(i));
+            }
+            tbnCustomer.setColumnIdentifiers(column);
+            
+            while(rs.next()){
+                row = new Vector();
+                for(int i = 1; i <= number; i++){
+                    row.addElement(rs.getString(i));
+                }
+                tbnCustomer.addRow(row);
+                jTableCustomer.setModel(tbnCustomer);
+            }
+            
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
+    }//GEN-LAST:event_txtSearchCustomerKeyReleased
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        txtCustomerName.setText(jTableCustomer.getValueAt(jTableCustomer.getSelectedRow(), 1) + "");
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        txtCustomerName.setText("");
+    }//GEN-LAST:event_jButton12ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
