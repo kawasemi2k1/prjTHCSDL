@@ -627,10 +627,14 @@ public class BanHang extends javax.swing.JPanel {
         jTableCustomer.setModel(tbnCustomer);
         jTableProduct.setModel(tbnProduct);
         jTableBill.setModel(tbnBill);
+        txtBillID.setText("");
+        txtCustomerName.setText("");
+        txtDiscount.setText("");
+        txtQuantity.setText("");
         txtSearchCustomer.setText("");
         txtSearchProduct.setText("");
-        txtCustomerName.setText("");
         loadDataCustomer();
+        loadDataProduct();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txtSearchCustomerKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchCustomerKeyReleased
@@ -699,6 +703,8 @@ public class BanHang extends javax.swing.JPanel {
             String str = "select sales.stocks.product_id, "
                     + "production.products.product_name, "
                     + "production.categories.category_name, "
+                    + "sales.stocks.created_at, "
+                    + "sales.stocks.good_till,"
                     + "production.brands.brand_name, "
                     + "production.brands.country, "
                     + "sales.stocks.price, "
