@@ -35,6 +35,7 @@ public class BanHang extends javax.swing.JPanel {
     DefaultTableModel tbnProduct = new DefaultTableModel();
     DefaultTableModel tbnBill = new DefaultTableModel();
     static int store = 1; //default to 1, until Login function
+    static int staff = 1; //default to 1, until Login function
     /**
      * Creates new form BanHang
      */
