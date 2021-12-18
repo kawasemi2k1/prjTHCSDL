@@ -249,13 +249,13 @@ public class BanHang extends javax.swing.JPanel {
 
         jTableBill.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Tên sản phẩm", "Số lượng", "Giảm giá", "Thành tiền"
+                "Tên sản phẩm", "Đơn giá", "Số lượng", "Giảm giá", "Thành tiền"
             }
         ));
         jScrollPane3.setViewportView(jTableBill);
@@ -373,8 +373,13 @@ public class BanHang extends javax.swing.JPanel {
         jLabel5.setText("Số lượng");
 
         jButton5.setText("Thêm vào giỏ hàng");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
-        jLabel6.setText("Giảm giá");
+        jLabel6.setText("Giảm giá (%)");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
