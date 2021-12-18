@@ -35,6 +35,10 @@ public class BanHang extends javax.swing.JPanel {
     DefaultTableModel tbnCustomer = new DefaultTableModel();
     DefaultTableModel tbnProduct = new DefaultTableModel();
     DefaultTableModel tbnBill = new DefaultTableModel();
+    String customerID = null;
+    String customerPhone = null;
+    String customerEmail = null;
+    double totalBillPrice = 0;
     static int store = 1; //default to 1, until Login function
     static int staff = 1; //default to 1, until Login function
     /**
@@ -101,9 +105,9 @@ public class BanHang extends javax.swing.JPanel {
             column = new Vector();
             PreparedStatement ps = con.prepareStatement("select sales.stocks.product_id, "
                     + "production.products.product_name, "
-                    + "production.categories.category_name, "
                     + "sales.stocks.created_at, "
                     + "sales.stocks.good_till,"
+                    + "production.categories.category_name, "
                     + "production.brands.brand_name, "
                     + "production.brands.country, "
                     + "sales.stocks.quantity, "
@@ -663,9 +667,9 @@ public class BanHang extends javax.swing.JPanel {
             Connection con = a.getConnectDB();
             String str = "select sales.stocks.product_id, "
                     + "production.products.product_name, "
-                    + "production.categories.category_name, "
                     + "sales.stocks.created_at, "
                     + "sales.stocks.good_till,"
+                    + "production.categories.category_name, "
                     + "production.brands.brand_name, "
                     + "production.brands.country, "
                     + "sales.stocks.quantity, "
@@ -808,10 +812,16 @@ public class BanHang extends javax.swing.JPanel {
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         txtCustomerName.setText(jTableCustomer.getValueAt(jTableCustomer.getSelectedRow(), 1) + "");
+        customerID = jTableCustomer.getValueAt(jTableCustomer.getSelectedRow(), 0) + "";
+        customerPhone = jTableCustomer.getValueAt(jTableCustomer.getSelectedRow(), 4) + "";
+        customerEmail = jTableCustomer.getValueAt(jTableCustomer.getSelectedRow(), 5) + "";
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         txtCustomerName.setText("");
+        customerID = "";
+        customerPhone = "";
+        customerEmail = "";
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void txtSearchProductKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchProductKeyReleased
@@ -820,9 +830,9 @@ public class BanHang extends javax.swing.JPanel {
             Connection con = a.getConnectDB();
             String str = "select sales.stocks.product_id, "
                     + "production.products.product_name, "
-                    + "production.categories.category_name, "
                     + "sales.stocks.created_at, "
                     + "sales.stocks.good_till,"
+                    + "production.categories.category_name, "
                     + "production.brands.brand_name, "
                     + "production.brands.country, "
                     + "sales.stocks.quantity, "
@@ -944,9 +954,12 @@ public class BanHang extends javax.swing.JPanel {
             System.out.println(ex.toString());
         }
         
+        jButton7.setEnabled(true);
+        jButton9.setEnabled(true);
+        
         String productName = jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 1) + "";
-        double singlePrice = Double.parseDouble(jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 7) + "");
-        double productDiscount = Double.parseDouble(jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 8) + "");
+        double singlePrice = Double.parseDouble(jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 8) + "");
+        double productDiscount = Double.parseDouble(jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 9) + "");
         double eventDiscount = Double.parseDouble(txtDiscount.getText());
         int quantity = Integer.parseInt(txtQuantity.getText());
         double totalDiscount = productDiscount + eventDiscount - productDiscount*eventDiscount/100.00;
@@ -958,19 +971,111 @@ public class BanHang extends javax.swing.JPanel {
             column.add(jTableBill.getColumnName(i));
         }
         tbnBill.setColumnIdentifiers(column);
+        row.add(jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 0) + "");
         row.add(productName);
+        row.add(jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 2) + "");
+        row.add(jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 3) + "");
         row.add(String.valueOf(singlePrice));
         row.add(String.valueOf(quantity));
         row.add(String.valueOf(totalDiscount));
         row.add(String.valueOf(totalSinglePrice));
         tbnBill.addRow(row);
         jTableBill.setModel(tbnBill);
+        
+        totalBillPrice += totalSinglePrice;
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         tbnBill.removeRow(jTableBill.getSelectedRow());
         jTableBill.setModel(tbnBill);
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        try {
+            Connect a = new Connect();
+            Connection con = a.getConnectDB();
+            
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        tbnBill.setRowCount(0);
+        jTableBill.setModel(tbnBill);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        int seed = 0;
+        if(txtCustomerName.getText().equals("")){
+            int result = JOptionPane.showConfirmDialog(this ,"Chưa rõ khách hàng.\nBạn có muốn tiếp tục?", "Làm ơn xác nhận",
+               JOptionPane.YES_NO_OPTION,
+               JOptionPane.QUESTION_MESSAGE);
+            if(result == JOptionPane.YES_OPTION){
+               customerID = "1";
+            }else if (result == JOptionPane.NO_OPTION){
+               return;
+            }else {
+               return;
+            }
+        }
+        
+        try {
+            Connect a = new Connect();
+            Connection con = a.getConnectDB();
+            
+            if(SlotToInsert() >= 0){
+                seed = SlotToInsert();
+                System.out.println("Seed: " + seed);
+                PreparedStatement ps1 = con.prepareStatement("DBCC CHECKIDENT ('sales.orders', RESEED, ?);");
+                ps1.setInt(1, seed);
+                ps1.execute();
+            }
+            
+            if(!txtCustomerName.getText().equals("")) {
+                PreparedStatement ps = con.prepareStatement("select customer_id from sales.customers "
+                        + "where "
+                        + "phone like ? and "
+                        + "email like ? ;");
+                ps.setString(1, customerPhone);
+                ps.setString(2, customerEmail);
+                ResultSet rs = ps.executeQuery();
+                rs.next();
+                customerID = rs.getString(1);
+            }
+            
+            PreparedStatement ps1 = con.prepareStatement("insert into sales.orders values (?, ?, ?, ?);");
+            ps1.setString(1, customerID);
+            ps1.setString(2, String.valueOf(staff));
+            ps1.setObject(3, new Date());
+            ps1.setString(4, String.valueOf(totalBillPrice));
+            int update = ps1.executeUpdate();
+            
+            int update1 = 0;
+            PreparedStatement ps2 = con.prepareStatement("insert into sales.order_items values (?, ?, ?, ?, ?, ?, ?, ?);");
+            for(int i=0; i < jTableBill.getRowCount(); i++) {
+                ps2.setString(1, String.valueOf(seed + 1));
+                ps2.setString(2, jTableBill.getValueAt(i, 0) + "");
+                System.out.println(jTableBill.getValueAt(i, 2) + "");
+                System.out.println(jTableBill.getValueAt(i, 3) + "");
+                ps2.setString(3, jTableBill.getValueAt(i, 2) + "");
+                ps2.setString(4, jTableBill.getValueAt(i, 3) + "");
+                ps2.setString(5, String.valueOf(store));
+                ps2.setString(6, jTableBill.getValueAt(i, 5) + "");
+                ps2.setString(7, jTableBill.getValueAt(i, 7) + "");
+                ps2.setString(8, jTableBill.getValueAt(i, 6) + "");
+                update1 = ps2.executeUpdate();
+            }
+            
+            if(update > 0 && update1 > 0) {
+                JOptionPane.showMessageDialog(this, "Chốt đơn thành công");
+            } else {
+                JOptionPane.showMessageDialog(this, "Chốt đơn không thành công");
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
