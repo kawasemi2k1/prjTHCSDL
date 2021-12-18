@@ -26,17 +26,23 @@ SET IDENTITY_INSERT sales.customers Off;
 
 --3. staffs
 SET IDENTITY_INSERT sales.staffs ON;
--- insert cho staff
+
+insert into sales.staffs values
+(N'Trần Đức Mạnh', 'tranducmanh@gmail', '0357251858', 1, 1, 1, 'Nam', 'manh135792468')
+
 SET IDENTITY_INSERT sales.staffs Off;
 
 --4. orders
 SET IDENTITY_INSERT sales.orders ON;
 -- insert cho sales.orders
+select * from sales.orders
+delete from sales.orders where order_id = 1;
 SET IDENTITY_INSERT sales.orders Off;
 
 
 --5. order_item
 -- insert cho sales.order_items 
+select * from sales.order_items
 
 
 

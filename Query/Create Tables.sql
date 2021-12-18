@@ -52,7 +52,7 @@ CREATE TABLE sales.staffs (
 	staff_id INT IDENTITY (1, 1) PRIMARY KEY,
 	name NVARCHAR (50) NOT NULL,
 	email VARCHAR (255) NOT NULL UNIQUE,
-	phone VARCHAR (25),
+	phone VARCHAR (25) not null unique,
 	active tinyint NOT NULL,
 	store_id INT NOT NULL,
 	manager_state INT Not null,
@@ -63,37 +63,38 @@ CREATE TABLE sales.staffs (
 
 CREATE TABLE sales.orders (
 	order_id INT IDENTITY (1, 1) PRIMARY KEY,
-	customer_id INT,
-	created_date DATE NOT NULL,
-	store_id INT NOT NULL,
+	customer_id INT not null,
 	staff_id INT NOT NULL,
-	price decimal(10,2) not null,
+	created_date DATE NOT NULL,
+	price decimal(10,2) not null default 0,
 	FOREIGN KEY (customer_id) REFERENCES sales.customers (customer_id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (store_id) REFERENCES sales.stores (store_id) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (staff_id) REFERENCES sales.staffs (staff_id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
-CREATE TABLE sales.order_items (
-	order_id INT,
-	product_id INT NOT NULL,
-	quantity INT NOT NULL,
-	price DECIMAL (10, 2) NOT NULL,
-	discount DECIMAL (4, 2) NOT NULL DEFAULT 0,
-	FOREIGN KEY (order_id) REFERENCES sales.orders (order_id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (product_id) REFERENCES production.products (product_id) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
 CREATE TABLE sales.stocks (
-	product_id INT,
-	created_at Date not null,
-	good_till Date not null,
-	store_id INT,
-	price DECIMAL (10, 2) NOT NULL,
+	product_id INT not null,
+	created_at date not null,
+	good_till date not null,
+	store_id INT not null,
+	price DECIMAL (10, 2) NOT NULL default 0,
 	discount DECIMAL (4, 2) NOT NULL DEFAULT 0,
-	quantity INT,
+	quantity INT not null default 0,
 	PRIMARY KEY (product_id, created_at, good_till, store_id),
 	FOREIGN KEY (store_id) REFERENCES sales.stores (store_id) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (product_id) REFERENCES production.products (product_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE sales.order_items (
+	order_id INT not null,
+	product_id INT not null,
+	created_at date not null,
+	good_till date not null,
+	store_id INT NOT NULL,
+	quantity INT NOT NULL default 0,
+	price DECIMAL (10, 2) NOT NULL default 0,
+	discount DECIMAL (4, 2) NOT NULL DEFAULT 0,
+	FOREIGN KEY (order_id) REFERENCES sales.orders (order_id) ON DELETE CASCADE ON UPDATE CASCADE,
+	foreign key (product_id, created_at, good_till, store_id) references sales.stocks (product_id, created_at, good_till, store_id)
 );
 
 drop table sales.stocks;
