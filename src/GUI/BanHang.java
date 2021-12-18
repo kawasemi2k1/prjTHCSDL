@@ -311,13 +311,10 @@ public class BanHang extends javax.swing.JPanel {
 
         jTableBill.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Tên sản phẩm", "Đơn giá", "Số lượng", "Giảm giá", "Thành tiền"
+                "ID", "Tên sản phẩm", "NSX", "HSD", "Đơn giá", "Số lượng", "Giảm giá", "Thành tiền"
             }
         ));
         jScrollPane3.setViewportView(jTableBill);
