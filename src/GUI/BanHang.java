@@ -57,7 +57,7 @@ public class BanHang extends javax.swing.JPanel {
             Vector row, column;
             column = new Vector();
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("Select * from sales.customers");
+            ResultSet rs = st.executeQuery("Select * from sales.customers where name != 'Vô danh'");
             ResultSetMetaData metadata = rs.getMetaData();
             number = metadata.getColumnCount();
             
