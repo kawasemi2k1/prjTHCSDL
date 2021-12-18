@@ -105,6 +105,7 @@ public class BanHang extends javax.swing.JPanel {
                     + "sales.stocks.good_till,"
                     + "production.brands.brand_name, "
                     + "production.brands.country, "
+                    + "sales.stocks.quantity, "
                     + "sales.stocks.price, "
                     + "sales.stocks.discount from sales.stocks\n" +
                 "inner join production.products on sales.stocks.product_id = production.products.product_id\n" +
@@ -643,6 +644,7 @@ public class BanHang extends javax.swing.JPanel {
                     + "sales.stocks.good_till,"
                     + "production.brands.brand_name, "
                     + "production.brands.country, "
+                    + "sales.stocks.quantity, "
                     + "sales.stocks.price, "
                     + "sales.stocks.discount from sales.stocks\n" +
                 "inner join production.products on sales.stocks.product_id = production.products.product_id\n" +
@@ -799,6 +801,7 @@ public class BanHang extends javax.swing.JPanel {
                     + "sales.stocks.good_till,"
                     + "production.brands.brand_name, "
                     + "production.brands.country, "
+                    + "sales.stocks.quantity, "
                     + "sales.stocks.price, "
                     + "sales.stocks.discount from sales.stocks\n" +
                 "inner join production.products on sales.stocks.product_id = production.products.product_id\n" +
