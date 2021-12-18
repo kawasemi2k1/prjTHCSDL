@@ -876,16 +876,58 @@ public class BanHang extends javax.swing.JPanel {
             return;
         }
         
+        int count = 0;
+        try {
+            Connect a = new Connect();
+            Connection con = a.getConnectDB();
+            PreparedStatement ps = con.prepareStatement("select quantity from sales.stocks "
+                    + "where product_id = ? and "
+                    + "created_at = ? and "
+                    + "good_till = ? and "
+                    + "store_id = ?;");
+            ps.setString(1, jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 0) + "");
+            ps.setString(2, jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 3) + "");
+            ps.setString(3, jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 4) + "");
+            ps.setString(4, String.valueOf(store));
+            ResultSet rs = ps.executeQuery();
+            
+            rs.next();
+            count = rs.getInt(1);
+            if(count < Integer.parseInt(txtQuantity.getText())) {
+                String str = "Hàng không đủ trong kho.";
+                
+                PreparedStatement ps1 = con.prepareStatement("select distinct sales.stores.name, quantity from sales.stocks "
+                        + "inner join sales.stores on sales.stores.store_id = sales.stocks.store_id "
+                        + "where product_id = ? and "
+                        + "sales.stocks.store_id != ?;");
+                ps1.setString(1, jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 0) + "");
+                ps1.setString(2, String.valueOf(store));
+                ResultSet rs1 = ps1.executeQuery();
+                
+                if(rs1.next() == false) {
+                    str = str + "\nKhông kho nào khách còn hàng.";
+                } else {
+                    str = str + "\nCòn hàng tại:\n";
+                    do {
+                        str = str + rs1.getString(1) + ": " + rs1.getString(2) + "\n";
+                    } while(rs1.next());
+                }
+                
+                JOptionPane.showMessageDialog(this, str);
+                return;
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
+        
         String productName = jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 1) + "";
         double singlePrice = Double.parseDouble(jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 7) + "");
         double productDiscount = Double.parseDouble(jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 8) + "");
         double eventDiscount = Double.parseDouble(txtDiscount.getText());
         int quantity = Integer.parseInt(txtQuantity.getText());
         double totalDiscount = productDiscount + eventDiscount - productDiscount*eventDiscount/100.00;
-        System.out.println(totalDiscount);
         double totalSinglePrice = singlePrice * (1.00 - totalDiscount/100.00) * (double)quantity;
-        System.out.println(totalSinglePrice);
-        
+               
         Vector row = new Vector();
         Vector column = new Vector();
         for(int i = 0; i < jTableBill.getColumnCount(); i++){
