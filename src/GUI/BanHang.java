@@ -52,7 +52,11 @@ public class BanHang extends javax.swing.JPanel {
         jButton11.setEnabled(false);
         jButton5.setEnabled(false);
         jButton8.setEnabled(false);
-        BillTableListener();
+        loadDataBill();
+        if(jTableBill.getRowCount() == 0) {
+            jButton7.setEnabled(false);
+            jButton9.setEnabled(false);
+        }
     }
     
     private void loadDataCustomer(){
@@ -150,7 +154,14 @@ public class BanHang extends javax.swing.JPanel {
         }
     }
     
-    private void BillTableListener() {
+    private void loadDataBill() {
+        Vector column = new Vector();
+        for(int i = 0; i < jTableBill.getColumnCount(); i++){
+            column.add(jTableBill.getColumnName(i));
+        }
+        tbnBill.setColumnIdentifiers(column);
+        tbnBill.setRowCount(0);
+        jTableBill.setModel(tbnBill);
         jTableBill.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
                 @Override
                 public void valueChanged(ListSelectionEvent lse) {
