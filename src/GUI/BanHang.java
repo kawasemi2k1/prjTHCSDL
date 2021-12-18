@@ -34,6 +34,7 @@ public class BanHang extends javax.swing.JPanel {
     DefaultTableModel tbnCustomer = new DefaultTableModel();
     DefaultTableModel tbnProduct = new DefaultTableModel();
     DefaultTableModel tbnBill = new DefaultTableModel();
+    static int store = 1; //default to 1, until Login function
     /**
      * Creates new form BanHang
      */
@@ -81,8 +82,7 @@ public class BanHang extends javax.swing.JPanel {
             int number, number1;
             Vector row, row1, column, column1;
             column = new Vector();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select sales.stocks.product_id, "
+            PreparedStatement ps = con.prepareStatement("select sales.stocks.product_id, "
                     + "production.products.product_name, "
                     + "production.categories.category_name, "
                     + "sales.stocks.created_at, "
@@ -93,7 +93,10 @@ public class BanHang extends javax.swing.JPanel {
                     + "sales.stocks.discount from sales.stocks\n" +
                 "inner join production.products on sales.stocks.product_id = production.products.product_id\n" +
                 "inner join production.categories on production.categories.category_id = production.products.category_id\n" +
-                "inner join production.brands on production.brands.brand_id = production.products.brand_id;");
+                "inner join production.brands on production.brands.brand_id = production.products.brand_id "
+                    + "where store_id = ?");
+            ps.setString(1, String.valueOf(store));
+            ResultSet rs = ps.executeQuery();
             ResultSetMetaData metadata = rs.getMetaData();
             number = metadata.getColumnCount();
             
