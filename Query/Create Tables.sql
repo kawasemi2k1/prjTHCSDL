@@ -32,10 +32,10 @@ CREATE TABLE production.products (
 create table sales.customers (
 	customer_id int identity(1,1),
 	name nvarchar(255) not null,
-	birthday date not null,
-	address nvarchar(255) not null,
-	phone varchar(25) constraint UQ0 unique not null,
-	email varchar(255) constraint UQ1 unique not null,
+	birthday date,
+	address nvarchar(255),
+	phone varchar(25) constraint UQ0 unique,
+	email varchar(255) constraint UQ1 unique,
 	constraint PK0 primary key (customer_id),
 );
 
@@ -91,7 +91,7 @@ CREATE TABLE sales.stocks (
 	price DECIMAL (10, 2) NOT NULL,
 	discount DECIMAL (4, 2) NOT NULL DEFAULT 0,
 	quantity INT,
-	PRIMARY KEY (product_id, created_at, good_till),
+	PRIMARY KEY (product_id, created_at, good_till, store_id),
 	FOREIGN KEY (store_id) REFERENCES sales.stores (store_id) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (product_id) REFERENCES production.products (product_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -105,4 +105,3 @@ drop table production.categories;
 drop table production.brands;
 drop table sales.customers;
 drop table sales.stores;
-drop table sales.products;

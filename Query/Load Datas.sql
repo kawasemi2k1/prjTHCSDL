@@ -16,6 +16,7 @@ SET IDENTITY_INSERT sales.stores Off;
 SET IDENTITY_INSERT sales.customers ON;
 
 insert into sales.customers values
+(N'Vô Danh', null, null, null, null),
 (N'Trần Đức Mạnh', '20011209', N'15 ngách 2 ngõ 119, đường Nước Phần Lan, Tấy Hồ, Hà Nội', '0357251858', 'tranducmanh12092001@gmail.com'),
 (N'Phạm Đức Huy', '20010101', N'Việt Nam', '0000000001', 'phamduchuy@gmail.com'),
 (N'Nguyễn Thị Thúy', '20010101', N'Việt Nam', '0000000002', 'nguyenthithuy@gmail.com'),
@@ -43,6 +44,7 @@ SET IDENTITY_INSERT sales.orders Off;
 insert into sales.stocks values
 (1, '2021-01-01', '2022-02-02', 1, 10000.00, 10.00, 20),
 (1, '2021-01-01', '2022-11-01', 1, 15000.00, 20.00, 20),
+(1, '2021-01-01', '2022-11-01', 2, 15000.00, 20.00, 20),
 (2, '2021-01-01', '2022-01-01', 4, 15000.00, 20.00, 20),
 (3, '2021-01-01', '2022-01-01', 1, 21000.00, 5.00, 21);
 
