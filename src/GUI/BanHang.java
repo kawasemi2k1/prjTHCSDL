@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -40,6 +41,7 @@ public class BanHang extends javax.swing.JPanel {
         initComponents();
         loadDataCustomer();
         loadDataProduct();
+        txtDiscount.setText("0.00");
     }
     
     private void loadDataCustomer(){
@@ -47,7 +49,7 @@ public class BanHang extends javax.swing.JPanel {
             Connect a = new Connect();
             Connection con = a.getConnectDB();
             int number, number1;
-            Vector row, row1, column, column1;
+            Vector row, column;
             column = new Vector();
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("Select * from sales.customers");
@@ -112,7 +114,30 @@ public class BanHang extends javax.swing.JPanel {
             System.out.println(ex.toString());
         }
     }
-
+    
+    public static boolean isDouble(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+           double i = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+    
+    public static boolean isInt(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            int i = Integer.parseInt(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -774,6 +799,42 @@ public class BanHang extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtSearchProductKeyReleased
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        if(!isDouble(txtDiscount.getText()) || 
+                Double.parseDouble(txtDiscount.getText()) < 0 ||
+                Double.parseDouble(txtDiscount.getText()) > 100) {
+            JOptionPane.showMessageDialog(this, "Lỗi ở Giảm giá.");
+            return;
+        }
+        if(!isInt(txtQuantity.getText()) || Integer.parseInt(txtQuantity.getText()) <= 0) {
+            JOptionPane.showMessageDialog(this, "Lỗi ở Số lượng.");
+            return;
+        }
+        
+        String productName = jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 1) + "";
+        double singlePrice = Double.parseDouble(jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 7) + "");
+        double productDiscount = Double.parseDouble(jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 8) + "");
+        double eventDiscount = Double.parseDouble(txtDiscount.getText());
+        int quantity = Integer.parseInt(txtQuantity.getText());
+        double totalDiscount = productDiscount + eventDiscount - productDiscount*eventDiscount/100.00;
+        System.out.println(totalDiscount);
+        double totalSinglePrice = singlePrice * (1.00 - totalDiscount/100.00);
+        System.out.println(totalSinglePrice);
+        
+        Vector row = new Vector();
+        Vector column = new Vector();
+        for(int i = 0; i < jTableBill.getColumnCount(); i++){
+            column.add(jTableBill.getColumnName(i));
+        }
+        tbnBill.setColumnIdentifiers(column);
+        row.add(productName);
+        row.add(String.valueOf(singlePrice));
+        row.add(String.valueOf(quantity));
+        row.add(String.valueOf(totalDiscount));
+        row.add(String.valueOf(totalSinglePrice));
+        tbnBill.addRow(row);
+        jTableBill.setModel(tbnBill);
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
