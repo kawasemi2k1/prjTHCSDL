@@ -43,6 +43,10 @@ public class BanHang extends javax.swing.JPanel {
         loadDataCustomer();
         loadDataProduct();
         txtDiscount.setText("0.00");
+        jButton11.setEnabled(false);
+        jButton5.setEnabled(false);
+        jButton8.setEnabled(false);
+        BillTableListener();
     }
     
     private void loadDataCustomer(){
@@ -70,6 +74,17 @@ public class BanHang extends javax.swing.JPanel {
                 tbnCustomer.addRow(row);
                 jTableCustomer.setModel(tbnCustomer);
             }
+            
+            jTableCustomer.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent lse) {
+                    if (jTableCustomer.getSelectedRow() >= 0) {
+                        jButton11.setEnabled(true);
+
+                    }
+                }
+            }
+            );
         }catch(Exception ex){
             System.out.println(ex.toString());
         }
@@ -113,9 +128,31 @@ public class BanHang extends javax.swing.JPanel {
                 tbnProduct.addRow(row);
                 jTableProduct.setModel(tbnProduct);
             }
+            
+            jTableProduct.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent lse) {
+                    if (jTableProduct.getSelectedRow() >= 0) {
+                        jButton5.setEnabled(true);
+                    }
+                }
+            }
+            );
         }catch(Exception ex){
             System.out.println(ex.toString());
         }
+    }
+    
+    private void BillTableListener() {
+        jTableBill.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent lse) {
+                    if (jTableBill.getSelectedRow() >= 0) {
+                        jButton8.setEnabled(true);
+                    }
+                }
+            }
+        );
     }
     
     public static boolean isDouble(String strNum) {
