@@ -322,6 +322,11 @@ public class BanHang extends javax.swing.JPanel {
         jButton7.setText("Chốt đơn");
 
         jButton8.setText("Xóa sản phẩm");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jButton9.setText("Hủy đơn");
 
@@ -869,6 +874,11 @@ public class BanHang extends javax.swing.JPanel {
         tbnBill.addRow(row);
         jTableBill.setModel(tbnBill);
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        tbnBill.removeRow(jTableBill.getSelectedRow());
+        jTableBill.setModel(tbnBill);
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
