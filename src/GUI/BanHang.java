@@ -14,6 +14,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -180,6 +181,32 @@ public class BanHang extends javax.swing.JPanel {
         }
         return true;
     }
+    
+    private int SlotToInsert() {
+        int missingSlot = 1;
+        ArrayList<Integer> Slots = new ArrayList<Integer>();
+        try{
+            Connect a = new Connect();
+            Connection con = a.getConnectDB();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("Select order_id from sales.orders order by order_id");
+            if(rs.next() == false) return 0;
+            else {
+                do { 
+                    Slots.add(rs.getInt(1));
+                    for(int i = 0; missingSlot < Slots.size(); i++, missingSlot++){
+                        if(missingSlot != Slots.get(i)){
+                            return missingSlot - 1;
+                        }
+                    }
+                }while(rs.next());
+            }
+        }catch(Exception ex){
+            System.out.println(ex.toString());
+        }
+        return missingSlot;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
