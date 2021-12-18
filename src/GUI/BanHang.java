@@ -812,7 +812,7 @@ public class BanHang extends javax.swing.JPanel {
         int quantity = Integer.parseInt(txtQuantity.getText());
         double totalDiscount = productDiscount + eventDiscount - productDiscount*eventDiscount/100.00;
         System.out.println(totalDiscount);
-        double totalSinglePrice = singlePrice * (1.00 - totalDiscount/100.00);
+        double totalSinglePrice = singlePrice * (1.00 - totalDiscount/100.00) * (double)quantity;
         System.out.println(totalSinglePrice);
         
         Vector row = new Vector();
