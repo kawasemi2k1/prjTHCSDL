@@ -44,7 +44,7 @@ CREATE TABLE sales.stores (
 	name NVARCHAR (255) NOT NULL,
 	phone VARCHAR (25),
 	email VARCHAR (255),
-	address VARCHAR (255),
+	address NVARCHAR (255),
 	state VARCHAR (10)
 );
 
@@ -83,25 +83,17 @@ CREATE TABLE sales.order_items (
 	FOREIGN KEY (product_id) REFERENCES production.products (product_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE sales.products (
-	store_id INT,
+CREATE TABLE sales.stocks (
 	product_id INT,
-	created_at_date Date not null,
-	good_till_date Date not null,
+	created_at Date not null,
+	good_till Date not null,
+	store_id INT,
 	price DECIMAL (10, 2) NOT NULL,
 	discount DECIMAL (4, 2) NOT NULL DEFAULT 0,
-	PRIMARY KEY (product_id, created_at_date, good_till_date)
-);
-
-CREATE TABLE sales.stocks (
-	store_id INT,
-	product_id INT,
-	created_at_date Date not null,
-	good_till_date Date not null,
 	quantity INT,
-	PRIMARY KEY (product_id, created_at_date, good_till_date),
+	PRIMARY KEY (product_id, created_at, good_till),
 	FOREIGN KEY (store_id) REFERENCES sales.stores (store_id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (product_id, created_at_date, good_till_date) REFERENCES sales.products (product_id, created_at_date, good_till_date) ON DELETE CASCADE ON UPDATE CASCADE
+	FOREIGN KEY (product_id) REFERENCES production.products (product_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 drop table sales.stocks;
