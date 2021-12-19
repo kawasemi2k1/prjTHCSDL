@@ -50,7 +50,7 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             Vector row, column;
             column = new Vector();
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("Select * from sales.customers");
+            ResultSet rs = st.executeQuery("Select * from sales.customers where customer_id ! = 1;");
             ResultSetMetaData metadata = rs.getMetaData();
             number = metadata.getColumnCount();
             
