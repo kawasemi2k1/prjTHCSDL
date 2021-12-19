@@ -25,6 +25,8 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -38,6 +40,7 @@ public class BanHang extends javax.swing.JPanel {
     String customerID = null;
     String customerPhone = null;
     String customerEmail = null;
+    String billID = null;
     double totalBillPrice = 0;
     static int store = 1; //default to 1, until Login function
     static int staff = 1; //default to 1, until Login function
@@ -48,14 +51,30 @@ public class BanHang extends javax.swing.JPanel {
         initComponents();
         loadDataCustomer();
         loadDataProduct();
+        loadDataStaff();
+        loadDataBill();
         txtDiscount.setText("0.00");
         jButton11.setEnabled(false);
         jButton5.setEnabled(false);
         jButton8.setEnabled(false);
-        loadDataBill();
         if(jTableBill.getRowCount() == 0) {
             jButton7.setEnabled(false);
             jButton9.setEnabled(false);
+            jButton6.setEnabled(false);
+        }
+    }
+    
+    private void loadDataStaff() {
+        try {
+            Connect a = new Connect();
+            Connection con = a.getConnectDB();
+            PreparedStatement ps = con.prepareStatement("Select name from sales.staffs where staff_id = ?;");
+            ps.setString(1, String.valueOf(staff));
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            txtStaff.setText(rs.getString(1));
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
         }
     }
     
@@ -63,7 +82,7 @@ public class BanHang extends javax.swing.JPanel {
         try{
             Connect a = new Connect();
             Connection con = a.getConnectDB();
-            int number, number1;
+            int number;
             Vector row, column;
             column = new Vector();
             Statement st = con.createStatement();
