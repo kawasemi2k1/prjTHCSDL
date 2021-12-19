@@ -877,6 +877,7 @@ public class BanHang extends javax.swing.JPanel {
         loadDataCustomer();
         loadDataProduct();
         loadDataBill();
+        loadDataStaff();
         totalBillPrice = 0;
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -1371,6 +1372,7 @@ public class BanHang extends javax.swing.JPanel {
         tbnBill.setRowCount(0);
         jTableBill.setModel(tbnBill);
         loadDataBill();
+        loadDataStaff();
         txtCustomerName.setText("");
         txtTotalBillPrice.setText("");
         txtBillID.setText("");
