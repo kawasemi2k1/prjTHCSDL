@@ -390,31 +390,32 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             if(txtName.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Name is Blank.");
+                JOptionPane.showMessageDialog(this, "Thiếu tên.");
                 return;
             } else if (txtAddress.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Address is Blank.");
+                JOptionPane.showMessageDialog(this, "Thiếu địa chỉ.");
                 return;
             } else if (txtPhone.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Phone is Blank.");
+                JOptionPane.showMessageDialog(this, "Thiếu SĐT.");
                 return;
             } else if (txtEmail.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Email is Blank.");
+                JOptionPane.showMessageDialog(this, "Thiếu Email.");
                 return;
             } else if (date.getYear() - jDateChooser1.getDate().getYear() < 10 ) {
-                JOptionPane.showMessageDialog(this, "Not old enough.");
+                JOptionPane.showMessageDialog(this, "Không đủ tuổi.");
                 return;
             } else if (!isValidEmail(txtEmail.getText())) {
-                JOptionPane.showMessageDialog(this, "Email is not valid.");
+                JOptionPane.showMessageDialog(this, "Sai cú pháp Email.");
                 return;
             } else if (!isValidPhone(txtPhone.getText())) {
-                JOptionPane.showMessageDialog(this, "Phone number is not valid.");
+                JOptionPane.showMessageDialog(this, "Sai cú pháp SĐT.");
                 return;
             }
             
             Connect a = new Connect();
             Connection con = a.getConnectDB();
             
+            int seed;
             if(SlotToInsert() >= 0){
                 seed = SlotToInsert();
                 System.out.println("Seed: " + seed);
@@ -431,20 +432,19 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             ps.setString(5, txtEmail.getText());
             
             int check = ps.executeUpdate();
-            seed++;
             if(check > 0) {
-                JOptionPane.showMessageDialog(this, "Added Successfully.");
+                JOptionPane.showMessageDialog(this, "Thêm thành công.");
                 tbn.setRowCount(0);
                 loadData();
             }
         } catch (Exception ex) {
             System.out.println(ex.toString());
             if(ex.toString().contains("UQ1")) {
-                JOptionPane.showMessageDialog(this, "This Email has already existed.");
+                JOptionPane.showMessageDialog(this, "Email này đã tồn tại trong hệ thống.");
             } else if (ex.toString().contains("UQ0")) {
-                JOptionPane.showMessageDialog(this, "This PhoneNumber has already existed.");
+                JOptionPane.showMessageDialog(this, "SĐT này đã tồn tại trong hệ thống.");
             } else if (ex.toString().contains("PK")) {
-                JOptionPane.showMessageDialog(this, "This Person has already existed.");
+                JOptionPane.showMessageDialog(this, "Người này đã tồn tại trong hệ thống.");
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -452,25 +452,25 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
             if(txtName.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Name is Blank.");
+                JOptionPane.showMessageDialog(this, "Thiếu tên.");
                 return;
             } else if (txtAddress.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Address is Blank.");
+                JOptionPane.showMessageDialog(this, "Thiếu địa chỉ.");
                 return;
             } else if (txtPhone.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Phone is Blank.");
+                JOptionPane.showMessageDialog(this, "Thiếu SĐT.");
                 return;
             } else if (txtEmail.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Email is Blank.");
+                JOptionPane.showMessageDialog(this, "Thiếu Email.");
                 return;
             } else if (date.getYear() - jDateChooser1.getDate().getYear() < 10 ) {
-                JOptionPane.showMessageDialog(this, "Not old enough.");
+                JOptionPane.showMessageDialog(this, "Không đủ tuổi.");
                 return;
             } else if (!isValidEmail(txtEmail.getText())) {
-                JOptionPane.showMessageDialog(this, "Email is not valid.");
+                JOptionPane.showMessageDialog(this, "Sai cú pháp Email.");
                 return;
             } else if (!isValidPhone(txtPhone.getText())) {
-                JOptionPane.showMessageDialog(this, "Phone number is not valid.");
+                JOptionPane.showMessageDialog(this, "Sai cú pháp SĐT.");
                 return;
             }
             
@@ -492,34 +492,55 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             
             int check = ps.executeUpdate();
             if(check > 0) {
-                JOptionPane.showMessageDialog(this, "Updated Successfully.");
+                JOptionPane.showMessageDialog(this, "Cập nhật thành công.");
                 tbn.setRowCount(0);
                 loadData();
             }
         } catch (Exception ex) {
             System.out.println(ex.toString());
             if(ex.toString().contains("UQ1")) {
-                JOptionPane.showMessageDialog(this, "This Email has already existed.");
+                JOptionPane.showMessageDialog(this, "Email này đã tồn tại trong hệ thống.");
             } else if (ex.toString().contains("UQ0")) {
-                JOptionPane.showMessageDialog(this, "This PhoneNumber has already existed.");
+                JOptionPane.showMessageDialog(this, "SĐT này đã tồn tại trong hệ thống.");
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if(txtName.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Thiếu tên.");
+            return;
+        } else if (txtAddress.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Thiếu địa chỉ.");
+            return;
+        } else if (txtPhone.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Thiếu SĐT.");
+            return;
+        } else if (txtEmail.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Thiếu Email.");
+            return;
+        }
+        
         try {
             Connect a = new Connect();
             Connection con = a.getConnectDB();
-            PreparedStatement ps = con.prepareStatement("delete from sales.customers where customer_id = ?");
-            ps.setString(1, jTable1.getValueAt(jTable1.getSelectedRow(), 0) + "");
             
-            int check = ps.executeUpdate();
-            if(check > 0) {
-                JOptionPane.showMessageDialog(this, "Deleted Successfully.");
-                tbn.setRowCount(0);
-                loadData();
+            if(isDeleteAble(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0) + ""))) {
+                PreparedStatement ps = con.prepareStatement("delete from sales.customers where customer_id = ?");
+                ps.setString(1, jTable1.getValueAt(jTable1.getSelectedRow(), 0) + "");
+
+                int check = ps.executeUpdate();
+                if(check > 0) {
+                    JOptionPane.showMessageDialog(this, "Xóa thành công.");
+                    tbn.setRowCount(0);
+                    loadData();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Xóa thất bại.");
+                    return;
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "Deleted Failed Successfully.");
+                JOptionPane.showMessageDialog(this, "Không thể xóa.");
+                return;
             }
         } catch (Exception ex) {
             System.out.println(ex.toString());
@@ -545,22 +566,22 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                 ps = con.prepareStatement(str + "customer_id like ?");
                 ps.setString(1, txtSearch.getText());
                 rs = ps.executeQuery();
-            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Name")) {
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Tên")) {
                 ps = con.prepareStatement(str + "name like ?");
                 ps.setString(1, txtSearch.getText());
                 rs = ps.executeQuery();
-            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Address")) {
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Địa Chỉ")) {
                 ps = con.prepareStatement(str + "address like ?");
                 ps.setString(1, txtSearch.getText());
                 rs = ps.executeQuery();
-            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Phone")) {
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("SĐT")) {
                 ps = con.prepareStatement(str + "phone like ?");
                 ps.setString(1, txtSearch.getText());
             } else if (jComboBoxSearch.getSelectedItem().toString().equals("Email")) {
                 ps = con.prepareStatement(str + "email like ?");
                 ps.setString(1, txtSearch.getText());
                 rs = ps.executeQuery();
-            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Birthday")) {
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Ngày Sinh")) {
                 ps = con.prepareStatement(str + "birthday = ?");
                 ps.setString(1, txtSearch.getText());
                 rs = ps.executeQuery();
@@ -584,7 +605,7 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                 jTable1.setModel(tbn);
             }
             
-            if(tbn.getRowCount() == 0) JOptionPane.showMessageDialog(this, "You searched for nothing.");
+            if(tbn.getRowCount() == 0) JOptionPane.showMessageDialog(this, "Không tìm thấy.");
         } catch (Exception ex) {
             System.out.println(ex.toString());
         }
@@ -618,17 +639,17 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                 str1 = "%" + txtSearch.getText() + "%";
                 ps.setString(1, str1);
                 rs = ps.executeQuery();
-            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Name")) {
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Tên")) {
                 ps = con.prepareStatement(str + "name like ?");
                 str1 = "%" + txtSearch.getText() + "%";
                 ps.setString(1, str1);
                 rs = ps.executeQuery();
-            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Address")) {
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Địa Chỉ")) {
                 ps = con.prepareStatement(str + "address like ?");
                 str1 = "%" + txtSearch.getText() + "%";
                 ps.setString(1, str1);
                 rs = ps.executeQuery();
-            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Phone")) {
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("SĐT")) {
                 ps = con.prepareStatement(str + "phone like ?");
                 str1 = "%" + txtSearch.getText() + "%";
                 ps.setString(1, str1);
@@ -638,7 +659,7 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                 str1 = "%" + txtSearch.getText() + "%";
                 ps.setString(1, str1);
                 rs = ps.executeQuery();
-            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Birthday")) {
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Ngày Sinh")) {
                 ps = con.prepareStatement(str + "birthday = ?");
                 ps.setString(1, txtSearch.getText());
                 rs = ps.executeQuery();
