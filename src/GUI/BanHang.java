@@ -245,12 +245,12 @@ public class BanHang extends javax.swing.JPanel {
             else {
                 do { 
                     Slots.add(rs.getInt(1));
-                    for(int i = 0; missingSlot < Slots.size(); i++, missingSlot++){
-                        if(missingSlot != Slots.get(i)){
-                            return missingSlot - 1;
-                        }
-                    }
                 }while(rs.next());
+                for(int i = 0; missingSlot < Slots.size(); i++, missingSlot++){
+                    if(missingSlot != Slots.get(i)){
+                        return missingSlot - 1;
+                    }
+                }
             }
         }catch(Exception ex){
             System.out.println(ex.toString());
