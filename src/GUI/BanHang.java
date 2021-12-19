@@ -1291,6 +1291,14 @@ public class BanHang extends javax.swing.JPanel {
                 totalBillPrice = Float.parseFloat(rs2.getString(1));
                 
                 billID = txtBillID.getText();
+                
+                PreparedStatement ps3 = con.prepareStatement("select sales.staffs.name from sales.orders "
+                        + "inner join sales.staffs on sales.staffs.staff_id = sales.orders.staff_id "
+                        + "where order_id = ?;");
+                ps3.setString(1, txtBillID.getText());
+                ResultSet rs3 = ps3.executeQuery();
+                rs3.next();
+                txtStaff.setText(rs3.getString(1));
             } catch(Exception ex) {
                 System.out.println(ex.toString());
             }
