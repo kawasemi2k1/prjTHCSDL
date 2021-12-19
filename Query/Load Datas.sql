@@ -35,16 +35,10 @@ SET IDENTITY_INSERT sales.staffs Off;
 --4. orders
 SET IDENTITY_INSERT sales.orders ON;
 -- insert cho sales.orders
-select * from sales.orders
-delete from sales.orders where order_id = 1;
 SET IDENTITY_INSERT sales.orders Off;
-
 
 --5. order_item
 -- insert cho sales.order_items 
-select * from sales.order_items
-
-
 
 --6. stocks
 insert into sales.stocks values
