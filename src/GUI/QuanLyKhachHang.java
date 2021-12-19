@@ -94,6 +94,32 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         }
     }
     
+    private boolean isDeleteAble(int ID) {
+        ArrayList<Integer> Slots = new ArrayList<Integer>();
+        try{
+            Connect a = new Connect();
+            Connection con = a.getConnectDB();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("Select sales.customers.customer_id from sales.customers "
+                    + "left join sales.orders on sales.orders.customer_id = sales.customers.customer_id "
+                    + "where order_id is null;");
+            if(rs.next() == false) return false;
+            else {
+                do { 
+                    Slots.add(rs.getInt(1));
+                }while(rs.next());
+                for(int i = 0; i < Slots.size(); i++){
+                    if(ID == Slots.get(i)){
+                        return true;
+                    }
+                }
+            }
+        }catch(Exception ex){
+            System.out.println(ex.toString());
+        }
+        return false;
+    }
+    
     private boolean isValidEmail(String email)
     {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
