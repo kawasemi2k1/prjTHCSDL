@@ -31,7 +31,6 @@ import java.util.regex.Pattern;
  */
 public class QuanLyKhachHang extends javax.swing.JPanel {
     DefaultTableModel tbn = new DefaultTableModel();
-    static int seed = 1000000000;
     Date date = new Date();
     
     /**
@@ -125,17 +124,22 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             Connect a = new Connect();
             Connection con = a.getConnectDB();
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("Select customer_id from sales.customers order by customer_id");
-            while(rs.next()) Slots.add(rs.getInt(1));
-            for(int i = 0; missingSlot < Slots.size(); i++, missingSlot++){
-                if (missingSlot != Slots.get(i)){
-                    return missingSlot - 1;
+            ResultSet rs = st.executeQuery("Select customer_id from sales.customers order by customer_id;");
+            if(rs.next() == false) return 0;
+            else {
+                do { 
+                    Slots.add(rs.getInt(1));
+                }while(rs.next());
+                for(int i = 0; i < Slots.size(); i++, missingSlot++){
+                    if(missingSlot != Slots.get(i)){
+                        return missingSlot - 1;
+                    }
                 }
             }
         }catch(Exception ex){
             System.out.println(ex.toString());
         }
-        return missingSlot;
+        return missingSlot - 1;
     }
     
     /**

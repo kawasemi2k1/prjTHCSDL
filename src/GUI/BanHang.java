@@ -246,7 +246,7 @@ public class BanHang extends javax.swing.JPanel {
                 do { 
                     Slots.add(rs.getInt(1));
                 }while(rs.next());
-                for(int i = 0; missingSlot < Slots.size(); i++, missingSlot++){
+                for(int i = 0; i < Slots.size(); i++, missingSlot++){
                     if(missingSlot != Slots.get(i)){
                         return missingSlot - 1;
                     }
@@ -255,7 +255,7 @@ public class BanHang extends javax.swing.JPanel {
         }catch(Exception ex){
             System.out.println(ex.toString());
         }
-        return missingSlot;
+        return missingSlot - 1;
     }
 
     /**
