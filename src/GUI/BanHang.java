@@ -1041,8 +1041,8 @@ public class BanHang extends javax.swing.JPanel {
                     + "good_till = ? and "
                     + "store_id = ?;");
             ps.setString(1, jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 0) + "");
-            ps.setString(2, jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 3) + "");
-            ps.setString(3, jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 4) + "");
+            ps.setString(2, jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 2) + "");
+            ps.setString(3, jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 3) + "");
             ps.setString(4, String.valueOf(store));
             ResultSet rs = ps.executeQuery();
             
