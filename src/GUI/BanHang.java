@@ -873,8 +873,11 @@ public class BanHang extends javax.swing.JPanel {
         txtQuantity.setText("");
         txtSearchCustomer.setText("");
         txtSearchProduct.setText("");
+        txtTotalBillPrice.setText("");
         loadDataCustomer();
         loadDataProduct();
+        loadDataBill();
+        totalBillPrice = 0;
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txtSearchCustomerKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchCustomerKeyReleased
