@@ -1097,109 +1097,283 @@ public class BanHang extends javax.swing.JPanel {
         row.add(String.valueOf(quantity));
         row.add(String.valueOf(totalDiscount));
         row.add(String.valueOf(totalSinglePrice));
+        row.add("Mới");
         tbnBill.addRow(row);
         jTableBill.setModel(tbnBill);
         
         totalBillPrice += totalSinglePrice;
+        txtTotalBillPrice.setText(String.valueOf(totalBillPrice));
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        float removedItem = Float.parseFloat(jTableBill.getValueAt(jTableBill.getSelectedRow(), 7) + "");
+        totalBillPrice -= removedItem;
+        txtTotalBillPrice.setText(String.valueOf(totalBillPrice));
+        
         tbnBill.removeRow(jTableBill.getSelectedRow());
         jTableBill.setModel(tbnBill);
-    }//GEN-LAST:event_jButton8ActionPerformed
-
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        try {
-            Connect a = new Connect();
-            Connection con = a.getConnectDB();
-            
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
+        if(jTableBill.getRowCount() == 0) {
+           txtTotalBillPrice.setText("");
         }
-    }//GEN-LAST:event_jButton9ActionPerformed
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         tbnBill.setRowCount(0);
         jTableBill.setModel(tbnBill);
+        txtTotalBillPrice.setText("");
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        int seed = 0;
-        if(txtCustomerName.getText().equals("")){
-            int result = JOptionPane.showConfirmDialog(this ,"Chưa rõ khách hàng.\nBạn có muốn tiếp tục?", "Làm ơn xác nhận",
-               JOptionPane.YES_NO_OPTION,
-               JOptionPane.QUESTION_MESSAGE);
-            if(result == JOptionPane.YES_OPTION){
-               customerID = "1";
-            }else if (result == JOptionPane.NO_OPTION){
-               return;
-            }else {
-               return;
+        int result1 = JOptionPane.showConfirmDialog(this ,"Xác nhận để tiếp tục.", "Làm ơn xác nhận",
+           JOptionPane.YES_NO_OPTION,
+           JOptionPane.QUESTION_MESSAGE);
+        if(result1 == JOptionPane.YES_OPTION){
+            int seed = 0;
+            if(txtCustomerName.getText().equals("")){
+                int result = JOptionPane.showConfirmDialog(this ,"Chưa rõ khách hàng.\nBạn có muốn tiếp tục?", "Làm ơn xác nhận",
+                   JOptionPane.YES_NO_OPTION,
+                   JOptionPane.QUESTION_MESSAGE);
+                if(result == JOptionPane.YES_OPTION){
+                   customerID = "1";
+                }else if (result == JOptionPane.NO_OPTION){
+                   return;
+                }else {
+                   return;
+                }
             }
-        }
-        
-        try {
-            Connect a = new Connect();
-            Connection con = a.getConnectDB();
-            
-            if(SlotToInsert() >= 0){
-                seed = SlotToInsert();
-                System.out.println("Seed: " + seed);
-                PreparedStatement ps1 = con.prepareStatement("DBCC CHECKIDENT ('sales.orders', RESEED, ?);");
-                ps1.setInt(1, seed);
-                ps1.execute();
+
+            try {
+                Connect a = new Connect();
+                Connection con = a.getConnectDB();
+
+                if(SlotToInsert() >= 0){
+                    seed = SlotToInsert();
+                    System.out.println("Seed: " + seed);
+                    PreparedStatement ps1 = con.prepareStatement("DBCC CHECKIDENT ('sales.orders', RESEED, ?);");
+                    ps1.setInt(1, seed);
+                    ps1.execute();
+                }
+
+                if(!txtCustomerName.getText().equals("")) {
+                    PreparedStatement ps = con.prepareStatement("select customer_id from sales.customers "
+                            + "where "
+                            + "phone like ? and "
+                            + "email like ? ;");
+                    ps.setString(1, customerPhone);
+                    ps.setString(2, customerEmail);
+                    ResultSet rs = ps.executeQuery();
+                    rs.next();
+                    customerID = rs.getString(1);
+                }
+
+                PreparedStatement ps1 = con.prepareStatement("insert into sales.orders values (?, ?, ?, ?);");
+                ps1.setString(1, customerID);
+                ps1.setString(2, String.valueOf(staff));
+                ps1.setObject(3, new Date());
+                ps1.setString(4, String.valueOf(totalBillPrice));
+                int update = ps1.executeUpdate();
+
+                int update1 = 0, update2  = 0;
+                PreparedStatement ps2 = con.prepareStatement("insert into sales.order_items values (?, ?, ?, ?, ?, ?, ?, ?);");
+                for(int i=0; i < jTableBill.getRowCount(); i++) {
+                    ps2.setString(1, String.valueOf(seed + 1));
+                    ps2.setString(2, jTableBill.getValueAt(i, 0) + "");
+                    System.out.println(jTableBill.getValueAt(i, 2) + "");
+                    System.out.println(jTableBill.getValueAt(i, 3) + "");
+                    ps2.setString(3, jTableBill.getValueAt(i, 2) + "");
+                    ps2.setString(4, jTableBill.getValueAt(i, 3) + "");
+                    ps2.setString(5, String.valueOf(store));
+                    ps2.setString(6, jTableBill.getValueAt(i, 5) + "");
+                    ps2.setString(7, jTableBill.getValueAt(i, 7) + "");
+                    ps2.setString(8, jTableBill.getValueAt(i, 6) + "");
+                    update1 = ps2.executeUpdate();
+
+
+                    PreparedStatement ps3 = con.prepareStatement("update sales.stocks set quantity = quantity - ? "
+                            + "where product_id = ? "
+                            + "and created_at = ? "
+                            + "and good_till = ? "
+                            + "and store_id = ?;");
+                    ps3.setInt(1, Integer.parseInt(jTableBill.getValueAt(i, 5) + ""));
+                    ps3.setString(2, jTableBill.getValueAt(i, 0) + "");
+                    ps3.setString(3, jTableBill.getValueAt(i, 2) + "");
+                    ps3.setString(4, jTableBill.getValueAt(i, 3) + "");
+                    ps3.setString(5, String.valueOf(store));
+                    update2 = ps3.executeUpdate();
+                }
+                tbnProduct.setRowCount(0);
+                jTableProduct.setModel(tbnProduct);
+                loadDataProduct();
+
+                if(update > 0 && update1 > 0 && update2 > 0) {
+                    JOptionPane.showMessageDialog(this, "Chốt đơn thành công");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Chốt đơn không thành công");
+                }
+            } catch (Exception ex) {
+                System.out.println(ex.toString());
             }
-            
-            if(!txtCustomerName.getText().equals("")) {
-                PreparedStatement ps = con.prepareStatement("select customer_id from sales.customers "
-                        + "where "
-                        + "phone like ? and "
-                        + "email like ? ;");
-                ps.setString(1, customerPhone);
-                ps.setString(2, customerEmail);
-                ResultSet rs = ps.executeQuery();
-                rs.next();
-                customerID = rs.getString(1);
-            }
-            
-            PreparedStatement ps1 = con.prepareStatement("insert into sales.orders values (?, ?, ?, ?);");
-            ps1.setString(1, customerID);
-            ps1.setString(2, String.valueOf(staff));
-            ps1.setObject(3, new Date());
-            ps1.setString(4, String.valueOf(totalBillPrice));
-            int update = ps1.executeUpdate();
-            
-            int update1 = 0;
-            PreparedStatement ps2 = con.prepareStatement("insert into sales.order_items values (?, ?, ?, ?, ?, ?, ?, ?);");
-            for(int i=0; i < jTableBill.getRowCount(); i++) {
-                ps2.setString(1, String.valueOf(seed + 1));
-                ps2.setString(2, jTableBill.getValueAt(i, 0) + "");
-                System.out.println(jTableBill.getValueAt(i, 2) + "");
-                System.out.println(jTableBill.getValueAt(i, 3) + "");
-                ps2.setString(3, jTableBill.getValueAt(i, 2) + "");
-                ps2.setString(4, jTableBill.getValueAt(i, 3) + "");
-                ps2.setString(5, String.valueOf(store));
-                ps2.setString(6, jTableBill.getValueAt(i, 5) + "");
-                ps2.setString(7, jTableBill.getValueAt(i, 7) + "");
-                ps2.setString(8, jTableBill.getValueAt(i, 6) + "");
-                update1 = ps2.executeUpdate();
-            }
-            
-            if(update > 0 && update1 > 0) {
-                JOptionPane.showMessageDialog(this, "Chốt đơn thành công");
-            } else {
-                JOptionPane.showMessageDialog(this, "Chốt đơn không thành công");
-            }
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
+        }else if (result1 == JOptionPane.NO_OPTION){
+           return;
+        }else {
+           return;
         }
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        if(txtBillID.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Không có từ khóa.");
+            return;
+        } else {
+            tbnBill.setRowCount(0);
+            jTableBill.setModel(tbnBill);
+            jButton9.setEnabled(true);
+            try {
+                Connect a = new Connect();
+                Connection con = a.getConnectDB();
+                PreparedStatement ps = con.prepareStatement("select distinct "
+                        + "sales.order_items.product_id, "
+                        + "production.products.product_name, "
+                        + "sales.order_items.created_at, "
+                        + "sales.order_items.good_till, "
+                        + "sales.stocks.price, "
+                        + "sales.order_items.quantity, "
+                        + "sales.order_items.discount, "
+                        + "sales.order_items.price "
+                        + "from sales.orders "
+                        + "inner join sales.order_items on sales.orders.order_id = sales.order_items.order_id "
+                        + "inner join sales.stocks on sales.order_items.product_id = sales.stocks.product_id "
+                            + "and sales.order_items.created_at = sales.stocks.created_at "
+                            + "and sales.order_items.good_till = sales.stocks.good_till "
+                        + "inner join production.products on production.products.product_id = sales.stocks.product_id "
+                        + "where sales.orders.order_id = ?;");
+                ps.setString(1, txtBillID.getText());
+                ResultSet rs = ps.executeQuery();
+                ResultSetMetaData metadata = rs.getMetaData();
+                int number = metadata.getColumnCount();
+                Vector row, column;
+                column = new Vector();
+                for(int i = 0; i < jTableBill.getColumnCount(); i++){
+                    column.add(jTableBill.getColumnName(i));
+                }
+                tbnBill.setColumnIdentifiers(column);
+                while(rs.next()){
+                    row = new Vector();
+                    for(int i = 1; i <= number; i++){
+                        row.addElement(rs.getString(i));
+                    }
+                    row.add("Cũ");
+                    tbnBill.addRow(row);
+                    jTableBill.setModel(tbnBill);
+                }
+                if(jTableBill.getRowCount() == 0) {
+                    txtTotalBillPrice.setText("");
+                    txtCustomerName.setText("");
+                    totalBillPrice = 0;
+                    JOptionPane.showMessageDialog(this, "Không tìm thấy.");
+                    return;
+                }
+                
+                PreparedStatement ps1 = con.prepareStatement("select name from sales.orders "
+                        + "inner join sales.customers on sales.orders.customer_id = sales.customers.customer_id "
+                        + "where sales.orders.order_id = ?;");
+                ps1.setString(1, txtBillID.getText());
+                ResultSet rs1 = ps1.executeQuery();
+                rs1.next();
+                txtCustomerName.setText(rs1.getString(1));
+                
+                PreparedStatement ps2 = con.prepareStatement("select price from sales.orders "
+                        + "where order_id = ?;");
+                ps2.setString(1, txtBillID.getText());
+                ResultSet rs2 = ps2.executeQuery();
+                rs2.next();
+                txtTotalBillPrice.setText(rs2.getString(1));
+                totalBillPrice = Float.parseFloat(rs2.getString(1));
+                
+                billID = txtBillID.getText();
+            } catch(Exception ex) {
+                System.out.println(ex.toString());
+            }
+        }
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        
+        int result = JOptionPane.showConfirmDialog(this ,"Xác nhận để tiếp tục.", "Làm ơn xác nhận",
+           JOptionPane.YES_NO_OPTION,
+           JOptionPane.QUESTION_MESSAGE);
+        if(result == JOptionPane.YES_OPTION){
+           try {
+                Connect a = new Connect();
+                Connection con = a.getConnectDB();
+                PreparedStatement ps = con.prepareStatement("delete from sales.order_items where order_id = ?;");
+                ps.setString(1, billID);
+                int update = ps.executeUpdate();
+                
+                int update1 = 0, update2  = 0;
+                PreparedStatement ps2 = con.prepareStatement("insert into sales.order_items values (?, ?, ?, ?, ?, ?, ?, ?);");
+                for(int i=0; i < jTableBill.getRowCount(); i++) {
+                    ps2.setString(1, billID);
+                    ps2.setString(2, jTableBill.getValueAt(i, 0) + "");
+                    System.out.println(jTableBill.getValueAt(i, 2) + "");
+                    System.out.println(jTableBill.getValueAt(i, 3) + "");
+                    ps2.setString(3, jTableBill.getValueAt(i, 2) + "");
+                    ps2.setString(4, jTableBill.getValueAt(i, 3) + "");
+                    ps2.setString(5, String.valueOf(store));
+                    ps2.setString(6, jTableBill.getValueAt(i, 5) + "");
+                    ps2.setString(7, jTableBill.getValueAt(i, 7) + "");
+                    ps2.setString(8, jTableBill.getValueAt(i, 6) + "");
+                    update1 = ps2.executeUpdate();
+
+                    if(jTableBill.getValueAt(i, 8).toString().equals("Mới")) {
+                        PreparedStatement ps3 = con.prepareStatement("update sales.stocks set quantity = quantity - ? "
+                                + "where product_id = ? "
+                                + "and created_at = ? "
+                                + "and good_till = ? "
+                                + "and store_id = ?;");
+                        ps3.setInt(1, Integer.parseInt(jTableBill.getValueAt(i, 5) + ""));
+                        ps3.setString(2, jTableBill.getValueAt(i, 0) + "");
+                        ps3.setString(3, jTableBill.getValueAt(i, 2) + "");
+                        ps3.setString(4, jTableBill.getValueAt(i, 3) + "");
+                        ps3.setString(5, String.valueOf(store));
+                        update2 = ps3.executeUpdate();
+                    }
+                }
+                tbnProduct.setRowCount(0);
+                jTableProduct.setModel(tbnProduct);
+                loadDataProduct();
+                
+                if(update > 0 && update1 > 0) {
+                    JOptionPane.showMessageDialog(this, "Cập nhật đơn thành công");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Cập nhật đơn không thành công");
+                }
+           } catch (Exception ex) {
+               System.out.println(ex.toString());
+           }
+        }else if (result == JOptionPane.NO_OPTION){
+           return;
+        }else {
+           return;
+        }
+        
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        tbnBill.setRowCount(0);
+        jTableBill.setModel(tbnBill);
+        loadDataBill();
+        txtCustomerName.setText("");
+        txtTotalBillPrice.setText("");
+        txtBillID.setText("");
+    }//GEN-LAST:event_jButton13ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
