@@ -186,6 +186,23 @@ public class BanHang extends javax.swing.JPanel {
                 public void valueChanged(ListSelectionEvent lse) {
                     if (jTableBill.getSelectedRow() >= 0) {
                         jButton8.setEnabled(true);
+                    } else {
+                        jButton8.setEnabled(false);
+                    }
+                }
+            }
+        );
+        jTableBill.getModel().addTableModelListener(new TableModelListener() {
+                @Override
+                public void tableChanged(TableModelEvent e) {
+                    if(jTableBill.getRowCount() > 0) {
+                        jButton7.setEnabled(true);
+                        jButton9.setEnabled(true);
+                        jButton6.setEnabled(true);
+                    } else {
+                        jButton7.setEnabled(false);
+                        jButton9.setEnabled(false);
+                        jButton6.setEnabled(false);
                     }
                 }
             }
@@ -1054,9 +1071,6 @@ public class BanHang extends javax.swing.JPanel {
         } catch (Exception ex) {
             System.out.println(ex.toString());
         }
-        
-        jButton7.setEnabled(true);
-        jButton9.setEnabled(true);
         
         String productName = jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 1) + "";
         double singlePrice = Double.parseDouble(jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 8) + "");
