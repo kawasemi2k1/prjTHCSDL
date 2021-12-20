@@ -46,22 +46,19 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         try{
             Connect a = new Connect();
             Connection con = a.getConnectDB();
-            int number;
             Vector row, column;
             column = new Vector();
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("Select * from sales.customers where customer_id ! = 1;");
-            ResultSetMetaData metadata = rs.getMetaData();
-            number = metadata.getColumnCount();
             
-            for(int i = 1; i <= number; i++){
-                column.add(metadata.getColumnName(i));
+            for(int i = 0; i < jTable1.getColumnCount(); i++){
+                column.add(jTable1.getColumnName(i));
             }
             tbn.setColumnIdentifiers(column);
             
             while(rs.next()){
                 row = new Vector();
-                for(int i = 1; i <= number; i++){
+                for(int i = 1; i <= jTable1.getColumnCount(); i++){
                     row.addElement(rs.getString(i));
                 }
                 tbn.addRow(row);
@@ -553,7 +550,6 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             Connection con = a.getConnectDB();
             String str = "Select * from sales.customers where ";
             PreparedStatement ps = null;
-            int number;
             Vector row, column;
             column = new Vector();
             ResultSet rs = null;
@@ -588,17 +584,15 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             } 
             
             tbn.setRowCount(0);
-            ResultSetMetaData metadata = rs.getMetaData();
-            number = metadata.getColumnCount();
             
-            for(int i = 1; i <= number; i++){
-                column.add(metadata.getColumnName(i));
+            for(int i = 0; i < jTable1.getColumnCount(); i++){
+                column.add(jTable1.getColumnName(i));
             }
             tbn.setColumnIdentifiers(column);
             
             while(rs.next()){
                 row = new Vector();
-                for(int i = 1; i <= number; i++){
+                for(int i = 1; i <= jTable1.getColumnCount(); i++){
                     row.addElement(rs.getString(i));
                 }
                 tbn.addRow(row);
@@ -629,7 +623,6 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             Connection con = a.getConnectDB();
             String str = "Select * from sales.customers where ";
             PreparedStatement ps = null;
-            int number;
             Vector row, column;
             column = new Vector();
             ResultSet rs = null;
@@ -666,17 +659,15 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             } 
             
             tbn.setRowCount(0);
-            ResultSetMetaData metadata = rs.getMetaData();
-            number = metadata.getColumnCount();
             
-            for(int i = 1; i <= number; i++){
-                column.add(metadata.getColumnName(i));
+            for(int i = 0; i < jTable1.getColumnCount(); i++){
+                column.add(jTable1.getColumnName(i));
             }
             tbn.setColumnIdentifiers(column);
             
             while(rs.next()){
                 row = new Vector();
-                for(int i = 1; i <= number; i++){
+                for(int i = 1; i <= jTable1.getColumnCount(); i++){
                     row.addElement(rs.getString(i));
                 }
                 tbn.addRow(row);
