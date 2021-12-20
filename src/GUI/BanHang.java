@@ -98,7 +98,7 @@ public class BanHang extends javax.swing.JPanel {
                 public void valueChanged(ListSelectionEvent lse) {
                     if (jTableCustomer.getSelectedRow() >= 0) {
                         jButton11.setEnabled(true);
-
+                        txtCustomer.setText(jTableCustomer.getValueAt(jTableCustomer.getSelectedRow(), 1) + "");
                     }
                 }
             }
@@ -150,6 +150,7 @@ public class BanHang extends javax.swing.JPanel {
                 public void valueChanged(ListSelectionEvent lse) {
                     if (jTableProduct.getSelectedRow() >= 0) {
                         jButton5.setEnabled(true);
+                        txtProduct.setText(jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 1) + "");
                     }
                 }
             }
