@@ -31,7 +31,6 @@ import java.util.regex.Pattern;
  */
 public class QuanLyKhachHang extends javax.swing.JPanel {
     DefaultTableModel tbn = new DefaultTableModel();
-    static int seed = 1000000000;
     Date date = new Date();
     
     /**
@@ -47,22 +46,19 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         try{
             Connect a = new Connect();
             Connection con = a.getConnectDB();
-            int number;
             Vector row, column;
             column = new Vector();
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("Select * from sales.customers");
-            ResultSetMetaData metadata = rs.getMetaData();
-            number = metadata.getColumnCount();
+            ResultSet rs = st.executeQuery("Select * from vRealCustomer;");
             
-            for(int i = 1; i <= number; i++){
-                column.add(metadata.getColumnName(i));
+            for(int i = 0; i < jTable1.getColumnCount(); i++){
+                column.add(jTable1.getColumnName(i));
             }
             tbn.setColumnIdentifiers(column);
             
             while(rs.next()){
                 row = new Vector();
-                for(int i = 1; i <= number; i++){
+                for(int i = 1; i <= jTable1.getColumnCount(); i++){
                     row.addElement(rs.getString(i));
                 }
                 tbn.addRow(row);
@@ -95,6 +91,32 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         }
     }
     
+    private boolean isDeleteAble(int ID) {
+        ArrayList<Integer> Slots = new ArrayList<Integer>();
+        try{
+            Connect a = new Connect();
+            Connection con = a.getConnectDB();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("Select sales.customers.customer_id from sales.customers "
+                    + "left join sales.orders on sales.orders.customer_id = sales.customers.customer_id "
+                    + "where order_id is null;");
+            if(rs.next() == false) return false;
+            else {
+                do { 
+                    Slots.add(rs.getInt(1));
+                }while(rs.next());
+                for(int i = 0; i < Slots.size(); i++){
+                    if(ID == Slots.get(i)){
+                        return true;
+                    }
+                }
+            }
+        }catch(Exception ex){
+            System.out.println(ex.toString());
+        }
+        return false;
+    }
+    
     private boolean isValidEmail(String email)
     {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
@@ -125,17 +147,22 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             Connect a = new Connect();
             Connection con = a.getConnectDB();
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("Select customer_id from sales.customers order by customer_id");
-            while(rs.next()) Slots.add(rs.getInt(1));
-            for(int i = 0; missingSlot < Slots.size(); i++, missingSlot++){
-                if (missingSlot != Slots.get(i)){
-                    return missingSlot - 1;
+            ResultSet rs = st.executeQuery("Select customer_id from sales.customers order by customer_id;");
+            if(rs.next() == false) return 0;
+            else {
+                do { 
+                    Slots.add(rs.getInt(1));
+                }while(rs.next());
+                for(int i = 0; i < Slots.size(); i++, missingSlot++){
+                    if(missingSlot != Slots.get(i)){
+                        return missingSlot - 1;
+                    }
                 }
             }
         }catch(Exception ex){
             System.out.println(ex.toString());
         }
-        return missingSlot;
+        return missingSlot - 1;
     }
     
     /**
@@ -179,53 +206,54 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
-                "ID", "Name", "Birthday", "Address", "Phone", "Email"
+                "ID", "Tên", "Ngày Sinh", "Địa Chỉ", "SĐT", "Email"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel2.setText("Name");
+        jLabel2.setText("Tên");
 
-        jLabel3.setText("Birthday");
+        jLabel3.setText("Ngày sinh");
 
-        jLabel4.setText("Address");
+        jLabel4.setText("Địa chỉ");
 
-        jLabel5.setText("Phone");
+        jLabel5.setText("SĐT");
 
         jLabel6.setText("Email");
 
-        jButton1.setText("Add");
+        jButton1.setText("Thêm");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Update");
+        jButton2.setText("Cập Nhật");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Delete");
+        jButton3.setText("Xóa");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Search");
+        jButton4.setText("Tìm kiếm");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -238,21 +266,21 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             }
         });
 
-        jComboBoxSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Name", "Birthday", "Address", "Phone", "Email", " " }));
+        jComboBoxSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Tên", "Ngày Sinh", "Địa Chỉ", "SĐT", "Email", " " }));
 
         txtID.setEditable(false);
         txtID.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel7.setText("ID");
 
-        jButton5.setText("Refresh");
+        jButton5.setText("Làm mới");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
             }
         });
 
-        jButton6.setText("Exit");
+        jButton6.setText("Thoát");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -265,7 +293,7 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
@@ -274,37 +302,34 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(jLabel7))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtID)
-                            .addComponent(txtAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE))))
-                .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtAddress, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(jLabel5)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton4)
                         .addGap(18, 18, 18)
+                        .addComponent(jComboBoxSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(23, 23, 23)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton4)
-                                .addGap(18, 18, 18)
-                                .addComponent(jComboBoxSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(209, 209, 209))
+                    .addComponent(txtSearch))
+                .addGap(215, 215, 215))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -362,31 +387,32 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             if(txtName.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Name is Blank.");
+                JOptionPane.showMessageDialog(this, "Thiếu tên.");
                 return;
             } else if (txtAddress.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Address is Blank.");
+                JOptionPane.showMessageDialog(this, "Thiếu địa chỉ.");
                 return;
             } else if (txtPhone.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Phone is Blank.");
+                JOptionPane.showMessageDialog(this, "Thiếu SĐT.");
                 return;
             } else if (txtEmail.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Email is Blank.");
+                JOptionPane.showMessageDialog(this, "Thiếu Email.");
                 return;
             } else if (date.getYear() - jDateChooser1.getDate().getYear() < 10 ) {
-                JOptionPane.showMessageDialog(this, "Not old enough.");
+                JOptionPane.showMessageDialog(this, "Không đủ tuổi.");
                 return;
             } else if (!isValidEmail(txtEmail.getText())) {
-                JOptionPane.showMessageDialog(this, "Email is not valid.");
+                JOptionPane.showMessageDialog(this, "Sai cú pháp Email.");
                 return;
             } else if (!isValidPhone(txtPhone.getText())) {
-                JOptionPane.showMessageDialog(this, "Phone number is not valid.");
+                JOptionPane.showMessageDialog(this, "Sai cú pháp SĐT.");
                 return;
             }
             
             Connect a = new Connect();
             Connection con = a.getConnectDB();
             
+            int seed;
             if(SlotToInsert() >= 0){
                 seed = SlotToInsert();
                 System.out.println("Seed: " + seed);
@@ -403,20 +429,19 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             ps.setString(5, txtEmail.getText());
             
             int check = ps.executeUpdate();
-            seed++;
             if(check > 0) {
-                JOptionPane.showMessageDialog(this, "Added Successfully.");
+                JOptionPane.showMessageDialog(this, "Thêm thành công.");
                 tbn.setRowCount(0);
                 loadData();
             }
         } catch (Exception ex) {
             System.out.println(ex.toString());
             if(ex.toString().contains("UQ1")) {
-                JOptionPane.showMessageDialog(this, "This Email has already existed.");
+                JOptionPane.showMessageDialog(this, "Email này đã tồn tại trong hệ thống.");
             } else if (ex.toString().contains("UQ0")) {
-                JOptionPane.showMessageDialog(this, "This PhoneNumber has already existed.");
+                JOptionPane.showMessageDialog(this, "SĐT này đã tồn tại trong hệ thống.");
             } else if (ex.toString().contains("PK")) {
-                JOptionPane.showMessageDialog(this, "This Person has already existed.");
+                JOptionPane.showMessageDialog(this, "Người này đã tồn tại trong hệ thống.");
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -424,25 +449,25 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
             if(txtName.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Name is Blank.");
+                JOptionPane.showMessageDialog(this, "Thiếu tên.");
                 return;
             } else if (txtAddress.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Address is Blank.");
+                JOptionPane.showMessageDialog(this, "Thiếu địa chỉ.");
                 return;
             } else if (txtPhone.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Phone is Blank.");
+                JOptionPane.showMessageDialog(this, "Thiếu SĐT.");
                 return;
             } else if (txtEmail.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Email is Blank.");
+                JOptionPane.showMessageDialog(this, "Thiếu Email.");
                 return;
             } else if (date.getYear() - jDateChooser1.getDate().getYear() < 10 ) {
-                JOptionPane.showMessageDialog(this, "Not old enough.");
+                JOptionPane.showMessageDialog(this, "Không đủ tuổi.");
                 return;
             } else if (!isValidEmail(txtEmail.getText())) {
-                JOptionPane.showMessageDialog(this, "Email is not valid.");
+                JOptionPane.showMessageDialog(this, "Sai cú pháp Email.");
                 return;
             } else if (!isValidPhone(txtPhone.getText())) {
-                JOptionPane.showMessageDialog(this, "Phone number is not valid.");
+                JOptionPane.showMessageDialog(this, "Sai cú pháp SĐT.");
                 return;
             }
             
@@ -464,34 +489,55 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             
             int check = ps.executeUpdate();
             if(check > 0) {
-                JOptionPane.showMessageDialog(this, "Updated Successfully.");
+                JOptionPane.showMessageDialog(this, "Cập nhật thành công.");
                 tbn.setRowCount(0);
                 loadData();
             }
         } catch (Exception ex) {
             System.out.println(ex.toString());
             if(ex.toString().contains("UQ1")) {
-                JOptionPane.showMessageDialog(this, "This Email has already existed.");
+                JOptionPane.showMessageDialog(this, "Email này đã tồn tại trong hệ thống.");
             } else if (ex.toString().contains("UQ0")) {
-                JOptionPane.showMessageDialog(this, "This PhoneNumber has already existed.");
+                JOptionPane.showMessageDialog(this, "SĐT này đã tồn tại trong hệ thống.");
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if(txtName.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Thiếu tên.");
+            return;
+        } else if (txtAddress.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Thiếu địa chỉ.");
+            return;
+        } else if (txtPhone.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Thiếu SĐT.");
+            return;
+        } else if (txtEmail.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Thiếu Email.");
+            return;
+        }
+        
         try {
             Connect a = new Connect();
             Connection con = a.getConnectDB();
-            PreparedStatement ps = con.prepareStatement("delete from sales.customers where customer_id = ?");
-            ps.setString(1, jTable1.getValueAt(jTable1.getSelectedRow(), 0) + "");
             
-            int check = ps.executeUpdate();
-            if(check > 0) {
-                JOptionPane.showMessageDialog(this, "Deleted Successfully.");
-                tbn.setRowCount(0);
-                loadData();
+            if(isDeleteAble(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0) + ""))) {
+                PreparedStatement ps = con.prepareStatement("delete from sales.customers where customer_id = ?");
+                ps.setString(1, jTable1.getValueAt(jTable1.getSelectedRow(), 0) + "");
+
+                int check = ps.executeUpdate();
+                if(check > 0) {
+                    JOptionPane.showMessageDialog(this, "Xóa thành công.");
+                    tbn.setRowCount(0);
+                    loadData();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Xóa thất bại.");
+                    return;
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "Deleted Failed Successfully.");
+                JOptionPane.showMessageDialog(this, "Không thể xóa.");
+                return;
             }
         } catch (Exception ex) {
             System.out.println(ex.toString());
@@ -502,9 +548,8 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         try {
             Connect a = new Connect();
             Connection con = a.getConnectDB();
-            String str = "Select * from sales.customers where ";
+            String str = "Select * from vRealCustomer where ";
             PreparedStatement ps = null;
-            int number;
             Vector row, column;
             column = new Vector();
             ResultSet rs = null;
@@ -517,46 +562,44 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                 ps = con.prepareStatement(str + "customer_id like ?");
                 ps.setString(1, txtSearch.getText());
                 rs = ps.executeQuery();
-            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Name")) {
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Tên")) {
                 ps = con.prepareStatement(str + "name like ?");
                 ps.setString(1, txtSearch.getText());
                 rs = ps.executeQuery();
-            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Address")) {
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Địa Chỉ")) {
                 ps = con.prepareStatement(str + "address like ?");
                 ps.setString(1, txtSearch.getText());
                 rs = ps.executeQuery();
-            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Phone")) {
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("SĐT")) {
                 ps = con.prepareStatement(str + "phone like ?");
                 ps.setString(1, txtSearch.getText());
             } else if (jComboBoxSearch.getSelectedItem().toString().equals("Email")) {
                 ps = con.prepareStatement(str + "email like ?");
                 ps.setString(1, txtSearch.getText());
                 rs = ps.executeQuery();
-            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Birthday")) {
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Ngày Sinh")) {
                 ps = con.prepareStatement(str + "birthday = ?");
                 ps.setString(1, txtSearch.getText());
                 rs = ps.executeQuery();
             } 
             
             tbn.setRowCount(0);
-            ResultSetMetaData metadata = rs.getMetaData();
-            number = metadata.getColumnCount();
             
-            for(int i = 1; i <= number; i++){
-                column.add(metadata.getColumnName(i));
+            for(int i = 0; i < jTable1.getColumnCount(); i++){
+                column.add(jTable1.getColumnName(i));
             }
             tbn.setColumnIdentifiers(column);
             
             while(rs.next()){
                 row = new Vector();
-                for(int i = 1; i <= number; i++){
+                for(int i = 1; i <= jTable1.getColumnCount(); i++){
                     row.addElement(rs.getString(i));
                 }
                 tbn.addRow(row);
                 jTable1.setModel(tbn);
             }
             
-            if(tbn.getRowCount() == 0) JOptionPane.showMessageDialog(this, "You searched for nothing.");
+            if(tbn.getRowCount() == 0) JOptionPane.showMessageDialog(this, "Không tìm thấy.");
         } catch (Exception ex) {
             System.out.println(ex.toString());
         }
@@ -578,32 +621,28 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         try {
             Connect a = new Connect();
             Connection con = a.getConnectDB();
-            String str = "Select * from sales.customers where ";
+            String str = "Select * from vRealCustomer where ";
             PreparedStatement ps = null;
-            int number;
             Vector row, column;
             column = new Vector();
             ResultSet rs = null;
             String str1 = null;
-            if(txtSearch.getText().equals("")) {
-                loadData();
-                return;
-            } else if(jComboBoxSearch.getSelectedItem().toString().equals("ID")) {
+            if(jComboBoxSearch.getSelectedItem().toString().equals("ID")) {
                 ps = con.prepareStatement(str + "customer_id like ?");
                 str1 = "%" + txtSearch.getText() + "%";
                 ps.setString(1, str1);
                 rs = ps.executeQuery();
-            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Name")) {
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Tên")) {
                 ps = con.prepareStatement(str + "name like ?");
                 str1 = "%" + txtSearch.getText() + "%";
                 ps.setString(1, str1);
                 rs = ps.executeQuery();
-            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Address")) {
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Địa Chỉ")) {
                 ps = con.prepareStatement(str + "address like ?");
                 str1 = "%" + txtSearch.getText() + "%";
                 ps.setString(1, str1);
                 rs = ps.executeQuery();
-            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Phone")) {
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("SĐT")) {
                 ps = con.prepareStatement(str + "phone like ?");
                 str1 = "%" + txtSearch.getText() + "%";
                 ps.setString(1, str1);
@@ -613,24 +652,22 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                 str1 = "%" + txtSearch.getText() + "%";
                 ps.setString(1, str1);
                 rs = ps.executeQuery();
-            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Birthday")) {
+            } else if (jComboBoxSearch.getSelectedItem().toString().equals("Ngày Sinh")) {
                 ps = con.prepareStatement(str + "birthday = ?");
                 ps.setString(1, txtSearch.getText());
                 rs = ps.executeQuery();
             } 
             
             tbn.setRowCount(0);
-            ResultSetMetaData metadata = rs.getMetaData();
-            number = metadata.getColumnCount();
             
-            for(int i = 1; i <= number; i++){
-                column.add(metadata.getColumnName(i));
+            for(int i = 0; i < jTable1.getColumnCount(); i++){
+                column.add(jTable1.getColumnName(i));
             }
             tbn.setColumnIdentifiers(column);
             
             while(rs.next()){
                 row = new Vector();
-                for(int i = 1; i <= number; i++){
+                for(int i = 1; i <= jTable1.getColumnCount(); i++){
                     row.addElement(rs.getString(i));
                 }
                 tbn.addRow(row);

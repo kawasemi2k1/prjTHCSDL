@@ -1,12 +1,22 @@
-﻿--1. store
+﻿use CSDL_Project;
+
+--1. store
 SET IDENTITY_INSERT sales.stores ON;
--- insert cho store
+
+insert into sales.stores values
+(N'Store A', '0357251858', 'storeA@gmail.com', N'Tây Hồ', 'Open'),
+(N'Store B', '0000000001', 'storeB@gmail.com', N'Hoàn Kiếm', 'Open'),
+(N'Store C', '0000000002', 'storeC@gmail.com', N'Ba Đình', 'Close'),
+(N'Store D', '0000000003', 'storeD@gmail.com', N'Cầu Giấy', 'Close'),
+(N'Store E', '0000000003', 'storeE@gmail.com', N'Thanh Xuân', 'Open');
+
 SET IDENTITY_INSERT sales.stores Off;
 
 --2. customers
 SET IDENTITY_INSERT sales.customers ON;
 
 insert into sales.customers values
+(N'Khách lẻ', null, null, null, null);
 (N'Trần Đức Mạnh', '20011209', N'15 ngách 2 ngõ 119, đường Nước Phần Lan, Tấy Hồ, Hà Nội', '0357251858', 'tranducmanh12092001@gmail.com'),
 (N'Phạm Đức Huy', '20010101', N'Việt Nam', '0000000001', 'phamduchuy@gmail.com'),
 (N'Nguyễn Thị Thúy', '20010101', N'Việt Nam', '0000000002', 'nguyenthithuy@gmail.com'),
@@ -16,7 +26,10 @@ SET IDENTITY_INSERT sales.customers Off;
 
 --3. staffs
 SET IDENTITY_INSERT sales.staffs ON;
--- insert cho staff
+
+insert into sales.staffs values
+(N'Trần Đức Mạnh', 'tranducmanh@gmail', '0357251858', 1, 1, 1, 'Nam', 'manh135792468')
+
 SET IDENTITY_INSERT sales.staffs Off;
 
 --4. orders
@@ -24,15 +37,16 @@ SET IDENTITY_INSERT sales.orders ON;
 -- insert cho sales.orders
 SET IDENTITY_INSERT sales.orders Off;
 
-
 --5. order_item
 -- insert cho sales.order_items 
 
-
-
---6. products
--- insert cho products
-
+--6. stocks
+insert into sales.stocks values
+(1, '2021-01-01', '2022-02-02', 1, 10000.00, 10.00, 20),
+(1, '2021-01-01', '2022-11-01', 1, 15000.00, 20.00, 20),
+(1, '2021-01-01', '2022-11-01', 2, 15000.00, 20.00, 20),
+(2, '2021-01-01', '2022-01-01', 4, 15000.00, 20.00, 20),
+(3, '2021-01-01', '2022-01-01', 1, 21000.00, 5.00, 21);
 
 --7. production.brands
 SET IDENTITY_INSERT production.brands ON;
@@ -51,7 +65,8 @@ SET IDENTITY_INSERT production.brands OFF;
 
 
 --8. production.categories
-SET IDENTITY_INSERT production.categories ON;  
+SET IDENTITY_INSERT production.categories ON;
+
 INSERT INTO production.categories(category_id,category_name) VALUES(1,'Children Bicycles')
 INSERT INTO production.categories(category_id,category_name) VALUES(2,'Comfort Bicycles')
 INSERT INTO production.categories(category_id,category_name) VALUES(3,'Cruisers Bicycles')
@@ -65,6 +80,7 @@ SET IDENTITY_INSERT production.categories OFF;
 
 --9. production.products
 SET IDENTITY_INSERT production.products ON;
+
 INSERT INTO production.products(product_id, product_name, brand_id, category_id, price) VALUES(1,'Trek 820 - 2016',9,6,379.99)
 INSERT INTO production.products(product_id, product_name, brand_id, category_id, price) VALUES(2,'Ritchey Timberwolf Frameset - 2016',5,6,749.99)
 INSERT INTO production.products(product_id, product_name, brand_id, category_id, price) VALUES(3,'Surly Wednesday Frameset - 2016',8,6,999.99)
