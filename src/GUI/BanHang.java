@@ -1025,18 +1025,26 @@ public class BanHang extends javax.swing.JPanel {
     }//GEN-LAST:event_txtSearchProductKeyReleased
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        if(!isDouble(txtDiscount.getText()) || 
-                Double.parseDouble(txtDiscount.getText()) < 0 ||
-                Double.parseDouble(txtDiscount.getText()) > 100) {
-            JOptionPane.showMessageDialog(this, "Lỗi ở Giảm giá.");
-            return;
-        }
         if(!isInt(txtQuantity.getText()) || Integer.parseInt(txtQuantity.getText()) <= 0) {
-            JOptionPane.showMessageDialog(this, "Lỗi ở Số lượng.");
+            JOptionPane.showMessageDialog(this, "Thiếu thông tin Số lượng.");
             return;
         }
         
-        int count = 0;
+        int countInStocks = 0;
+        int buying = 0;
+        buying += Integer.parseInt(txtQuantity.getText());
+        int rowToDelete = -1;
+        
+        for(int i = 0; i < jTableBill.getRowCount(); i++) {
+            if(jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 1).equals(jTableBill.getValueAt(i, 1)) &&
+                    jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 2).equals(jTableBill.getValueAt(i, 2)) &&
+                    jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 3).equals(jTableBill.getValueAt(i, 3))) {
+                buying += Integer.parseInt(jTableBill.getValueAt(i, 5) + "");
+                rowToDelete = i;
+                break;
+            }
+        }
+        
         try {
             Connect a = new Connect();
             Connection con = a.getConnectDB();
@@ -1052,14 +1060,15 @@ public class BanHang extends javax.swing.JPanel {
             ResultSet rs = ps.executeQuery();
             
             rs.next();
-            count = rs.getInt(1);
-            if(count < Integer.parseInt(txtQuantity.getText())) {
+            countInStocks = rs.getInt(1);
+            if(countInStocks < buying) {
                 String str = "Hàng không đủ trong kho.";
                 
-                PreparedStatement ps1 = con.prepareStatement("select distinct sales.stores.name, quantity from sales.stocks "
+                PreparedStatement ps1 = con.prepareStatement("select sales.stores.name, sum(quantity) from sales.stocks "
                         + "inner join sales.stores on sales.stores.store_id = sales.stocks.store_id "
                         + "where product_id = ? and "
-                        + "sales.stocks.store_id != ?;");
+                        + "sales.stocks.store_id != ? "
+                        + "group by sales.stores.store_id, sales.stores.name;");
                 ps1.setString(1, jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 0) + "");
                 ps1.setString(2, String.valueOf(store));
                 ResultSet rs1 = ps1.executeQuery();
@@ -1083,24 +1092,22 @@ public class BanHang extends javax.swing.JPanel {
         String productName = jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 1) + "";
         double singlePrice = Double.parseDouble(jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 8) + "");
         double productDiscount = Double.parseDouble(jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 9) + "");
-        double eventDiscount = Double.parseDouble(txtDiscount.getText());
-        int quantity = Integer.parseInt(txtQuantity.getText());
-        double totalDiscount = productDiscount + eventDiscount - productDiscount*eventDiscount/100.00;
-        double totalSinglePrice = singlePrice * (1.00 - totalDiscount/100.00) * (double)quantity;
+        double totalSinglePrice = singlePrice * (1.00 - productDiscount/100.00) * (double)buying;
                
         Vector row = new Vector();
         Vector column = new Vector();
-        for(int i = 0; i < jTableBill.getColumnCount(); i++){
-            column.add(jTableBill.getColumnName(i));
+        for(int j = 0; j < jTableBill.getColumnCount(); j++){
+            column.add(jTableBill.getColumnName(j));
         }
         tbnBill.setColumnIdentifiers(column);
+        if(rowToDelete > -1) tbnBill.removeRow(rowToDelete);
         row.add(jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 0) + "");
         row.add(productName);
         row.add(jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 2) + "");
         row.add(jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 3) + "");
         row.add(String.valueOf(singlePrice));
-        row.add(String.valueOf(quantity));
-        row.add(String.valueOf(totalDiscount));
+        row.add(String.valueOf(buying));
+        row.add(String.valueOf(productDiscount));
         row.add(String.valueOf(totalSinglePrice));
         row.add("Mới");
         tbnBill.addRow(row);
