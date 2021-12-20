@@ -5,21 +5,14 @@
  */
 package GUI;
 
-import java.awt.Component;
 import java.awt.Window;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.Statement;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Pattern;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -82,22 +75,19 @@ public class BanHang extends javax.swing.JPanel {
         try{
             Connect a = new Connect();
             Connection con = a.getConnectDB();
-            int number;
             Vector row, column;
             column = new Vector();
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("Select * from sales.customers where name != 'Vô danh'");
-            ResultSetMetaData metadata = rs.getMetaData();
-            number = metadata.getColumnCount();
             
-            for(int i = 1; i <= number; i++){
-                column.add(metadata.getColumnName(i));
+            for(int i = 0; i < jTableCustomer.getColumnCount(); i++){
+                column.add(jTableCustomer.getColumnName(i));
             }
             tbnCustomer.setColumnIdentifiers(column);
             
             while(rs.next()){
                 row = new Vector();
-                for(int i = 1; i <= number; i++){
+                for(int i = 1; i <= jTableCustomer.getColumnCount(); i++){
                     row.addElement(rs.getString(i));
                 }
                 tbnCustomer.addRow(row);
@@ -123,8 +113,7 @@ public class BanHang extends javax.swing.JPanel {
         try{
             Connect a = new Connect();
             Connection con = a.getConnectDB();
-            int number, number1;
-            Vector row, row1, column, column1;
+            Vector row, column;
             column = new Vector();
             PreparedStatement ps = con.prepareStatement("select sales.stocks.product_id, "
                     + "production.products.product_name, "
@@ -142,17 +131,15 @@ public class BanHang extends javax.swing.JPanel {
                     + "where store_id = ?");
             ps.setString(1, String.valueOf(store));
             ResultSet rs = ps.executeQuery();
-            ResultSetMetaData metadata = rs.getMetaData();
-            number = metadata.getColumnCount();
             
-            for(int i = 1; i <= number; i++){
-                column.add(metadata.getColumnName(i));
+            for(int i = 0; i < jTableProduct.getColumnCount(); i++){
+                column.add(jTableProduct.getColumnName(i));
             }
             tbnProduct.setColumnIdentifiers(column);
             
             while(rs.next()){
                 row = new Vector();
-                for(int i = 1; i <= number; i++){
+                for(int i = 1; i <= jTableProduct.getColumnCount(); i++){
                     row.addElement(rs.getString(i));
                 }
                 tbnProduct.addRow(row);
@@ -570,17 +557,17 @@ public class BanHang extends javax.swing.JPanel {
 
         jTableProduct.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Tên", "NSX", "HSD", "Loại", "Hãng", "Xuất xứ", "Đơn giá", "Giảm giá"
+                "ID", "Tên", "NSX", "HSD", "Loại", "Hãng", "Xuất xứ", "Số lượng", "Đơn giá", "Giảm giá"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -756,17 +743,15 @@ public class BanHang extends javax.swing.JPanel {
             }
             
             tbnCustomer.setRowCount(0);
-            ResultSetMetaData metadata = rs.getMetaData();
-            number = metadata.getColumnCount();
             
-            for(int i = 1; i <= number; i++){
-                column.add(metadata.getColumnName(i));
+            for(int i = 0; i < jTableCustomer.getColumnCount(); i++){
+                column.add(jTableCustomer.getColumnName(i));
             }
             tbnCustomer.setColumnIdentifiers(column);
             
             while(rs.next()){
                 row = new Vector();
-                for(int i = 1; i <= number; i++){
+                for(int i = 1; i <= jTableCustomer.getColumnCount(); i++){
                     row.addElement(rs.getString(i));
                 }
                 tbnCustomer.addRow(row);
@@ -798,7 +783,6 @@ public class BanHang extends javax.swing.JPanel {
                 "inner join production.brands on production.brands.brand_id = production.products.brand_id\n"
                     + "where ";
             PreparedStatement ps = null;
-            int number;
             Vector row, column;
             column = new Vector();
             ResultSet rs = null;
@@ -807,39 +791,42 @@ public class BanHang extends javax.swing.JPanel {
                 loadDataProduct();
                 return;
             } else if (jComboBoxProductSearch.getSelectedItem().toString().equals("Tên")) {
-                ps = con.prepareStatement(str + "production.products.product_name like ?");
-                ps.setString(1, txtSearchProduct.getText());
+                ps = con.prepareStatement(str + "store_id = ? and production.products.product_name like ?");
+                ps.setString(1, String.valueOf(store));
+                ps.setString(2, txtSearchProduct.getText());
                 rs = ps.executeQuery();
             } else if (jComboBoxProductSearch.getSelectedItem().toString().equals("ID")) {
-                ps = con.prepareStatement(str + "sales.stocks.product_id like ?");
+                ps = con.prepareStatement(str + "store_id = ? and sales.stocks.product_id like ?");
+                ps.setString(1, String.valueOf(store));
                 ps.setString(1, txtSearchProduct.getText());
                 rs = ps.executeQuery();
             } else if (jComboBoxProductSearch.getSelectedItem().toString().equals("Loại")) {
-                ps = con.prepareStatement(str + "production.categories.category_name like ?");
+                ps = con.prepareStatement(str + "store_id = ? and production.categories.category_name like ?");
+                ps.setString(1, String.valueOf(store));
                 ps.setString(1, txtSearchProduct.getText());
                 rs = ps.executeQuery();
             } else if (jComboBoxProductSearch.getSelectedItem().toString().equals("Hãng")) {
-                ps = con.prepareStatement(str + "production.brands.brand_name like ?");
+                ps = con.prepareStatement(str + "store_id = ? and production.brands.brand_name like ?");
+                ps.setString(1, String.valueOf(store));
                 ps.setString(1, txtSearchProduct.getText());
                 rs = ps.executeQuery();
             } else if (jComboBoxProductSearch.getSelectedItem().toString().equals("Xuất xứ")) {
-                ps = con.prepareStatement(str + "production.brands.country like ?");
+                ps = con.prepareStatement(str + "store_id = ? and production.brands.country like ?");
+                ps.setString(1, String.valueOf(store));
                 ps.setString(1, txtSearchProduct.getText());
                 rs = ps.executeQuery();
             }
             
             tbnProduct.setRowCount(0);
-            ResultSetMetaData metadata = rs.getMetaData();
-            number = metadata.getColumnCount();
             
-            for(int i = 1; i <= number; i++){
-                column.add(metadata.getColumnName(i));
+            for(int i = 0; i < jTableProduct.getColumnCount(); i++){
+                column.add(jTableProduct.getColumnName(i));
             }
             tbnProduct.setColumnIdentifiers(column);
             
             while(rs.next()){
                 row = new Vector();
-                for(int i = 1; i <= number; i++){
+                for(int i = 1; i <= jTableProduct.getColumnCount(); i++){
                     row.addElement(rs.getString(i));
                 }
                 tbnProduct.addRow(row);
@@ -910,17 +897,15 @@ public class BanHang extends javax.swing.JPanel {
             } 
             
             tbnCustomer.setRowCount(0);
-            ResultSetMetaData metadata = rs.getMetaData();
-            number = metadata.getColumnCount();
             
-            for(int i = 1; i <= number; i++){
-                column.add(metadata.getColumnName(i));
+            for(int i = 0; i < jTableCustomer.getColumnCount(); i++){
+                column.add(jTableCustomer.getColumnName(i));
             }
             tbnCustomer.setColumnIdentifiers(column);
             
             while(rs.next()){
                 row = new Vector();
-                for(int i = 1; i <= number; i++){
+                for(int i = 1; i <= jTableCustomer.getColumnCount(); i++){
                     row.addElement(rs.getString(i));
                 }
                 tbnCustomer.addRow(row);
@@ -971,44 +956,47 @@ public class BanHang extends javax.swing.JPanel {
             ResultSet rs = null;
             String str1 = null;
             if (jComboBoxProductSearch.getSelectedItem().toString().equals("Tên")) {
-                ps = con.prepareStatement(str + "production.products.product_name like ?");
+                ps = con.prepareStatement(str + "store_id = ? and production.products.product_name like ?");
+                ps.setString(1, String.valueOf(store));
                 str1 = "%" + txtSearchProduct.getText() + "%";
-                ps.setString(1, str1);
+                ps.setString(2, str1);
                 rs = ps.executeQuery();
             } else if (jComboBoxProductSearch.getSelectedItem().toString().equals("ID")) {
-                ps = con.prepareStatement(str + "sales.stocks.product_id like ?");
+                ps = con.prepareStatement(str + "store_id = ? and sales.stocks.product_id like ?");
+                ps.setString(1, String.valueOf(store));
                 str1 = "%" + txtSearchProduct.getText() + "%";
-                ps.setString(1, str1);
+                ps.setString(2, str1);
                 rs = ps.executeQuery();
             } else if (jComboBoxProductSearch.getSelectedItem().toString().equals("Loại")) {
-                ps = con.prepareStatement(str + "production.categories.category_name like ?");
+                ps = con.prepareStatement(str + "store_id = ? and production.categories.category_name like ?");
+                ps.setString(1, String.valueOf(store));
                 str1 = "%" + txtSearchProduct.getText() + "%";
-                ps.setString(1, str1);
+                ps.setString(2, str1);
                 rs = ps.executeQuery();
             } else if (jComboBoxProductSearch.getSelectedItem().toString().equals("Hãng")) {
-                ps = con.prepareStatement(str + "production.brands.brand_name like ?");
+                ps = con.prepareStatement(str + "store_id = ? and production.brands.brand_name like ?");
+                ps.setString(1, String.valueOf(store));
                 str1 = "%" + txtSearchProduct.getText() + "%";
-                ps.setString(1, str1);
+                ps.setString(2, str1);
                 rs = ps.executeQuery();
             } else if (jComboBoxProductSearch.getSelectedItem().toString().equals("Xuất xứ")) {
-                ps = con.prepareStatement(str + "production.brands.country like ?");
+                ps = con.prepareStatement(str + "store_id = ? and production.brands.country like ?");
+                ps.setString(1, String.valueOf(store));
                 str1 = "%" + txtSearchProduct.getText() + "%";
-                ps.setString(1, str1);
+                ps.setString(2, str1);
                 rs = ps.executeQuery();
             }
             
             tbnProduct.setRowCount(0);
-            ResultSetMetaData metadata = rs.getMetaData();
-            number = metadata.getColumnCount();
             
-            for(int i = 1; i <= number; i++){
-                column.add(metadata.getColumnName(i));
+            for(int i = 0; i < jTableProduct.getColumnCount(); i++){
+                column.add(jTableProduct.getColumnName(i));
             }
             tbnProduct.setColumnIdentifiers(column);
             
             while(rs.next()){
                 row = new Vector();
-                for(int i = 1; i <= number; i++){
+                for(int i = 1; i <= jTableProduct.getColumnCount(); i++){
                     row.addElement(rs.getString(i));
                 }
                 tbnProduct.addRow(row);
@@ -1247,11 +1235,10 @@ public class BanHang extends javax.swing.JPanel {
                             + "and sales.order_items.created_at = sales.stocks.created_at "
                             + "and sales.order_items.good_till = sales.stocks.good_till "
                         + "inner join production.products on production.products.product_id = sales.stocks.product_id "
-                        + "where sales.orders.order_id = ?;");
-                ps.setString(1, txtBillID.getText());
+                        + "where sales.order_items.store_id = ? and sales.orders.order_id = ?;");
+                ps.setString(1, String.valueOf(store));
+                ps.setString(2, txtBillID.getText());
                 ResultSet rs = ps.executeQuery();
-                ResultSetMetaData metadata = rs.getMetaData();
-                int number = metadata.getColumnCount();
                 Vector row, column;
                 column = new Vector();
                 for(int i = 0; i < jTableBill.getColumnCount(); i++){
@@ -1260,7 +1247,7 @@ public class BanHang extends javax.swing.JPanel {
                 tbnBill.setColumnIdentifiers(column);
                 while(rs.next()){
                     row = new Vector();
-                    for(int i = 1; i <= number; i++){
+                    for(int i = 1; i <= jTableBill.getColumnCount() - 1; i++){
                         row.addElement(rs.getString(i));
                     }
                     row.add("Cũ");
