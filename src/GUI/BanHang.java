@@ -77,7 +77,7 @@ public class BanHang extends javax.swing.JPanel {
             Vector row, column;
             column = new Vector();
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("Select * from sales.customers where name != 'Vô danh'");
+            ResultSet rs = st.executeQuery("Select * from vRealCustomer");
             
             for(int i = 0; i < jTableCustomer.getColumnCount(); i++){
                 column.add(jTableCustomer.getColumnName(i));
@@ -735,7 +735,7 @@ public class BanHang extends javax.swing.JPanel {
         try {
             Connect a = new Connect();
             Connection con = a.getConnectDB();
-            String str = "Select * from sales.customers where ";
+            String str = "Select * from vRealCustomer where ";
             PreparedStatement ps = null;
             int number;
             Vector row, column;
