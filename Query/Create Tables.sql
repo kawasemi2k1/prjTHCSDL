@@ -39,6 +39,9 @@ create table sales.customers (
 	constraint PK0 primary key (customer_id),
 );
 
+create view vRealCustomer as
+select * from sales.customers where customer_id != 1
+
 CREATE TABLE sales.stores (
 	store_id INT IDENTITY (1, 1) PRIMARY KEY,
 	name NVARCHAR (255) NOT NULL,

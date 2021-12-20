@@ -49,7 +49,7 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             Vector row, column;
             column = new Vector();
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("Select * from sales.customers where customer_id ! = 1;");
+            ResultSet rs = st.executeQuery("Select * from vRealCustomer;");
             
             for(int i = 0; i < jTable1.getColumnCount(); i++){
                 column.add(jTable1.getColumnName(i));
@@ -548,7 +548,7 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         try {
             Connect a = new Connect();
             Connection con = a.getConnectDB();
-            String str = "Select * from sales.customers where ";
+            String str = "Select * from vRealCustomer where ";
             PreparedStatement ps = null;
             Vector row, column;
             column = new Vector();
@@ -621,7 +621,7 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         try {
             Connect a = new Connect();
             Connection con = a.getConnectDB();
-            String str = "Select * from sales.customers where ";
+            String str = "Select * from vRealCustomer where ";
             PreparedStatement ps = null;
             Vector row, column;
             column = new Vector();
