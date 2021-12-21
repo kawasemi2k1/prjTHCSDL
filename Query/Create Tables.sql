@@ -38,6 +38,7 @@ create table sales.customers (
 	email varchar(255) constraint UQ1 unique,
 	constraint PK0 primary key (customer_id),
 );
+go
 
 create view vRealCustomer as
 select * from sales.customers where customer_id != 1
@@ -97,11 +98,12 @@ CREATE TABLE sales.order_items (
 	price DECIMAL (10, 2) NOT NULL default 0,
 	discount DECIMAL (4, 2) NOT NULL DEFAULT 0,
 	FOREIGN KEY (order_id) REFERENCES sales.orders (order_id) ON DELETE CASCADE ON UPDATE CASCADE,
-	foreign key (product_id, created_at, good_till, store_id) references sales.stocks (product_id, created_at, good_till, store_id)
+	foreign key (product_id, created_at, good_till, store_id) references sales.stocks (product_id, created_at, good_till, store_id),
+	foreign key (product_id) references production.products (product_id)
 );
 
-drop table sales.stocks;
 drop table sales.order_items;
+drop table sales.stocks;
 drop table sales.orders;
 drop table sales.staffs;
 drop table production.products;
