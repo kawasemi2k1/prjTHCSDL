@@ -49,24 +49,19 @@ public class ThongKe_Stores extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        date1 = new com.toedter.calendar.JDateChooser();
-        date2 = new com.toedter.calendar.JDateChooser();
+        jPanel1 = new javax.swing.JPanel();
         label1 = new java.awt.Label();
-        label2 = new java.awt.Label();
-        label3 = new java.awt.Label();
         jButton1 = new javax.swing.JButton();
-        jcontent = new javax.swing.JPanel();
+        label2 = new java.awt.Label();
+        date1 = new com.toedter.calendar.JDateChooser();
+        label3 = new java.awt.Label();
+        date2 = new com.toedter.calendar.JDateChooser();
+        jcontent = new javax.swing.JTabbedPane();
 
         setPreferredSize(new java.awt.Dimension(1920, 1030));
 
         label1.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
         label1.setText("Thống kê doanh số các cửa hàng");
-
-        label2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        label2.setText("Ngày bắt đầu");
-
-        label3.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        label3.setText("Ngày kết thúc");
 
         jButton1.setText("Thống kê");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -75,15 +70,50 @@ public class ThongKe_Stores extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout jcontentLayout = new javax.swing.GroupLayout(jcontent);
-        jcontent.setLayout(jcontentLayout);
-        jcontentLayout.setHorizontalGroup(
-            jcontentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1412, Short.MAX_VALUE)
+        label2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        label2.setText("Ngày bắt đầu");
+
+        label3.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        label3.setText("Ngày kết thúc");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(506, 506, 506)
+                .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addComponent(date1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(82, 82, 82)
+                .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(date2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(552, 552, 552)
+                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(830, 830, 830)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(591, Short.MAX_VALUE))
         );
-        jcontentLayout.setVerticalGroup(
-            jcontentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 372, Short.MAX_VALUE)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(date1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(date2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(50, 50, 50)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(104, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -91,43 +121,18 @@ public class ThongKe_Stores extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(262, 262, 262)
-                        .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(date1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(121, 121, 121)
-                        .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(date2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(588, 588, 588)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(301, 301, 301)
-                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jcontent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jcontent))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(date2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(date1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(49, 49, 49)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addComponent(jcontent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jcontent, javax.swing.GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -157,7 +162,6 @@ public class ThongKe_Stores extends javax.swing.JPanel {
                     + "left join sales.order_items soits on sstck.product_id = soits.product_id\n"
                     + "left join sales.orders so on soits.order_id = so.order_id\n"
                     + "where so.created_date between (?) and (?) or sstr.store_id not in (select store_id from sales.order_items)\n"
-                    + "or (sstr.store_id in (select store_id from sales.order_items) and so.created_date not between (?) and (?)\n"
                     + "group by sstr.name";
             PreparedStatement ps;
             ps = conn.prepareStatement(sql_doanhthu);
@@ -165,8 +169,6 @@ public class ThongKe_Stores extends javax.swing.JPanel {
             java.sql.Date jdate2 = new java.sql.Date(tdate2.getTime());
             ps.setDate(1, jdate1);
             ps.setDate(2, jdate2);
-            ps.setDate(3, jdate1);
-            ps.setDate(4, jdate2);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 String name = rs.getString("Ten");
@@ -175,7 +177,7 @@ public class ThongKe_Stores extends javax.swing.JPanel {
             }
 
         } catch (Exception ex) {
-            System.out.println(ex.toString());
+            System.out.println("Thong ke cua hang "+ex.toString());
         }
     }
 
@@ -199,12 +201,13 @@ public class ThongKe_Stores extends javax.swing.JPanel {
 
     public void initFrame() {
 
-        /*
         ChartPanel chartPanel = new ChartPanel(createChart());
         chartPanel.setPreferredSize(new java.awt.Dimension(1412, 372));
+        jcontent.removeAll();
         jcontent.add(chartPanel);
         jcontent.setVisible(true);
-         */
+
+        /*
         ChartPanel chartPanel = new ChartPanel(createChart());
         chartPanel.setPreferredSize(new java.awt.Dimension(560, 367));
         JFrame frame = new JFrame();
@@ -215,7 +218,7 @@ public class ThongKe_Stores extends javax.swing.JPanel {
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setVisible(true);
-
+         */
     }
 
 
@@ -223,7 +226,8 @@ public class ThongKe_Stores extends javax.swing.JPanel {
     private com.toedter.calendar.JDateChooser date1;
     private com.toedter.calendar.JDateChooser date2;
     private javax.swing.JButton jButton1;
-    private javax.swing.JPanel jcontent;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTabbedPane jcontent;
     private java.awt.Label label1;
     private java.awt.Label label2;
     private java.awt.Label label3;
