@@ -1,6 +1,6 @@
 // user: tranducmanh@gmail
 // pass: manh135792468
-// size: 1877x 819
+// size: 1536va814
 package GUI;
 
 import java.sql.Connection;
