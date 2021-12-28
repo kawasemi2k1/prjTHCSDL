@@ -17,15 +17,15 @@ public class ManagerMain extends javax.swing.JFrame {
      * Creates new form ManagerMain
      */
     public ManagerMain() {
-        this.setAlwaysOnTop(true); // this interface is always on top
-        this.setResizable(false); // not resizeble now
-        this.setVisible(true);
+        //this.setAlwaysOnTop(true); // this interface is always on top
+        // this.setResizable(false); // not resizeble now
+        //this.setVisible(true);
         initComponents();
         Toolkit tk = Toolkit.getDefaultToolkit();
         int xsize = (int) tk.getScreenSize().getWidth();
         int ysize = (int) tk.getScreenSize().getHeight() - 50;
         System.out.println(xsize + "va" + ysize);
-        this.setSize(xsize, ysize);
+        //this.setSize(xsize, ysize);
     }
 
     /**
@@ -82,6 +82,11 @@ public class ManagerMain extends javax.swing.JFrame {
         jMenuBar2.add(jMenu8);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1920, 1030));
+        setPreferredSize(new java.awt.Dimension(1877, 819));
+
+        jcontent.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
+        jcontent.setMinimumSize(new java.awt.Dimension(1530, 800));
 
         jMenu1.setText("Bán hàng");
         jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -165,6 +170,11 @@ public class ManagerMain extends javax.swing.JFrame {
         jMenuBar1.add(jMenu6);
 
         jMenu3.setText("Đăng xuất");
+        jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu3MouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -173,11 +183,11 @@ public class ManagerMain extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jcontent, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
+            .addComponent(jcontent, javax.swing.GroupLayout.PREFERRED_SIZE, 1530, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jcontent, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
+            .addComponent(jcontent, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -229,6 +239,13 @@ public class ManagerMain extends javax.swing.JFrame {
         jcontent.removeAll();
         jcontent.add(frm, "Quản lý sản phẩm chuỗi cửa hàng bán");
     }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
+        // TODO add your handling code here:
+        Login login = new Login();
+        login.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenu3MouseClicked
 
     /**
      * @param args the command line arguments
