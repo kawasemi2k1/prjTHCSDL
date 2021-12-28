@@ -12,7 +12,6 @@ import java.awt.Toolkit;
  * @author ADMIN
  */
 public class ManagerMain extends javax.swing.JFrame {
-
     /**
      * Creates new form ManagerMain
      */
@@ -135,6 +134,11 @@ public class ManagerMain extends javax.swing.JFrame {
         jMenu6.setText("Thống kê");
 
         jMenuItem5.setText("Stores");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem5);
 
         jMenuItem9.setText("Categories");
@@ -146,6 +150,11 @@ public class ManagerMain extends javax.swing.JFrame {
         jMenu6.add(jMenuItem9);
 
         jMenuItem10.setText("Brands");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem10);
 
         jMenuItem11.setText("Products");
@@ -165,6 +174,11 @@ public class ManagerMain extends javax.swing.JFrame {
         jMenu6.add(jMenuItem12);
 
         jMenuItem13.setText("Customer");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem13);
 
         jMenuBar1.add(jMenu6);
@@ -216,14 +230,23 @@ public class ManagerMain extends javax.swing.JFrame {
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         // TODO add your handling code here:
+        ThongKe_Cat frm = new ThongKe_Cat();
+        jcontent.removeAll();
+        jcontent.add(frm, "Thống kê theo thể loại");
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         // TODO add your handling code here:
+        ThongKeProducts frm = new ThongKeProducts();
+        jcontent.removeAll();
+        jcontent.add(frm, "Thống kê theo sản phẩm");
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
         // TODO add your handling code here:
+        ThongKe_Staff frm = new ThongKe_Staff();
+        jcontent.removeAll();
+        jcontent.add(frm, "Thống kê nhân viên");
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -246,6 +269,27 @@ public class ManagerMain extends javax.swing.JFrame {
         login.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenu3MouseClicked
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        ThongKe_Stores frm = new ThongKe_Stores();
+        jcontent.removeAll();
+        jcontent.add(frm, "Thống kê Các Cửa hàng");
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        // TODO add your handling code here:
+        ThongKeBrands frm = new ThongKeBrands();
+        jcontent.removeAll();
+        jcontent.add(frm, "Thống kê theo hãng");
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        // TODO add your handling code here:
+        ThongKe_Customer frm = new ThongKe_Customer();
+        jcontent.removeAll();
+        jcontent.add(frm, "Thống kê khách hàng");
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     /**
      * @param args the command line arguments

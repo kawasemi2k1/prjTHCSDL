@@ -1,5 +1,5 @@
-// user: 1
-// pass: kawasemi
+// user: tranducmanh@gmail
+// pass: manh135792468
 // size: 1877x 819
 package GUI;
 
