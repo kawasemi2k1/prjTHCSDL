@@ -1068,13 +1068,14 @@ public class BanHang extends javax.swing.JPanel {
                         + "inner join sales.stores on sales.stores.store_id = sales.stocks.store_id "
                         + "where product_id = ? and "
                         + "sales.stocks.store_id != ? "
+                        + "and sales.stores.state = 'Open' "
                         + "group by sales.stores.store_id, sales.stores.name;");
                 ps1.setString(1, jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 0) + "");
                 ps1.setString(2, String.valueOf(store));
                 ResultSet rs1 = ps1.executeQuery();
                 
                 if(rs1.next() == false) {
-                    str = str + "\nKhông kho nào khách còn hàng.";
+                    str = str + "\nKhông kho nào còn hàng.";
                 } else {
                     str = str + "\nCòn hàng tại:\n";
                     do {
