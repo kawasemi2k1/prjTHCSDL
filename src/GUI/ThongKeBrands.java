@@ -158,7 +158,7 @@ public class ThongKeBrands extends javax.swing.JPanel {
             return;
         }
             Connect a = new Connect();
-            Connection conn =a.getConnection();
+            Connection conn =a.getConnectDB();
             String sql_soluong = "SELECT TOP 5 With TIES pb.brand_id,pb.brand_name,pb.country,count(PPRO.product_id) as number_product,sum(quantity) as total from "
                     + "sales.orders as SO inner join sales.order_items as ODI on SO.order_id = ODI.order_id " 
                     + " inner join production.products as PPRO on ODI.product_id = PPRO.product_id " 
@@ -235,7 +235,7 @@ public class ThongKeBrands extends javax.swing.JPanel {
             return;
         }
             Connect a = new Connect();
-            Connection conn =a.getConnection();
+            Connection conn =a.getConnectDB();
             String sql_soluong = "SELECT TOP 5 With TIES pb.brand_id,pb.brand_name,pb.country,count(PPRO.product_id) as number_product,sum(quantity) as total from "
                     + "sales.orders as SO inner join sales.order_items as ODI on SO.order_id = ODI.order_id " 
                     + " inner join production.products as PPRO on ODI.product_id = PPRO.product_id " 

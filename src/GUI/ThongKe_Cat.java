@@ -58,7 +58,7 @@ public class ThongKe_Cat extends javax.swing.JPanel {
         }
         try {
             Connect a = new Connect();
-            Connection conn = a.getConnection();
+            Connection conn = a.getConnectDB();
             String sql_doanhthu = "select pc.category_name as Ten, sum(so.price) as Tien from production.categories pc \n"
                     + "left join production.products pp on pc.category_id = pp.category_id\n"
                     + "left join sales.order_items sot on sot.product_id = pp.product_id\n"
@@ -138,7 +138,7 @@ public class ThongKe_Cat extends javax.swing.JPanel {
         }
         try {
             Connect a = new Connect();
-            Connection conn = a.getConnection();
+            Connection conn = a.getConnectDB();
             String sql_doanhthu = "select pc.category_name as Ten, count(sot.order_id) as So from production.categories pc \n"
                     + "left join production.products pp on pc.category_id = pp.category_id\n"
                     + "left join sales.order_items sot on sot.product_id = pp.product_id\n"

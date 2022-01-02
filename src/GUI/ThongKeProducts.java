@@ -179,7 +179,7 @@ public class ThongKeProducts extends javax.swing.JPanel {
             return;
         }
             Connect a = new Connect();
-            Connection conn =a.getConnection();
+            Connection conn =a.getConnectDB();
            
             String sql_soluong = "Select TOP 5 With TIES sales.order_items.product_id, sum(sales.order_items.quantity) as total "
                     + ",production.products.product_name,production.products.price from sales.orders inner join sales.order_items on "
@@ -255,7 +255,7 @@ public class ThongKeProducts extends javax.swing.JPanel {
             return;
         }
             Connect a = new Connect();
-            Connection conn =a.getConnection();
+            Connection conn =a.getConnectDB();
              String sql_soluong = "Select TOP 5 With TIES sales.order_items.product_id, sum(sales.order_items.quantity) as total "
                     + ",production.products.product_name,production.products.price from sales.orders inner join sales.order_items on "
                     + "sales.orders.order_id =sales.order_items.order_id "

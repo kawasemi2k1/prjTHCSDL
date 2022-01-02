@@ -1,31 +1,25 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package GUI;
+import java.sql.*;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-
-/**
- *
- * @author MANH.TD194616 
- */
 public class Connect {
-    Connection con = null;
+    Connection cnn = null;
     public Connection getConnectDB(){
         try{
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=CSDL_Project";
+            String uRL = "jdbc:sqlserver://localhost:1433;databaseName=CSDL_Project";
             String user = "sa";
-            String password = "123";
+            String pass = "123";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            con = DriverManager.getConnection(url, user, password);
-            if(con != null){
-                System.out.println("Connected Susseccful.");
-            }
-        } catch (Exception ex) {
-            System.out.println("Connected fail susseccfully: " + ex.toString());
+            cnn = DriverManager.getConnection(uRL, user, pass);
+            System.out.println(cnn);
+            System.out.println("Ket noi thanh cong");
+        } catch (Exception e){
+            System.out.println("Khong ket noi duoc");
         }
-        return con;
+        return cnn;
     }
 }

@@ -21,9 +21,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import static jdk.nashorn.internal.runtime.regexp.RegExpFactory.validate;
-import static sun.security.util.KeyUtil.validate;
-import static sun.security.util.KeyUtil.validate;
+//import static jdk.nashorn.internal.runtime.regexp.RegExpFactory.validate;
+//import static sun.security.util.KeyUtil.validate;
+//import static sun.security.util.KeyUtil.validate;
 
 /**
  *
@@ -54,7 +54,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
     public void loadComobox(){
         try{
             Connect a = new Connect();
-            Connection conn = a.getConnection();
+            Connection conn = a.getConnectDB();
             PreparedStatement ps = conn.prepareStatement("Select Gender from tblStaff group by Gender");
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
@@ -68,7 +68,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         // set combox active 
         try{
             Connect a = new Connect();
-            Connection conn = a.getConnection();
+            Connection conn = a.getConnectDB();
             PreparedStatement ps = conn.prepareStatement("Select Active from tblStaff group by Active");
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
@@ -82,7 +82,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
     public void loadComobox2(){
         try{
             Connect a = new Connect();
-            Connection conn = a.getConnection();
+            Connection conn = a.getConnectDB();
             PreparedStatement ps = conn.prepareStatement("Select ManagerState from tblStaff group by ManagerState");
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
@@ -97,7 +97,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
     public void loadData() {
         try {
             Connect a = new Connect();
-            Connection conn = a.getConnection();
+            Connection conn = a.getConnectDB();
             int number;
             Vector row,column;
             column = new Vector();
@@ -442,7 +442,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         try{
             Connect a = new Connect();
-            Connection conn = a.getConnection();
+            Connection conn = a.getConnectDB();
             PreparedStatement comm =conn.prepareStatement(" Delete  from sales.staffs where staff_id=?");
             comm.setString(1,jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString() );
             if(JOptionPane.showConfirmDialog(this, "Delete this Staff ?","Confirm",JOptionPane.YES_NO_OPTION) 
@@ -467,7 +467,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         try{
             Connect a = new Connect();
-            Connection conn = a.getConnection();
+            Connection conn = a.getConnectDB();
             if(txtName.getText().equals("") ||txtEmail.getText().equals("") ||txtPhone.getText().equals("")
                     ||txtStoreid.getText().equals("") || txtpass.getText().equals("") ){
                 JOptionPane.showMessageDialog(this, "Không được bỏ trống ");
@@ -548,7 +548,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         try{
             Connect a = new Connect();
-            Connection conn =a.getConnection();
+            Connection conn =a.getConnectDB();
         if(txtName.getText().equals("") ||txtEmail.getText().equals("") ||txtPhone.getText().equals("")
                     ||txtStoreid.getText().equals("") || txtpass.getText().equals("") ){
                 JOptionPane.showMessageDialog(this, "Không được bỏ trống ");
@@ -682,7 +682,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             try{
                 //DefaultTableModel defaultTableModel = new DefaultTableModel();
             Connect a = new Connect();
-            Connection conn = a.getConnection();
+            Connection conn = a.getConnectDB();
             StringBuffer sb = new StringBuffer();
             PreparedStatement ps = null;
             //String search_pk = "Select * from tblStaff where (staffID='"+txtTimkiem.getText()+"') or (Phone='"+txtTimkiem.getText()+"') or (Name like N'"+txtTimkiem.getText()+"') ";

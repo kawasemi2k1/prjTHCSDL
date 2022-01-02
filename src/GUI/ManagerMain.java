@@ -16,15 +16,15 @@ public class ManagerMain extends javax.swing.JFrame {
      * Creates new form ManagerMain
      */
     public ManagerMain() {
-        this.setAlwaysOnTop(true); // this interface is always on top
-        this.setResizable(false); // not resizeble now
-        this.setVisible(true);
+        //this.setAlwaysOnTop(true); // this interface is always on top
+        // this.setResizable(false); // not resizeble now
+        //this.setVisible(true);
         initComponents();
         Toolkit tk = Toolkit.getDefaultToolkit();
         int xsize = (int) tk.getScreenSize().getWidth();
         int ysize = (int) tk.getScreenSize().getHeight() - 50;
         System.out.println(xsize + "va" + ysize);
-        this.setSize(xsize, ysize);
+        //this.setSize(xsize, ysize);
     }
 
     /**
@@ -81,6 +81,11 @@ public class ManagerMain extends javax.swing.JFrame {
         jMenuBar2.add(jMenu8);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1920, 1030));
+        setPreferredSize(new java.awt.Dimension(1877, 819));
+
+        jcontent.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
+        jcontent.setMinimumSize(new java.awt.Dimension(1530, 800));
 
         jMenu1.setText("Bán hàng");
         jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -129,6 +134,11 @@ public class ManagerMain extends javax.swing.JFrame {
         jMenu6.setText("Thống kê");
 
         jMenuItem5.setText("Stores");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem5);
 
         jMenuItem9.setText("Categories");
@@ -140,6 +150,11 @@ public class ManagerMain extends javax.swing.JFrame {
         jMenu6.add(jMenuItem9);
 
         jMenuItem10.setText("Brands");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem10);
 
         jMenuItem11.setText("Products");
@@ -159,11 +174,21 @@ public class ManagerMain extends javax.swing.JFrame {
         jMenu6.add(jMenuItem12);
 
         jMenuItem13.setText("Customer");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem13);
 
         jMenuBar1.add(jMenu6);
 
         jMenu3.setText("Đăng xuất");
+        jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu3MouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -172,11 +197,11 @@ public class ManagerMain extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jcontent, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
+            .addComponent(jcontent, javax.swing.GroupLayout.PREFERRED_SIZE, 1530, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jcontent, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
+            .addComponent(jcontent, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -205,14 +230,23 @@ public class ManagerMain extends javax.swing.JFrame {
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         // TODO add your handling code here:
+        ThongKe_Cat frm = new ThongKe_Cat();
+        jcontent.removeAll();
+        jcontent.add(frm, "Thống kê theo thể loại");
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         // TODO add your handling code here:
+        ThongKeProducts frm = new ThongKeProducts();
+        jcontent.removeAll();
+        jcontent.add(frm, "Thống kê theo sản phẩm");
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
         // TODO add your handling code here:
+        ThongKe_Staff frm = new ThongKe_Staff();
+        jcontent.removeAll();
+        jcontent.add(frm, "Thống kê nhân viên");
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -228,6 +262,34 @@ public class ManagerMain extends javax.swing.JFrame {
         jcontent.removeAll();
         jcontent.add(frm, "Quản lý sản phẩm chuỗi cửa hàng bán");
     }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
+        // TODO add your handling code here:
+        Login login = new Login();
+        login.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenu3MouseClicked
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        ThongKe_Stores frm = new ThongKe_Stores();
+        jcontent.removeAll();
+        jcontent.add(frm, "Thống kê Các Cửa hàng");
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        // TODO add your handling code here:
+        ThongKeBrands frm = new ThongKeBrands();
+        jcontent.removeAll();
+        jcontent.add(frm, "Thống kê theo hãng");
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        // TODO add your handling code here:
+        ThongKe_Customer frm = new ThongKe_Customer();
+        jcontent.removeAll();
+        jcontent.add(frm, "Thống kê khách hàng");
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     /**
      * @param args the command line arguments

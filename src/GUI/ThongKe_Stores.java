@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import static jdk.nashorn.internal.objects.NativeArray.map;
+//import static jdk.nashorn.internal.objects.NativeArray.map;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -156,7 +156,7 @@ public class ThongKe_Stores extends javax.swing.JPanel {
         }
         try {
             Connect a = new Connect();
-            Connection conn = a.getConnection();
+            Connection conn = a.getConnectDB();
             String sql_doanhthu = "select sstr.name as Ten, sum(so.price) as Tien from sales.stores sstr\n"
                     + "left join sales.stocks sstck on sstr.store_id = sstck.store_id\n"
                     + "left join sales.order_items soits on sstck.product_id = soits.product_id\n"
