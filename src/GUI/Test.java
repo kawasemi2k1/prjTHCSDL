@@ -5,6 +5,7 @@
  */
 package GUI;
 import java.sql.*;
+import java.util.ArrayList;
 /**
  *
  * @author ADMIN
@@ -15,7 +16,33 @@ public class Test {
      * @param args the command line arguments
      */
     static Connect kn = new Connect();
-    public static void main(String[] args) {
+    private int SlotToInsert() {
+        int missingSlot = 1;
+        ArrayList<Integer> Slots = new ArrayList<Integer>();
+        try{
+            Connect a = new Connect();
+            Connection con = a.getConnectDB();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("Select customer_id from sales.customers order by customer_id;");
+            if(rs.next() == false) return 0;
+            else {
+                do { 
+                    Slots.add(rs.getInt(1));
+                }while(rs.next());
+                for(int i = 0; i < Slots.size(); i++, missingSlot++){
+                    if(missingSlot != Slots.get(i)){
+                        return missingSlot - 1;
+                    }
+                }
+            }
+        }catch(Exception ex){
+            System.out.println(ex.toString());
+        }
+        return missingSlot - 1;
+    }
+    
+    public static void main(String[] args) throws SQLException {
+        
         Connection cn = kn.getConnectDB();
         Statement stm = null;
         ResultSet rs = null;
