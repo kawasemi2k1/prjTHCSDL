@@ -35,8 +35,8 @@ public class BanHang extends javax.swing.JPanel {
     String customerEmail = null;
     String billID = null;
     double totalBillPrice = 0;
-    static int store = 1; //default to 1, until Login function
-    static int staff = 1; //default to 1, until Login function
+    static int store = Integer.parseInt(Login.Store_ID); //default to 1, until Login function
+    static int staff = Integer.parseInt(Login.Store_ID); //default to 1, until Login function
     /**
      * Creates new form BanHang
      */
