@@ -54,10 +54,14 @@
                       <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="txt_gia" alignment="0" min="-2" pref="233" max="-2" attributes="0"/>
-                          <Component id="txt_giamGia" alignment="0" min="-2" pref="233" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="txt_giamGia" min="-2" pref="233" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="139" max="-2" attributes="0"/>
+                              <Component id="Staff_ID" min="-2" pref="132" max="-2" attributes="0"/>
+                          </Group>
                           <Component id="txt_soLuong" alignment="0" min="-2" pref="233" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="455" max="32767" attributes="0"/>
+                      <EmptySpace pref="184" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
                               <Component id="btn_them" alignment="0" max="32767" attributes="0"/>
@@ -115,8 +119,14 @@
               <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="dc_ngaySX" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="dc_ngaySX" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="13" pref="13" max="-2" attributes="0"/>
+                              <Component id="Staff_ID" min="-2" pref="33" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="dc_hanSD" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -301,6 +311,8 @@
     <Component class="com.toedter.calendar.JDateChooser" name="dc_ngaySX">
     </Component>
     <Component class="com.toedter.calendar.JDateChooser" name="dc_hanSD">
+    </Component>
+    <Component class="javax.swing.JLabel" name="Staff_ID">
     </Component>
   </SubComponents>
 </Form>

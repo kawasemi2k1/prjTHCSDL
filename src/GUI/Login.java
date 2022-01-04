@@ -6,7 +6,10 @@ package GUI;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Vector;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,6 +21,8 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+    public static String Staff_ID;
+    public static String  Store_ID;
     public Login() {
         initComponents();
     }
@@ -49,12 +54,6 @@ public class Login extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
-            }
-        });
-
-        txt_email.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_emailActionPerformed(evt);
             }
         });
 
@@ -122,10 +121,73 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txt_emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_emailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_emailActionPerformed
+        public String GetStoreIDFromEmail(String email) {
+        String store_id = "";
+        try {
+            Connect a = new Connect();
+            Connection conn = a.getConnectDB();
+            int number;
+            Vector row, column;
+            column = new Vector();
+            Statement st = conn.createStatement();
+            String sql = "select store_id from sales.staffs\n" + "where email = (?)";
+            PreparedStatement ps;
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            ResultSetMetaData metadata = rs.getMetaData();
+            number = metadata.getColumnCount();
 
+            for (int i = 1; i <= number; i++) {
+                column.add(metadata.getColumnName(i));
+            }
+            while (rs.next()) {
+                row = new Vector();
+                for (int i = 1; i <= number; i++) {
+                    row.addElement(rs.getString(i));
+                    store_id = rs.getString(i);
+                }
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Loi o store" + ex.toString());
+        }
+        return store_id;
+    }
+            public String GetStaff_IDFromEmail(String email) {
+        String staff_id = "";
+        try {
+            Connect a = new Connect();
+            Connection conn = a.getConnectDB();
+            int number;
+            Vector row, column;
+            column = new Vector();
+            Statement st = conn.createStatement();
+            String sql = "select staff_id from sales.staffs\n" + "where email = (?)";
+            PreparedStatement ps;
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            ResultSetMetaData metadata = rs.getMetaData();
+            number = metadata.getColumnCount();
+
+            for (int i = 1; i <= number; i++) {
+                column.add(metadata.getColumnName(i));
+            }
+            while (rs.next()) {
+                row = new Vector();
+                for (int i = 1; i <= number; i++) {
+                    row.addElement(rs.getString(i));
+                    staff_id = rs.getString(i);
+                }
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Loi o store" + ex.toString());
+        }
+        return staff_id;
+    }
+     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Connect cn = new Connect();
@@ -138,6 +200,10 @@ public class Login extends javax.swing.JFrame {
             pst.setString(2, txt_password.getText());
             ResultSet rs = pst.executeQuery();
             if(rs.next()) {
+                Store_ID = GetStoreIDFromEmail(txt_email.getText());
+                Staff_ID = GetStaff_IDFromEmail(txt_email.getText());
+                System.out.println("STore_ID: *** : "+ Store_ID);
+                System.out.println("Staff_ID: *** : "+ Staff_ID);
                 ManagerMain mm = new ManagerMain();
                 mm.show();
                 this.hide();
