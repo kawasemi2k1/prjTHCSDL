@@ -38,7 +38,7 @@ public class QuanLySanPhamNgoaiQuay extends javax.swing.JPanel {
         loadBang();
         dc_ngaySX.setDate(new Date());
         dc_hanSD.setDate(new Date());
-        Staff_ID.setText(Login.Staff_ID);
+        Staff_ID.setText(Login.Store_ID);
         
     }
   

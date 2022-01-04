@@ -43,6 +43,7 @@ public class Login extends javax.swing.JFrame {
         txt_email = new javax.swing.JTextField();
         txt_password = new javax.swing.JPasswordField();
         label_saiTkMK = new javax.swing.JLabel();
+        TKDaBiKhoa = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,6 +60,8 @@ public class Login extends javax.swing.JFrame {
 
         label_saiTkMK.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         label_saiTkMK.setForeground(new java.awt.Color(255, 0, 0));
+
+        TKDaBiKhoa.setForeground(new java.awt.Color(204, 102, 255));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -77,11 +80,14 @@ public class Login extends javax.swing.JFrame {
                         .addGap(114, 114, 114)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(237, 237, 237)
-                        .addComponent(label_saiTkMK, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(173, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(TKDaBiKhoa, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_saiTkMK, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(186, 186, 186))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,9 +100,11 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TKDaBiKhoa, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(label_saiTkMK, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(53, Short.MAX_VALUE))
         );
@@ -154,7 +162,7 @@ public class Login extends javax.swing.JFrame {
         }
         return store_id;
     }
-            public String GetStaff_IDFromEmail(String email) {
+    public String GetStaff_IDFromEmail(String email) {
         String staff_id = "";
         try {
             Connect a = new Connect();
@@ -187,11 +195,83 @@ public class Login extends javax.swing.JFrame {
         }
         return staff_id;
     }
-     
+    public Integer GetActiveFromEmail(String email) {
+        int active = 0;
+        try {
+            Connect a = new Connect();
+            Connection conn = a.getConnectDB();
+            int number;
+            Vector row, column;
+            column = new Vector();
+            Statement st = conn.createStatement();
+            String sql = "select active from sales.staffs\n" + "where email = (?)";
+            PreparedStatement ps;
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            ResultSetMetaData metadata = rs.getMetaData();
+            number = metadata.getColumnCount();
+
+            for (int i = 1; i <= number; i++) {
+                column.add(metadata.getColumnName(i));
+            }
+            while (rs.next()) {
+                row = new Vector();
+                for (int i = 1; i <= number; i++) {
+                    row.addElement(rs.getString(i));
+                    active = rs.getInt(i);
+                }
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Loi o store" + ex.toString());
+        }
+        return active;
+    }
+    
+    public Integer GetManager_StateFromEmail(String email) {
+        int managerState = 0;
+        try {
+            Connect a = new Connect();
+            Connection conn = a.getConnectDB();
+            int number;
+            Vector row, column;
+            column = new Vector();
+            Statement st = conn.createStatement();
+            String sql = "select manager_state from sales.staffs\n" + "where email = (?)";
+            PreparedStatement ps;
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            ResultSetMetaData metadata = rs.getMetaData();
+            number = metadata.getColumnCount();
+
+            for (int i = 1; i <= number; i++) {
+                column.add(metadata.getColumnName(i));
+            }
+            while (rs.next()) {
+                row = new Vector();
+                for (int i = 1; i <= number; i++) {
+                    row.addElement(rs.getString(i));
+                    managerState = rs.getInt(i);
+                }
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Loi o store" + ex.toString());
+        }
+        
+        return managerState;
+    }
+    
+    
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Connect cn = new Connect();
         Connection conn = null;
+        int active = 0;
+        int manager_state = 0;
         try {
             conn = cn.getConnectDB();
             String sql = "Select * from sales.staffs where email = ? and password = ?";
@@ -202,11 +282,28 @@ public class Login extends javax.swing.JFrame {
             if(rs.next()) {
                 Store_ID = GetStoreIDFromEmail(txt_email.getText());
                 Staff_ID = GetStaff_IDFromEmail(txt_email.getText());
-                System.out.println("STore_ID: *** : "+ Store_ID);
+                active = GetActiveFromEmail(txt_email.getText());
+                manager_state = GetManager_StateFromEmail(txt_email.getText());
                 System.out.println("Staff_ID: *** : "+ Staff_ID);
-                ManagerMain mm = new ManagerMain();
-                mm.show();
-                this.hide();
+                System.out.println("active: ***: " + active);
+                System.out.println("STore_ID: *** : "+ Store_ID);
+                System.out.println("manager_state: ***: " + manager_state);
+                if(active == 0){
+                    JOptionPane.showMessageDialog(this, "Tài khoản này đã bị khóa");
+                    txt_email.setText("");
+                    txt_password.setText("");
+                    return;
+                } else {
+                    if(manager_state == 1){
+                        ManagerMain mm = new ManagerMain();
+                        mm.show();
+                    } else {
+                        StaffMain sm = new StaffMain();
+                        sm.show();
+                    }
+                this.hide(); 
+                }
+                
             } else {
                  label_saiTkMK.setText("Sai tài khoản hoặc mật khẩu!");
             }
@@ -253,6 +350,7 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel TKDaBiKhoa;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
