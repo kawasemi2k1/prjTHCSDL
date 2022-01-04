@@ -64,12 +64,16 @@
                               <Component id="txt_email" min="-2" pref="193" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="237" max="-2" attributes="0"/>
-                          <Component id="label_saiTkMK" min="-2" pref="318" max="-2" attributes="0"/>
-                      </Group>
                   </Group>
                   <EmptySpace pref="173" max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="TKDaBiKhoa" min="-2" pref="297" max="-2" attributes="0"/>
+                      <Component id="label_saiTkMK" min="-2" pref="318" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="186" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -86,9 +90,11 @@
                       <Component id="jLabel2" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
                       <Component id="txt_password" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="TKDaBiKhoa" min="-2" pref="32" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="label_saiTkMK" min="-2" pref="28" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jButton1" min="-2" pref="48" max="-2" attributes="0"/>
                   <EmptySpace pref="53" max="32767" attributes="0"/>
               </Group>
@@ -115,9 +121,6 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_email">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_emailActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JPasswordField" name="txt_password">
         </Component>
@@ -128,6 +131,13 @@
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="ff" type="rgb"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="TKDaBiKhoa">
+          <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="66" red="cc" type="rgb"/>
             </Property>
           </Properties>
         </Component>
