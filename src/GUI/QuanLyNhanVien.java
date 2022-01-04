@@ -224,9 +224,9 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             }
         });
 
-        txtTimkiem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTimkiemActionPerformed(evt);
+        txtTimkiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimkiemKeyReleased(evt);
             }
         });
 
@@ -283,11 +283,6 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
 
         btnSearch.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         btnSearch.setText("Tìm kiếm");
-        btnSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchActionPerformed(evt);
-            }
-        });
         btnSearch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 btnSearchKeyReleased(evt);
@@ -668,78 +663,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         ManagerMain main = new ManagerMain();
         main.setVisible(true);
     }//GEN-LAST:event_btnThoatActionPerformed
-
-    private void txtTimkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimkiemActionPerformed
-
-    }//GEN-LAST:event_txtTimkiemActionPerformed
    
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        if(txtTimkiem.getText().equals("")){
-            JOptionPane.showMessageDialog(this,"Hãy nhập dữ liệu tìm kiếm ");
-            tbn.setRowCount(0);
-            loadData();
-        }else{
-            try{
-                //DefaultTableModel defaultTableModel = new DefaultTableModel();
-            Connect a = new Connect();
-            Connection conn = a.getConnectDB();
-            StringBuffer sb = new StringBuffer();
-            PreparedStatement ps = null;
-            //String search_pk = "Select * from tblStaff where (staffID='"+txtTimkiem.getText()+"') or (Phone='"+txtTimkiem.getText()+"') or (Name like N'"+txtTimkiem.getText()+"') ";
-            String sql = "Select * from sales.staffs where ";
-            String str1 = null;
-            Statement st = conn.createStatement();
-            ResultSet rs = null;
-            if(BoxSearch.getSelectedItem().toString().equals("ID")){
-                ps = conn.prepareStatement(sql + "staff_id = ? ");
-                str1 = txtTimkiem.getText();
-                ps.setString(1, str1);
-                rs = ps.executeQuery();   
-            }else if(BoxSearch.getSelectedItem().toString().equals("Phone")){
-                ps = conn.prepareStatement(sql + "phone = ? ");
-                str1 = txtTimkiem.getText();
-                ps.setString(1, str1);
-                rs = ps.executeQuery();  
-            }else if(BoxSearch.getSelectedItem().toString().equals("Email")){
-                ps = conn.prepareStatement(sql + "email like ? ");
-                str1 = "%" + txtTimkiem.getText() + "%";
-                ps.setString(1, str1);
-                rs = ps.executeQuery();  
-            }
-            
-            while(rs.next()){
-                sb.append("Tìm kiếm thành công ");
-                tbn.setRowCount(0);
-                if(sb.length()>0){
-                    JOptionPane.showMessageDialog(this, sb.toString()); 
-                    String []colsName = {"StaffID", "Name","Email","Phone","Active","StoreID","ManagerState","Gender","Password"};
-                    tbn.setColumnIdentifiers(colsName);
-                    
-                    String value[] = new String[9];
-                    value[0]=rs.getInt("staff_id")+"";
-                    value[1]=rs.getString("name");
-                    value[2]=rs.getString("email");
-                    value[3]=rs.getString("phone");
-                    value[4]=rs.getInt("active")+"";
-                    value[5]=rs.getInt("store_id")+"";
-                    value[6]=rs.getInt("manager_state")+"";
-                    value[7]=rs.getString("gender");
-                    value[8]=rs.getString("password");
-                    tbn.addRow(value);
-                    jTable1.setModel(tbn);       
-                }      
-            }  
-            if(!rs.next()){
-                JOptionPane.showMessageDialog(this,"Không tìm thấy.Tìm kiếm thất bại ");
-            }
-            }catch(Exception ex){
-                System.out.println(  ex.toString());
-            }   
-        }
-     
-        
-    }//GEN-LAST:event_btnSearchActionPerformed
-
     private void Btn_ResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_ResetActionPerformed
         tbn.setRowCount(0);
         txtStaffID.setText("");
@@ -757,6 +681,62 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
          
      
     }//GEN-LAST:event_btnSearchKeyReleased
+
+    private void txtTimkiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimkiemKeyReleased
+        // TODO add your handling code here:
+        
+            try{
+                //DefaultTableModel defaultTableModel = new DefaultTableModel();
+            Connect a = new Connect();
+            Connection conn = a.getConnectDB();
+            StringBuffer sb = new StringBuffer();
+            PreparedStatement ps = null;
+            //String search_pk = "Select * from tblStaff where (staffID='"+txtTimkiem.getText()+"') or (Phone='"+txtTimkiem.getText()+"') or (Name like N'"+txtTimkiem.getText()+"') ";
+            String sql = "Select * from sales.staffs where ";
+            int number;
+            Vector row, column;
+            column = new Vector();
+            ResultSet rs = null;
+            String str1 = null;
+            if(BoxSearch.getSelectedItem().toString().equals("ID")){
+                ps = conn.prepareStatement(sql + "staff_id like ? ");
+                str1 = "%" + txtTimkiem.getText() + "%";
+                ps.setString(1, str1);
+                rs = ps.executeQuery();   
+            }else if(BoxSearch.getSelectedItem().toString().equals("Phone")){
+                ps = conn.prepareStatement(sql + "phone like ? ");
+                str1 = "%"+ txtTimkiem.getText()+ "%";
+                ps.setString(1, str1);
+                rs = ps.executeQuery();  
+            }else if(BoxSearch.getSelectedItem().toString().equals("Email")){
+                ps = conn.prepareStatement(sql + "email like ? ");
+                str1 = "%" + txtTimkiem.getText() + "%";
+                ps.setString(1, str1);
+                rs = ps.executeQuery();  
+            }
+            
+            tbn.setRowCount(0);
+            ResultSetMetaData metadata = rs.getMetaData();
+            number = metadata.getColumnCount();
+            
+            for(int i = 1; i <= number; i++){
+                column.add(metadata.getColumnName(i));
+            }
+            tbn.setColumnIdentifiers(column);
+            
+            while(rs.next()){
+                row = new Vector();
+                for(int i = 1; i <= number; i++){
+                    row.addElement(rs.getString(i));
+                }
+                tbn.addRow(row);
+                jTable1.setModel(tbn);
+            }
+            }catch(Exception ex){
+                System.out.println(  ex.toString());
+            }   
+        
+    }//GEN-LAST:event_txtTimkiemKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
