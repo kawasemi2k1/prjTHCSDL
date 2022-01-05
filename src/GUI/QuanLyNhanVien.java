@@ -283,6 +283,11 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
 
         btnSearch.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         btnSearch.setText("Tìm kiếm");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
         btnSearch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 btnSearchKeyReleased(evt);
@@ -737,6 +742,10 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             }   
         
     }//GEN-LAST:event_txtTimkiemKeyReleased
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSearchActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
