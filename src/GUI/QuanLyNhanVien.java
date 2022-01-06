@@ -36,6 +36,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
     static int old = -1;
     static String old1 = null;
     static String old2 = null;
+    int store = Integer.parseInt(Login.Store_ID);
     
 
     public QuanLyNhanVien() {
@@ -45,10 +46,14 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         //loadComobox1();
        // loadComobox2();
         txtStaffID.setEnabled(false);
-        BoxSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Phone", "Email" }));
-        cbActive.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1"}));
-        cbManagerstate.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1"}));
+        //txtStoreid.setText(store+"");
+        txtStoreid.setText(store+"");
+        txtStoreid.setEnabled(false);
+        BoxSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Phone", "Email" }));
+        cbActive.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hoạt động", "Nghỉ"}));
+        cbManagerstate.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Quản lý", "Nhân viên"}));
         cbGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ"}));
+        
         
     }
     public void loadComobox(){
@@ -102,7 +107,8 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             Vector row,column;
             column = new Vector();
             Statement st =conn.createStatement();
-            ResultSet rs=st.executeQuery("Select * from sales.staffs");
+            String query = " Select * from sales.staffs where store_id='"+store+"'";
+            ResultSet rs=st.executeQuery(query);
             ResultSetMetaData metadata =rs.getMetaData();
             number = metadata.getColumnCount();
             
@@ -113,7 +119,15 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             while(rs.next()){
                 row = new Vector();
                 for(int i=1;i<=number;i++){
+                    if(i==5)//vị trí của column active
+                    {
+                        row.addElement(rs.getString(i).equals("1") ? "Hoạt động" : "Nghỉ");
+                    }else if(i == 7){
+                        row.addElement(rs.getString(i).equals("1") ? "Quản lý" : "Nhân viên");
+                    }else {
                     row.addElement(rs.getString(i));
+                    }
+                    
                 }
                 tbn.addRow(row);
                 jTable1.setModel(tbn);  
@@ -123,7 +137,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
              //nap du lieu tu jtable len textfield
                public void valueChanged (ListSelectionEvent e){
                    if(jTable1.getSelectedRow()>= 0){
-                       txtStaffID.setText(jTable1.getValueAt(jTable1.getSelectedRow(),0)+ "");
+                        txtStaffID.setText(jTable1.getValueAt(jTable1.getSelectedRow(),0)+ "");
                        old = Integer.parseInt(txtStaffID.getText());
                        //txtStaffID.setEnabled(true);
                        txtName.setText(jTable1.getValueAt(jTable1.getSelectedRow(),1)+ "");
@@ -131,9 +145,9 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
                        old1 = txtEmail.getText();
                        txtPhone.setText(jTable1.getValueAt(jTable1.getSelectedRow(),3)+ "");
                        old2 = txtPhone.getText();
-                       cbActive.setSelectedItem(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),4)+ "");
+                       cbActive.setSelectedItem(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),4).equals("Hoạt động") ? "Hoạt động" : "Nghỉ" + "");
                        txtStoreid.setText(jTable1.getValueAt(jTable1.getSelectedRow(),5)+ "");
-                       cbManagerstate.setSelectedItem(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),6)+ "");
+                       cbManagerstate.setSelectedItem(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),6).equals("Quản lý") ? "Quản lý" : "Nhân viên" +"");
                        cbGender.setSelectedItem(jTable1.getModel().getValueAt(jTable1.getSelectedRow(),7)+ "");
                        txtpass.setText(jTable1.getValueAt(jTable1.getSelectedRow(),8)+ "");
                    } 
@@ -144,6 +158,9 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             System.out.println(ex.toString());
         }
     }
+    
+    
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -224,6 +241,17 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             }
         });
 
+        txtStoreid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtStoreidActionPerformed(evt);
+            }
+        });
+
+        txtTimkiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTimkiemActionPerformed(evt);
+            }
+        });
         txtTimkiem.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtTimkiemKeyReleased(evt);
@@ -286,11 +314,6 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSearchActionPerformed(evt);
-            }
-        });
-        btnSearch.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                btnSearchKeyReleased(evt);
             }
         });
 
@@ -469,7 +492,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             Connect a = new Connect();
             Connection conn = a.getConnectDB();
             if(txtName.getText().equals("") ||txtEmail.getText().equals("") ||txtPhone.getText().equals("")
-                    ||txtStoreid.getText().equals("") || txtpass.getText().equals("") ){
+                     || txtpass.getText().equals("") ){
                 JOptionPane.showMessageDialog(this, "Không được bỏ trống ");
             }else if( !validate.kiemTraTen(txtName.getText())){
                 JOptionPane.showMessageDialog(this, "Tên không được chứa chữ số");      
@@ -508,9 +531,9 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
                     ps.setString(1, txtName.getText());
                     ps.setString(2, txtEmail.getText());
                     ps.setString(3, txtPhone.getText());
-                    ps.setString(4, cbActive.getSelectedItem().toString());
-                    ps.setString(5, txtStoreid.getText());
-                    ps.setString(6, cbManagerstate.getSelectedItem().toString());
+                    ps.setString(4, cbActive.getSelectedItem().toString().equals("Hoạt động") ? "1" : "0");
+                    ps.setString(5, store+"");
+                    ps.setString(6, cbManagerstate.getSelectedItem().toString().equals("Quản lý") ? "1" : "0");
                     ps.setString(7, cbGender.getSelectedItem().toString());
                     ps.setString(8, txtpass.getText());
                     int check = ps.executeUpdate();
@@ -550,7 +573,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             Connect a = new Connect();
             Connection conn =a.getConnectDB();
         if(txtName.getText().equals("") ||txtEmail.getText().equals("") ||txtPhone.getText().equals("")
-                    ||txtStoreid.getText().equals("") || txtpass.getText().equals("") ){
+                     || txtpass.getText().equals("") ){
                 JOptionPane.showMessageDialog(this, "Không được bỏ trống ");
             }else if( !validate.kiemTraTen(txtName.getText())){
                 JOptionPane.showMessageDialog(this, "Tên không được chứa chữ số");      
@@ -640,13 +663,12 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             PreparedStatement comm =conn.prepareStatement(" Update sales.staffs set name=?,email=?,phone=?,active=?,store_id=?,manager_state=?,gender=?,password=? where staff_id=?");
             //txtStaffID.setEnabled(true);
             comm.setString(9,txtStaffID.getText());
-            txtStaffID.setEnabled(true);
             comm.setString(1, txtName.getText());
             comm.setString(2, txtEmail.getText());
             comm.setString(3, txtPhone.getText());
-            comm.setString(4, cbActive.getSelectedItem().toString());
-            comm.setString(5, txtStoreid.getText());
-            comm.setString(6, cbManagerstate.getSelectedItem().toString());
+            comm.setString(4, cbActive.getSelectedItem().toString().equals("Hoạt động") ? "1" : "0");
+            comm.setString(5, store+"");
+            comm.setString(6, cbManagerstate.getSelectedItem().toString().equals("Quản lý") ? "1" : "0");
             comm.setString(7, cbGender.getSelectedItem().toString());
             comm.setString(8, txtpass.getText());
             comm.executeUpdate();
@@ -681,12 +703,6 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
 // TODO add your handling code here:
     }//GEN-LAST:event_Btn_ResetActionPerformed
 
-    private void btnSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnSearchKeyReleased
-        // TODO add your handling code here:
-         
-     
-    }//GEN-LAST:event_btnSearchKeyReleased
-
     private void txtTimkiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimkiemKeyReleased
         // TODO add your handling code here:
         
@@ -697,18 +713,13 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             StringBuffer sb = new StringBuffer();
             PreparedStatement ps = null;
             //String search_pk = "Select * from tblStaff where (staffID='"+txtTimkiem.getText()+"') or (Phone='"+txtTimkiem.getText()+"') or (Name like N'"+txtTimkiem.getText()+"') ";
-            String sql = "Select * from sales.staffs where ";
+            String sql = "Select * from sales.staffs where store_id ='"+store+" 'and ";
             int number;
             Vector row, column;
             column = new Vector();
             ResultSet rs = null;
             String str1 = null;
-            if(BoxSearch.getSelectedItem().toString().equals("ID")){
-                ps = conn.prepareStatement(sql + "staff_id like ? ");
-                str1 = "%" + txtTimkiem.getText() + "%";
-                ps.setString(1, str1);
-                rs = ps.executeQuery();   
-            }else if(BoxSearch.getSelectedItem().toString().equals("Phone")){
+            if(BoxSearch.getSelectedItem().toString().equals("Phone")){
                 ps = conn.prepareStatement(sql + "phone like ? ");
                 str1 = "%"+ txtTimkiem.getText()+ "%";
                 ps.setString(1, str1);
@@ -732,7 +743,14 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             while(rs.next()){
                 row = new Vector();
                 for(int i = 1; i <= number; i++){
+                    if(i==5)//vị trí của column active
+                    {
+                        row.addElement(rs.getString(i).equals("1") ? "Hoạt động" : "Nghỉ");
+                    }else if(i == 7){
+                        row.addElement(rs.getString(i).equals("1") ? "Quản lý" : "Nhân viên");
+                    }else {
                     row.addElement(rs.getString(i));
+                    }
                 }
                 tbn.addRow(row);
                 jTable1.setModel(tbn);
@@ -744,8 +762,70 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
     }//GEN-LAST:event_txtTimkiemKeyReleased
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        // TODO add your handling code here:
+        try{
+                //DefaultTableModel defaultTableModel = new DefaultTableModel();
+            Connect a = new Connect();
+            Connection conn = a.getConnectDB();
+            StringBuffer sb = new StringBuffer();
+            PreparedStatement ps = null;
+            //String search_pk = "Select * from tblStaff where (staffID='"+txtTimkiem.getText()+"') or (Phone='"+txtTimkiem.getText()+"') or (Name like N'"+txtTimkiem.getText()+"') ";
+            String sql = "Select * from sales.staffs where store_id ='"+store+" 'and ";
+            int number;
+            Vector row, column;
+            column = new Vector();
+            ResultSet rs = null;
+            String str1 = null;
+            if(BoxSearch.getSelectedItem().toString().equals("Phone")){
+                ps = conn.prepareStatement(sql + "phone = ? ");
+                str1 =  txtTimkiem.getText();
+                ps.setString(1, str1);
+                rs = ps.executeQuery();  
+            }else if(BoxSearch.getSelectedItem().toString().equals("Email")){
+                ps = conn.prepareStatement(sql + "email = ? ");
+                str1 =   txtTimkiem.getText() ;
+                ps.setString(1, str1);
+                rs = ps.executeQuery();  
+            }
+            
+            tbn.setRowCount(0);
+            ResultSetMetaData metadata = rs.getMetaData();
+            number = metadata.getColumnCount();
+            
+            for(int i = 1; i <= number; i++){
+                column.add(metadata.getColumnName(i));
+            }
+            tbn.setColumnIdentifiers(column);
+            
+            while(rs.next()){
+                row = new Vector();
+                for(int i = 1; i <= number; i++){
+                    if(i==5)//vị trí của column active
+                    {
+                        row.addElement(rs.getString(i).equals("1") ? "Hoạt động" : "Nghỉ");
+                    }else if(i == 7){
+                        row.addElement(rs.getString(i).equals("1") ? "Quản lý" : "Nhân viên");
+                    }else {
+                    row.addElement(rs.getString(i));
+                    }
+                }
+                tbn.addRow(row);
+                jTable1.setModel(tbn);
+            }
+            }catch(Exception ex){
+                System.out.println(  ex.toString());
+            }   
+        
+// TODO add your handling code here:
     }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void txtTimkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimkiemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTimkiemActionPerformed
+
+    private void txtStoreidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStoreidActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_txtStoreidActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
