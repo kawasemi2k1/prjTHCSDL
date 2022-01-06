@@ -43,9 +43,12 @@ public class ThongKe_Cat extends javax.swing.JPanel {
         int xsize = (int) tk.getScreenSize().getWidth();
         int ysize = (int) tk.getScreenSize().getHeight() - 50;
         this.setSize(xsize, ysize);
+        createMap();
+        initFrame();               
     }
 
     public void createMap() {
+        map = new HashMap<>();
         Date tdate1 = date1.getDate();
         Date tdate2 = date2.getDate();
         Date tdate = new Date();
@@ -58,7 +61,7 @@ public class ThongKe_Cat extends javax.swing.JPanel {
         }
         try {
             Connect a = new Connect();
-            Connection conn = a.getConnectDB();
+            Connection conn = a.getConnection();
             String sql_doanhthu = "select pc.category_name as Ten, sum(so.price) as Tien from production.categories pc \n"
                     + "left join production.products pp on pc.category_id = pp.category_id\n"
                     + "left join sales.order_items sot on sot.product_id = pp.product_id\n"
@@ -126,6 +129,7 @@ public class ThongKe_Cat extends javax.swing.JPanel {
     }
 
     public void createMap2() {
+        map2 = new HashMap<>();
         Date tdate1 = date1.getDate();
         Date tdate2 = date2.getDate();
         Date tdate = new Date();
@@ -138,7 +142,7 @@ public class ThongKe_Cat extends javax.swing.JPanel {
         }
         try {
             Connect a = new Connect();
-            Connection conn = a.getConnectDB();
+            Connection conn = a.getConnection();
             String sql_doanhthu = "select pc.category_name as Ten, count(sot.order_id) as So from production.categories pc \n"
                     + "left join production.products pp on pc.category_id = pp.category_id\n"
                     + "left join sales.order_items sot on sot.product_id = pp.product_id\n"
@@ -218,97 +222,57 @@ public class ThongKe_Cat extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        label1 = new java.awt.Label();
         date1 = new com.toedter.calendar.JDateChooser();
-        jLabel2 = new javax.swing.JLabel();
         date2 = new com.toedter.calendar.JDateChooser();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jcontent = new javax.swing.JTabbedPane();
+        jLabel3 = new javax.swing.JLabel();
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setText("Thống kê theo loại hàng");
+        jPanel1.setLayout(null);
 
-        label1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        label1.setText("Từ ngày");
+        date1.setDate(new java.util.Date(1578102937000L));
+        jPanel1.add(date1);
+        date1.setBounds(630, 130, 190, 60);
+        jPanel1.add(date2);
+        date2.setBounds(1110, 130, 200, 60);
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel2.setText("Đến ngày");
-
-        jButton1.setText("Thống kê theo doanh thu");
+        jButton1.setText("Doanh thu");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
+        jPanel1.add(jButton1);
+        jButton1.setBounds(610, 250, 160, 70);
 
-        jButton2.setText("Thống kê theo số lượng");
+        jButton2.setText("Số lượng");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
+        jPanel1.add(jButton2);
+        jButton2.setBounds(1100, 250, 150, 70);
+        jPanel1.add(jcontent);
+        jcontent.setBounds(381, 395, 1110, 420);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(572, 572, 572)
-                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(date1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(65, 65, 65)
-                        .addComponent(jLabel2)
-                        .addGap(26, 26, 26)
-                        .addComponent(date2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(583, 583, 583)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(218, 218, 218)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(604, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(770, 770, 770))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(date1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(date2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(67, 67, 67))
-        );
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Bản sao của THỐNG KÊ loại hàng.jpg"))); // NOI18N
+        jLabel3.setText("jLabel3");
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(0, 0, 1530, 820);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jcontent))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1487, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(jcontent, javax.swing.GroupLayout.PREFERRED_SIZE, 614, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -330,10 +294,8 @@ public class ThongKe_Cat extends javax.swing.JPanel {
     private com.toedter.calendar.JDateChooser date2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTabbedPane jcontent;
-    private java.awt.Label label1;
     // End of variables declaration//GEN-END:variables
 }
