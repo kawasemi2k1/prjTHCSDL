@@ -1193,15 +1193,14 @@ public class BanHang extends javax.swing.JPanel {
                     customerID = rs.getString(1);
                 }
 
-                PreparedStatement ps1 = con.prepareStatement("insert into sales.orders values (?, ?, ?, ?);");
+                PreparedStatement ps1 = con.prepareStatement("insert into sales.orders values (?, ?, ?);");
                 ps1.setString(1, customerID);
                 ps1.setString(2, String.valueOf(staff));
                 ps1.setObject(3, new Date());
-                ps1.setString(4, String.valueOf(totalBillPrice));
                 int update = ps1.executeUpdate();
 
                 int update1 = 0, update2  = 0;
-                PreparedStatement ps2 = con.prepareStatement("insert into sales.order_items values (?, ?, ?, ?, ?, ?, ?, ?);");
+                PreparedStatement ps2 = con.prepareStatement("insert into sales.order_items values (?, ?, ?, ?, ?, ?, ?, ?, ?);");
                 for(int i=0; i < jTableBill.getRowCount(); i++) {
                     ps2.setString(1, String.valueOf(seed + 1));
                     ps2.setString(2, jTableBill.getValueAt(i, 0) + "");
@@ -1353,7 +1352,7 @@ public class BanHang extends javax.swing.JPanel {
                 int update = ps.executeUpdate();
                 
                 int update1 = 0, update2  = 0;
-                PreparedStatement ps2 = con.prepareStatement("insert into sales.order_items values (?, ?, ?, ?, ?, ?, ?, ?);");
+                PreparedStatement ps2 = con.prepareStatement("insert into sales.order_items values (?, ?, ?, ?, ?, ?, ?, ?, ?);");
                 for(int i=0; i < jTableBill.getRowCount(); i++) {
                     ps2.setString(1, billID);
                     ps2.setString(2, jTableBill.getValueAt(i, 0) + "");
@@ -1365,10 +1364,12 @@ public class BanHang extends javax.swing.JPanel {
                     ps2.setString(6, jTableBill.getValueAt(i, 5) + "");
                     ps2.setString(7, jTableBill.getValueAt(i, 7) + "");
                     ps2.setString(8, jTableBill.getValueAt(i, 6) + "");
+                    double profit = Profit(jTableBill.getValueAt(i, 0) + "", Double.parseDouble(jTableBill.getValueAt(i, 7) + ""), Double.parseDouble(jTableBill.getValueAt(i, 5) + ""));
+                    ps2.setString(9, String.valueOf(profit));
                     update1 = ps2.executeUpdate();
 
                     if(jTableBill.getValueAt(i, 8).toString().equals("Mới")) {
-                        PreparedStatement ps3 = con.prepareStatement("update sales.stocks set quantity = quantity - ? "
+                        PreparedStatement ps3 = con.prepareStatement("update vCurrentProduct set quantity = quantity - ? "
                                 + "where product_id = ? "
                                 + "and created_at = ? "
                                 + "and good_till = ? "
@@ -1457,4 +1458,20 @@ public class BanHang extends javax.swing.JPanel {
     private javax.swing.JTextField txtStaff;
     private javax.swing.JTextField txtTotalBillPrice;
     // End of variables declaration//GEN-END:variables
+
+    private double Profit(String product_ID, double totalSinglePrice, double quantity) {
+        double primePrice = 0;
+        try {
+            Connect a = new Connect();
+            Connection con = a.getConnectDB();
+            PreparedStatement ps = con.prepareStatement("select price from production.products where product_id = ?");
+            ps.setString(1, product_ID);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            primePrice = rs.getDouble(1);
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
+        return totalSinglePrice - primePrice * quantity;
+    }
 }
