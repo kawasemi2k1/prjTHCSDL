@@ -89,7 +89,7 @@ INSERT INTO production.products(product_id, product_name, brand_id, category_id,
 SET IDENTITY_INSERT production.products OFF;
 
 --6. stocks
-insert into sales.products values
+insert into sales.goods values
 (1, '2021-01-01', '2022-02-02', 1, 10000.00, 10.00, 20),
 (1, '2021-01-01', '2022-11-01', 1, 15000.00, 20.00, 20),
 (1, '2021-01-01', '2022-11-01', 2, 15000.00, 20.00, 20),

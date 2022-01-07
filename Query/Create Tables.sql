@@ -1,5 +1,6 @@
 use CSDL_Project;
 
+--Table
 CREATE TABLE production.categories (
 	category_id INT IDENTITY (1, 1) PRIMARY KEY,
 	category_name NVARCHAR (255) NOT NULL
@@ -62,7 +63,7 @@ CREATE TABLE sales.orders (
 	FOREIGN KEY (staff_id) REFERENCES sales.staffs (staff_id) 
 );
 
-CREATE TABLE sales.products (
+CREATE TABLE sales.goods (
 	product_id INT not null,
 	created_at date not null,
 	good_till date not null,
@@ -86,19 +87,11 @@ CREATE TABLE sales.order_items (
 	discount DECIMAL (4, 2) NOT NULL DEFAULT 0,
 	profit DECIMAL (10, 2) NOT NULL default 0,
 	FOREIGN KEY (order_id) REFERENCES sales.orders (order_id) on delete cascade on update cascade,
-	foreign key (product_id, created_at, good_till, store_id) references sales.products (product_id, created_at, good_till, store_id),
+	foreign key (product_id, created_at, good_till, store_id) references sales.goods (product_id, created_at, good_till, store_id),
 	foreign key (product_id) references production.products (product_id)
 );
 
-drop table sales.order_items;
-drop table sales.products;
-drop table sales.orders;
-drop table sales.staffs;
-drop table production.products;
-drop table production.categories;
-drop table production.brands;
-drop table sales.customers;
-drop table sales.stores;
+
 
 --Views
 go
@@ -106,11 +99,21 @@ create view vRealCustomer as
 select * from sales.customers where customer_id != 1;
 go
 create view vOutdatedProduct as
-select * from sales.products where getdate() >= good_till;
+select * from sales.goods where getdate() >= good_till;
 go
 create view vCurrentProduct as
-select * from sales.products where getdate() < good_till;
+select * from sales.goods where getdate() < good_till;
 
+--Delete
+drop table sales.order_items;
+drop table sales.goods;
+drop table sales.orders;
+drop table sales.staffs;
+drop table production.products;
+drop table production.categories;
+drop table production.brands;
+drop table sales.customers;
+drop table sales.stores;
 drop view vRealCustomer;
 drop view vOutdatedProduct;
 drop view vCurrentProduct;
