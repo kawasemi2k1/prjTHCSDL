@@ -1142,19 +1142,6 @@ public class BanHang extends javax.swing.JPanel {
            JOptionPane.YES_NO_OPTION,
            JOptionPane.QUESTION_MESSAGE);
         if(result1 == JOptionPane.YES_OPTION){
-            String mess = JOptionPane.showInputDialog(this, "Tiền khách đưa:");
-            if(!isDouble(mess)) {
-                JOptionPane.showMessageDialog(this, "Không phải số, vui lòng bấm Thanh toán lại.");
-                return;
-            } else if (Double.parseDouble(mess) < Double.parseDouble(txtTotalBillPrice.getText())) {
-                JOptionPane.showMessageDialog(this, "Số tiền này không đủ, vui lòng bấm Thanh toán lại.");
-                return;
-            } else {
-                double change = Double.parseDouble(mess) - Double.parseDouble(txtTotalBillPrice.getText());
-                String strChange = String.valueOf(change);
-                JOptionPane.showMessageDialog(this, "Tiền thừa: " + strChange + "\nThanh toán thành công.");
-            }
-            
             int seed = 0;
             if(txtCustomerName.getText().equals("")){
                 int result = JOptionPane.showConfirmDialog(this ,"Chưa rõ khách hàng.\nBạn có muốn tiếp tục?", "Làm ơn xác nhận",
@@ -1167,6 +1154,19 @@ public class BanHang extends javax.swing.JPanel {
                 }else {
                    return;
                 }
+            }
+            
+            String mess = JOptionPane.showInputDialog(this, "Tiền khách đưa:");
+            if(!isDouble(mess)) {
+                JOptionPane.showMessageDialog(this, "Không phải số, vui lòng bấm Thanh toán lại.");
+                return;
+            } else if (Double.parseDouble(mess) < Double.parseDouble(txtTotalBillPrice.getText())) {
+                JOptionPane.showMessageDialog(this, "Số tiền này không đủ, vui lòng bấm Thanh toán lại.");
+                return;
+            } else {
+                double change = Double.parseDouble(mess) - Double.parseDouble(txtTotalBillPrice.getText());
+                String strChange = String.valueOf(change);
+                JOptionPane.showMessageDialog(this, "Tiền thừa: " + strChange + "\nThanh toán thành công.");
             }
 
             try {
