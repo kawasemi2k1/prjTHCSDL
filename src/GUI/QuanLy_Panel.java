@@ -40,19 +40,34 @@ public class QuanLy_Panel extends javax.swing.JPanel {
 
         jPanel1.setLayout(null);
 
-        jButton1.setText("Quản lý nhân viên");
+        jButton1.setContentAreaFilled(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton1);
         jButton1.setBounds(170, 220, 270, 140);
 
-        jButton2.setText("Quản lý sản phẩm ngoài quầy");
+        jButton2.setContentAreaFilled(false);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton2);
         jButton2.setBounds(170, 400, 260, 140);
 
-        jButton3.setText("Quản lý khách hàng");
+        jButton3.setContentAreaFilled(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton3);
-        jButton3.setBounds(570, 220, 260, 130);
+        jButton3.setBounds(560, 220, 270, 130);
 
-        jButton4.setText("Quản lý sản phẩm chuỗi cửa hàng");
+        jButton4.setContentAreaFilled(false);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -94,6 +109,24 @@ public class QuanLy_Panel extends javax.swing.JPanel {
         QL_SPChuoiCuaHang ql = new QL_SPChuoiCuaHang();
         ql.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        QL_SPNgoaiQuay ql = new QL_SPNgoaiQuay();
+        ql.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        QL_NhanVien ql = new QL_NhanVien();
+        ql.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        QL_KhachHang ql = new QL_KhachHang();
+        ql.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
