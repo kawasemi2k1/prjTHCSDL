@@ -20,6 +20,9 @@ insert into sales.customers values
 insert into sales.staffs values
 (N'Trần Đức Mạnh', 'tranducmanh@gmail', '0357251858', 1, 1, 1, 'Nam', 'manh135792468')
 
+insert into sales.staffs values
+(N'Nguyễn Thị Thúy', 'thuy@gmail.com', '0123456789', 1, 2, 1, 'Nữ', '1')
+
 --4. orders
 
 --5. order_item
