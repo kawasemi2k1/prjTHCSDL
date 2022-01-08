@@ -16,13 +16,13 @@ public class TK_Cat extends javax.swing.JFrame {
      * Creates new form TK_Cat
      */
     public TK_Cat() {
-         this.setAlwaysOnTop(true); // this interface is always on top
+        this.setAlwaysOnTop(true); // this interface is always on top
         this.setResizable(false); // not resizeble now
         this.setVisible(true);
         initComponents();
         Toolkit tk = Toolkit.getDefaultToolkit();
         int xsize = (int) tk.getScreenSize().getWidth();
-        int ysize = (int) tk.getScreenSize().getHeight() - 50;
+        int ysize = (int) tk.getScreenSize().getHeight();
         this.setSize(xsize, ysize);
         
         ThongKe_Cat frm = new ThongKe_Cat();
@@ -39,30 +39,19 @@ public class TK_Cat extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jcontent = new javax.swing.JPanel();
+        jcontent = new javax.swing.JTabbedPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        javax.swing.GroupLayout jcontentLayout = new javax.swing.GroupLayout(jcontent);
-        jcontent.setLayout(jcontentLayout);
-        jcontentLayout.setHorizontalGroup(
-            jcontentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jcontentLayout.setVerticalGroup(
-            jcontentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jcontent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jcontent, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jcontent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jcontent, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
 
         pack();
@@ -104,6 +93,6 @@ public class TK_Cat extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jcontent;
+    private javax.swing.JTabbedPane jcontent;
     // End of variables declaration//GEN-END:variables
 }

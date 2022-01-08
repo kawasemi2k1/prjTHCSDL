@@ -1,7 +1,7 @@
 package GUI;
 
 
-import static com.sun.org.apache.xalan.internal.lib.ExsltDynamic.map;
+//import static com.sun.org.apache.xalan.internal.lib.ExsltDynamic.map;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class ThongKeBrands extends javax.swing.JPanel {
     DefaultTableModel tbn = new DefaultTableModel();
-    
+    static int store = Integer.parseInt(Login.Store_ID);
    
     
      
@@ -39,16 +39,13 @@ public class ThongKeBrands extends javax.swing.JPanel {
         BtnBanchay = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
         BoxTKBrand_Chay = new javax.swing.JComboBox<>();
         BtnBancham = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         BoxTKBrand_Cham = new javax.swing.JComboBox<>();
         datefrom = new com.toedter.calendar.JDateChooser();
         dateto = new com.toedter.calendar.JDateChooser();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
 
         menu1.setLabel("File");
         menuBar1.add(menu1);
@@ -66,7 +63,7 @@ public class ThongKeBrands extends javax.swing.JPanel {
             }
         });
         add(BtnBanchay);
-        BtnBanchay.setBounds(210, 140, 100, 30);
+        BtnBanchay.setBounds(610, 250, 150, 70);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -82,12 +79,7 @@ public class ThongKeBrands extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTable1);
 
         add(jScrollPane1);
-        jScrollPane1.setBounds(32, 200, 920, 402);
-
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel1.setText("THỐNG KÊ THEO BRANDS");
-        add(jLabel1);
-        jLabel1.setBounds(250, 10, 390, 60);
+        jScrollPane1.setBounds(510, 370, 930, 360);
 
         BoxTKBrand_Chay.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         BoxTKBrand_Chay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -97,7 +89,7 @@ public class ThongKeBrands extends javax.swing.JPanel {
             }
         });
         add(BoxTKBrand_Chay);
-        BoxTKBrand_Chay.setBounds(210, 80, 100, 30);
+        BoxTKBrand_Chay.setBounds(450, 280, 100, 30);
 
         BtnBancham.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         BtnBancham.setText("Thống Kê");
@@ -107,17 +99,7 @@ public class ThongKeBrands extends javax.swing.JPanel {
             }
         });
         add(BtnBancham);
-        BtnBancham.setBounds(440, 140, 100, 30);
-
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel2.setText("TOP 5 BRANDS BÁN CHẬM");
-        add(jLabel2);
-        jLabel2.setBounds(550, 110, 200, 30);
-
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel3.setText("TOP 5 BRANDS BÁN CHẠY");
-        add(jLabel3);
-        jLabel3.setBounds(30, 100, 190, 50);
+        BtnBancham.setBounds(1110, 250, 150, 70);
 
         BoxTKBrand_Cham.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         BoxTKBrand_Cham.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -127,21 +109,20 @@ public class ThongKeBrands extends javax.swing.JPanel {
             }
         });
         add(BoxTKBrand_Cham);
-        BoxTKBrand_Cham.setBounds(440, 80, 100, 30);
+        BoxTKBrand_Cham.setBounds(970, 280, 100, 30);
         add(datefrom);
-        datefrom.setBounds(800, 80, 139, 30);
+        datefrom.setBounds(640, 140, 124, 30);
         add(dateto);
-        dateto.setBounds(800, 140, 139, 30);
+        dateto.setBounds(1120, 140, 124, 30);
 
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel4.setText("From");
-        add(jLabel4);
-        jLabel4.setBounds(800, 60, 50, 17);
+        jButton1.setText("jButton1");
+        add(jButton1);
+        jButton1.setBounds(0, 670, 400, 140);
 
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel5.setText("To");
-        add(jLabel5);
-        jLabel5.setBounds(800, 120, 50, 17);
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/TK brands.png"))); // NOI18N
+        jLabel6.setText("jLabel6");
+        add(jLabel6);
+        jLabel6.setBounds(0, -10, 1560, 830);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnBanchayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBanchayActionPerformed
@@ -314,13 +295,10 @@ public class ThongKeBrands extends javax.swing.JPanel {
     private javax.swing.JButton BtnBanchay;
     private com.toedter.calendar.JDateChooser datefrom;
     private com.toedter.calendar.JDateChooser dateto;
+    private javax.swing.JButton jButton1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private java.awt.Menu menu1;

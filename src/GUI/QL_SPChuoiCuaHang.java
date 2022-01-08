@@ -22,7 +22,7 @@ public class QL_SPChuoiCuaHang extends javax.swing.JFrame {
         initComponents();
         Toolkit tk = Toolkit.getDefaultToolkit();
         int xsize = (int) tk.getScreenSize().getWidth();
-        int ysize = (int) tk.getScreenSize().getHeight() - 50;
+        int ysize = (int) tk.getScreenSize().getHeight();
         this.setSize(xsize, ysize);
         
         QuanLySanPhamChuoiCuaHang frm = new QuanLySanPhamChuoiCuaHang();
@@ -62,8 +62,8 @@ public class QL_SPChuoiCuaHang extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    // End of variables declaration//GEN-END:variables
+    // Variables declaration - do not modify                     
+    // End of variables declaration                   
 
 
     /**
