@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import View.QuanLyNhanVien;
 import java.awt.Toolkit;
 
 /**

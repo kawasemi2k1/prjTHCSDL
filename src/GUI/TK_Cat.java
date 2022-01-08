@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import ThongKe.ThongKe_Cat;
 import java.awt.Toolkit;
 
 /**

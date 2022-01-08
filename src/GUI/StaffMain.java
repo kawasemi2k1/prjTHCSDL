@@ -5,6 +5,10 @@
  */
 package GUI;
 
+import View.BanHang;
+import View.QuanLyKhachHang;
+import View.QuanLySanPhamChuoiCuaHang;
+import View.QuanLySanPhamNgoaiQuay;
 import java.awt.Toolkit;
 
 /**

@@ -2,6 +2,7 @@ package GUI;
 
 
 
+import Utils.Connect;
 import javax.mail.PasswordAuthentication;
 import java.sql.Connection;
 import java.sql.ResultSet;
