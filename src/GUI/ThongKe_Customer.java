@@ -108,20 +108,20 @@ public class ThongKe_Customer extends javax.swing.JPanel {
         jPanel1.add(date2);
         date2.setBounds(1110, 140, 200, 40);
 
-        jButton1.setText("Top 5 khách hàng quen thuộc");
+        jButton1.setContentAreaFilled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
         jPanel1.add(jButton1);
-        jButton1.setBounds(911, 210, 170, 70);
+        jButton1.setBounds(911, 210, 150, 70);
         jPanel1.add(jcontent);
         jcontent.setBounds(400, 310, 1140, 474);
 
-        jButton2.setText("Thoát");
+        jButton2.setContentAreaFilled(false);
         jPanel1.add(jButton2);
-        jButton2.setBounds(0, 660, 360, 120);
+        jButton2.setBounds(10, 690, 350, 90);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/THỐNG KÊ khách hàng.png"))); // NOI18N
         jLabel1.setText("jLabel1");

@@ -56,7 +56,7 @@ public class ThongKeBrands extends javax.swing.JPanel {
         setLayout(null);
 
         BtnBanchay.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        BtnBanchay.setText("Thống Kê");
+        BtnBanchay.setContentAreaFilled(false);
         BtnBanchay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnBanchayActionPerformed(evt);
@@ -89,17 +89,17 @@ public class ThongKeBrands extends javax.swing.JPanel {
             }
         });
         add(BoxTKBrand_Chay);
-        BoxTKBrand_Chay.setBounds(450, 280, 100, 30);
+        BoxTKBrand_Chay.setBounds(450, 270, 120, 50);
 
         BtnBancham.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        BtnBancham.setText("Thống Kê");
+        BtnBancham.setContentAreaFilled(false);
         BtnBancham.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnBanchamActionPerformed(evt);
             }
         });
         add(BtnBancham);
-        BtnBancham.setBounds(1110, 250, 150, 70);
+        BtnBancham.setBounds(1110, 260, 140, 60);
 
         BoxTKBrand_Cham.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         BoxTKBrand_Cham.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -109,15 +109,17 @@ public class ThongKeBrands extends javax.swing.JPanel {
             }
         });
         add(BoxTKBrand_Cham);
-        BoxTKBrand_Cham.setBounds(970, 280, 100, 30);
-        add(datefrom);
-        datefrom.setBounds(640, 140, 124, 30);
-        add(dateto);
-        dateto.setBounds(1120, 140, 124, 30);
+        BoxTKBrand_Cham.setBounds(950, 270, 120, 50);
 
-        jButton1.setText("jButton1");
+        datefrom.setDate(new java.util.Date(1610103193000L));
+        add(datefrom);
+        datefrom.setBounds(640, 130, 130, 50);
+        add(dateto);
+        dateto.setBounds(1120, 140, 140, 40);
+
+        jButton1.setContentAreaFilled(false);
         add(jButton1);
-        jButton1.setBounds(0, 670, 400, 140);
+        jButton1.setBounds(10, 680, 390, 120);
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/TK brands.png"))); // NOI18N
         jLabel6.setText("jLabel6");

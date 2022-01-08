@@ -761,7 +761,7 @@ public class BanHang extends javax.swing.JPanel {
         JComponent comp = (JComponent) evt.getSource();
         Window win = SwingUtilities.getWindowAncestor(comp);
         win.dispose();
-        ManagerMain main = new ManagerMain();
+        Main_QuanLy main = new Main_QuanLy();
         main.setVisible(true);        
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -149,59 +149,63 @@ public class QuanLySanPhamNgoaiQuay extends javax.swing.JPanel {
         add(txt_soLuong);
         txt_soLuong.setBounds(510, 380, 233, 22);
 
-        btn_them.setText("Thêm");
+        btn_them.setContentAreaFilled(false);
         btn_them.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_themActionPerformed(evt);
             }
         });
         add(btn_them);
-        btn_them.setBounds(940, 180, 180, 70);
+        btn_them.setBounds(930, 160, 200, 100);
 
-        btn_xoa.setText("Xóa");
+        btn_xoa.setContentAreaFilled(false);
         btn_xoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_xoaActionPerformed(evt);
             }
         });
         add(btn_xoa);
-        btn_xoa.setBounds(950, 310, 170, 70);
+        btn_xoa.setBounds(930, 290, 200, 110);
 
-        btn_sua.setText("Sửa");
+        btn_sua.setContentAreaFilled(false);
         btn_sua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_suaActionPerformed(evt);
             }
         });
         add(btn_sua);
-        btn_sua.setBounds(1210, 180, 160, 80);
+        btn_sua.setBounds(1180, 160, 220, 100);
 
-        jButton4.setText("Thoát");
+        jButton4.setContentAreaFilled(false);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
             }
         });
         add(jButton4);
-        jButton4.setBounds(10, 690, 270, 100);
+        jButton4.setBounds(0, 690, 290, 110);
 
-        btn_reset.setText("Làm mới");
+        btn_reset.setContentAreaFilled(false);
         btn_reset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_resetActionPerformed(evt);
             }
         });
         add(btn_reset);
-        btn_reset.setBounds(1190, 310, 200, 80);
+        btn_reset.setBounds(1190, 290, 200, 110);
 
+        btn_search.setBackground(new java.awt.Color(51, 51, 255));
+        btn_search.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_search.setForeground(new java.awt.Color(255, 255, 255));
         btn_search.setText("Tìm kiếm");
+        btn_search.setBorderPainted(false);
         btn_search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_searchActionPerformed(evt);
             }
         });
         add(btn_search);
-        btn_search.setBounds(940, 440, 100, 40);
+        btn_search.setBounds(800, 440, 100, 40);
 
         txt_search.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -209,11 +213,11 @@ public class QuanLySanPhamNgoaiQuay extends javax.swing.JPanel {
             }
         });
         add(txt_search);
-        txt_search.setBounds(500, 440, 350, 40);
+        txt_search.setBounds(500, 440, 290, 40);
 
         jComboBoxSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tên sản phẩm", "Giảm Giá", "Ngày sản xuất", "Hạn sử dụng" }));
         add(jComboBoxSearch);
-        jComboBoxSearch.setBounds(340, 440, 130, 40);
+        jComboBoxSearch.setBounds(360, 440, 110, 40);
 
         tbl_sanPhamBan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -234,7 +238,7 @@ public class QuanLySanPhamNgoaiQuay extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tbl_sanPhamBan);
 
         add(jScrollPane1);
-        jScrollPane1.setBounds(340, 500, 1160, 280);
+        jScrollPane1.setBounds(350, 510, 1140, 260);
         add(dc_ngaySX);
         dc_ngaySX.setBounds(510, 210, 190, 22);
         add(dc_hanSD);

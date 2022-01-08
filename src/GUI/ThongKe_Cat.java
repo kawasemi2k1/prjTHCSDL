@@ -234,7 +234,8 @@ public class ThongKe_Cat extends javax.swing.JPanel {
         add(jcontent);
         jcontent.setBounds(390, 360, 1140, 450);
 
-        jButton1.setText("Doanh thu");
+        jButton1.setContentAreaFilled(false);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -247,7 +248,7 @@ public class ThongKe_Cat extends javax.swing.JPanel {
         add(date1);
         date1.setBounds(640, 130, 190, 60);
 
-        jButton2.setText("Số lượng");
+        jButton2.setContentAreaFilled(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -258,7 +259,12 @@ public class ThongKe_Cat extends javax.swing.JPanel {
         add(date2);
         date2.setBounds(1130, 130, 200, 60);
 
-        jButton3.setText("jButton3");
+        jButton3.setContentAreaFilled(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         add(jButton3);
         jButton3.setBounds(0, 690, 370, 110);
 
@@ -279,6 +285,10 @@ public class ThongKe_Cat extends javax.swing.JPanel {
         createMap2();
         initFrame2();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

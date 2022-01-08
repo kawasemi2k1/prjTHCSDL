@@ -175,29 +175,29 @@ public class ThongKe_Staff extends javax.swing.JPanel {
         jPanel1.add(date2);
         date2.setBounds(1100, 130, 180, 60);
 
-        jButton1.setText("Top 5 nhân viên có doanh thu cao nhất");
+        jButton1.setContentAreaFilled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
         jPanel1.add(jButton1);
-        jButton1.setBounds(560, 260, 220, 60);
+        jButton1.setBounds(590, 250, 150, 70);
         jPanel1.add(jcontent);
         jcontent.setBounds(370, 340, 1150, 460);
 
-        jButton2.setText("Top 5 nhân viên có doanh thu thấp nhất");
+        jButton2.setContentAreaFilled(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
         jPanel1.add(jButton2);
-        jButton2.setBounds(1030, 250, 245, 80);
+        jButton2.setBounds(1085, 250, 150, 70);
 
-        jButton3.setText("Thoát");
+        jButton3.setContentAreaFilled(false);
         jPanel1.add(jButton3);
-        jButton3.setBounds(0, 670, 340, 120);
+        jButton3.setBounds(10, 690, 340, 120);
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/THỐNG KÊ nhân viên.png"))); // NOI18N
         jLabel3.setText("jLabel3");

@@ -196,7 +196,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             }
         });
         jPanel1.add(txtStaffID);
-        txtStaffID.setBounds(490, 160, 144, 26);
+        txtStaffID.setBounds(490, 160, 200, 26);
 
         txtPhone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -204,9 +204,9 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             }
         });
         jPanel1.add(txtPhone);
-        txtPhone.setBounds(490, 280, 144, 22);
+        txtPhone.setBounds(490, 280, 200, 22);
         jPanel1.add(txtEmail);
-        txtEmail.setBounds(490, 320, 144, 22);
+        txtEmail.setBounds(490, 320, 200, 22);
         jPanel1.add(txtpass);
         txtpass.setBounds(900, 160, 220, 22);
 
@@ -243,7 +243,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         txtTimkiem.setBounds(490, 440, 250, 40);
 
         btnThem.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        btnThem.setText("Thêm");
+        btnThem.setContentAreaFilled(false);
         btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThemActionPerformed(evt);
@@ -253,17 +253,17 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         btnThem.setBounds(1190, 90, 200, 90);
 
         btnSua.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        btnSua.setText("Sửa");
+        btnSua.setContentAreaFilled(false);
         btnSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSuaActionPerformed(evt);
             }
         });
         jPanel1.add(btnSua);
-        btnSua.setBounds(1190, 240, 200, 90);
+        btnSua.setBounds(1190, 230, 210, 110);
 
         btnXoa.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        btnXoa.setText("Xóa");
+        btnXoa.setContentAreaFilled(false);
         btnXoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnXoaActionPerformed(evt);
@@ -273,14 +273,14 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         btnXoa.setBounds(1190, 380, 200, 110);
 
         btnThoat.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        btnThoat.setText("Thoát");
+        btnThoat.setContentAreaFilled(false);
         btnThoat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThoatActionPerformed(evt);
             }
         });
         jPanel1.add(btnThoat);
-        btnThoat.setBounds(10, 700, 260, 90);
+        btnThoat.setBounds(0, 690, 290, 110);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -298,7 +298,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(345, 509, 1150, 270);
         jPanel1.add(txtName);
-        txtName.setBounds(490, 200, 144, 22);
+        txtName.setBounds(490, 200, 200, 22);
 
         cbGender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -306,7 +306,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             }
         });
         jPanel1.add(cbGender);
-        cbGender.setBounds(490, 240, 144, 24);
+        cbGender.setBounds(490, 240, 140, 24);
 
         btnSearch.setBackground(new java.awt.Color(51, 51, 255));
         btnSearch.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -326,7 +326,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         BoxSearch.setBounds(360, 440, 100, 40);
 
         Btn_Reset.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        Btn_Reset.setText("Reset");
+        Btn_Reset.setContentAreaFilled(false);
         Btn_Reset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Btn_ResetActionPerformed(evt);

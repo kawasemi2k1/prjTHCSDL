@@ -64,50 +64,50 @@ public class ThongKe_Stores extends javax.swing.JPanel {
 
         jPanel1.setLayout(null);
 
-        jButton1.setText("Thống kê tiền thu về");
+        jButton1.setContentAreaFilled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
         jPanel1.add(jButton1);
-        jButton1.setBounds(600, 260, 191, 58);
+        jButton1.setBounds(610, 248, 150, 70);
 
         date1.setDate(new java.util.Date(1578101857000L));
         jPanel1.add(date1);
-        date1.setBounds(640, 150, 190, 36);
+        date1.setBounds(640, 136, 190, 50);
         jPanel1.add(date2);
-        date2.setBounds(1120, 150, 200, 36);
+        date2.setBounds(1120, 136, 200, 50);
         jPanel1.add(jcontent);
         jcontent.setBounds(390, 360, 1150, 460);
 
-        jButton2.setText("Thống kê tiền lãi");
+        jButton2.setContentAreaFilled(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
         jPanel1.add(jButton2);
-        jButton2.setBounds(1070, 260, 201, 58);
+        jButton2.setBounds(1101, 248, 150, 70);
 
-        jButton3.setText("jButton3");
+        jButton3.setContentAreaFilled(false);
         jPanel1.add(jButton3);
         jButton3.setBounds(0, 690, 370, 120);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/THỐNG KÊ cửa hàng (1).png"))); // NOI18N
         jLabel1.setText("jLabel1");
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(0, -60, 1580, 940);
+        jLabel1.setBounds(0, -60, 1550, 940);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1540, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1552, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 823, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 828, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 

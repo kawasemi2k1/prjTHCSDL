@@ -467,15 +467,15 @@ public class QuanLySanPhamChuoiCuaHang extends javax.swing.JPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1150, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1140, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
         );
 
         add(jPanel2);
-        jPanel2.setBounds(340, 500, 1150, 270);
+        jPanel2.setBounds(350, 510, 1140, 260);
         add(txt_price);
         txt_price.setBounds(500, 370, 300, 30);
         add(txt_brand);
@@ -485,7 +485,7 @@ public class QuanLySanPhamChuoiCuaHang extends javax.swing.JPanel {
         add(txt_name);
         txt_name.setBounds(500, 200, 300, 30);
 
-        btn_them.setText("Thêm");
+        btn_them.setContentAreaFilled(false);
         btn_them.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_themActionPerformed(evt);
@@ -494,7 +494,7 @@ public class QuanLySanPhamChuoiCuaHang extends javax.swing.JPanel {
         add(btn_them);
         btn_them.setBounds(930, 160, 200, 100);
 
-        btn_sua.setText("Sửa");
+        btn_sua.setContentAreaFilled(false);
         btn_sua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_suaActionPerformed(evt);
@@ -503,7 +503,7 @@ public class QuanLySanPhamChuoiCuaHang extends javax.swing.JPanel {
         add(btn_sua);
         btn_sua.setBounds(1190, 160, 200, 100);
 
-        btn_xoa.setText("Xóa");
+        btn_xoa.setContentAreaFilled(false);
         btn_xoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_xoaActionPerformed(evt);
@@ -522,7 +522,8 @@ public class QuanLySanPhamChuoiCuaHang extends javax.swing.JPanel {
         add(txt_country);
         txt_country.setBounds(500, 330, 300, 30);
 
-        btn_thoat.setText("Thoát");
+        btn_thoat.setActionCommand("");
+        btn_thoat.setContentAreaFilled(false);
         btn_thoat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_thoatActionPerformed(evt);
@@ -531,7 +532,7 @@ public class QuanLySanPhamChuoiCuaHang extends javax.swing.JPanel {
         add(btn_thoat);
         btn_thoat.setBounds(0, 680, 290, 110);
 
-        btn_reset.setText("Reset");
+        btn_reset.setContentAreaFilled(false);
         btn_reset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_resetActionPerformed(evt);
@@ -542,7 +543,7 @@ public class QuanLySanPhamChuoiCuaHang extends javax.swing.JPanel {
 
         jComboBoxSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Name", "Brand", "Category", "Country" }));
         add(jComboBoxSearch);
-        jComboBoxSearch.setBounds(340, 420, 110, 70);
+        jComboBoxSearch.setBounds(350, 430, 100, 50);
 
         txt_search.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -550,16 +551,20 @@ public class QuanLySanPhamChuoiCuaHang extends javax.swing.JPanel {
             }
         });
         add(txt_search);
-        txt_search.setBounds(490, 420, 420, 70);
+        txt_search.setBounds(480, 430, 290, 50);
 
+        btn_search.setBackground(new java.awt.Color(51, 51, 255));
+        btn_search.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_search.setForeground(new java.awt.Color(255, 255, 255));
         btn_search.setText("Tìm kiếm");
+        btn_search.setBorderPainted(false);
         btn_search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_searchActionPerformed(evt);
             }
         });
         add(btn_search);
-        btn_search.setBounds(950, 420, 130, 60);
+        btn_search.setBounds(800, 430, 100, 50);
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Frame Quản lý sản phảm.png"))); // NOI18N
         jLabel8.setText("jLabel8");
