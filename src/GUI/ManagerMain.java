@@ -23,7 +23,10 @@ public class ManagerMain extends javax.swing.JFrame {
         Toolkit tk = Toolkit.getDefaultToolkit();
         int xsize = (int) tk.getScreenSize().getWidth();
         int ysize = (int) tk.getScreenSize().getHeight() - 50;
-        System.out.println(xsize + "va" + ysize);
+        System.out.println(xsize + " va " + ysize);
+        
+        AutoDelete ad = new AutoDelete();
+        ad.AutoDeleteOrder();
         //this.setSize(xsize, ysize);
     }
 
