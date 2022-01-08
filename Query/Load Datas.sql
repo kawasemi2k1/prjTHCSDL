@@ -1,8 +1,6 @@
 ﻿use CSDL_Project;
 
 --1. store
-SET IDENTITY_INSERT sales.stores ON;
-
 insert into sales.stores values
 (N'Store A', '0357251858', 'storeA@gmail.com', N'Tây Hồ', 'Open'),
 (N'Store B', '0000000001', 'storeB@gmail.com', N'Hoàn Kiếm', 'Open'),
@@ -10,45 +8,23 @@ insert into sales.stores values
 (N'Store D', '0000000003', 'storeD@gmail.com', N'Cầu Giấy', 'Close'),
 (N'Store E', '0000000003', 'storeE@gmail.com', N'Thanh Xuân', 'Open');
 
-SET IDENTITY_INSERT sales.stores Off;
-
 --2. customers
-SET IDENTITY_INSERT sales.customers ON;
-
 insert into sales.customers values
-(N'Khách lẻ', null, null, null, null);
+(N'Khách lẻ', null, null, null, null),
 (N'Trần Đức Mạnh', '20011209', N'15 ngách 2 ngõ 119, đường Nước Phần Lan, Tấy Hồ, Hà Nội', '0357251858', 'tranducmanh12092001@gmail.com'),
 (N'Phạm Đức Huy', '20010101', N'Việt Nam', '0000000001', 'phamduchuy@gmail.com'),
 (N'Nguyễn Thị Thúy', '20010101', N'Việt Nam', '0000000002', 'nguyenthithuy@gmail.com'),
 (N'Phạm Thanh Chung', '20010101', N'Việt Nam', '0000000003', 'phamthanhchung@gmail.com');
 
-SET IDENTITY_INSERT sales.customers Off;
-
 --3. staffs
-SET IDENTITY_INSERT sales.staffs ON;
-
 insert into sales.staffs values
 (N'Trần Đức Mạnh', 'tranducmanh@gmail', '0357251858', 1, 1, 1, 'Nam', 'manh135792468')
 
-SET IDENTITY_INSERT sales.staffs Off;
-
 --4. orders
-SET IDENTITY_INSERT sales.orders ON;
--- insert cho sales.orders
-SET IDENTITY_INSERT sales.orders Off;
 
 --5. order_item
--- insert cho sales.order_items 
 
---6. stocks
-insert into sales.stocks values
-(1, '2021-01-01', '2022-02-02', 1, 10000.00, 10.00, 20),
-(1, '2021-01-01', '2022-11-01', 1, 15000.00, 20.00, 20),
-(1, '2021-01-01', '2022-11-01', 2, 15000.00, 20.00, 20),
-(2, '2021-01-01', '2022-01-01', 4, 15000.00, 20.00, 20),
-(3, '2021-01-01', '2022-01-01', 1, 21000.00, 5.00, 21);
-
---7. production.brands
+--6. production.brands
 SET IDENTITY_INSERT production.brands ON;
 
 INSERT INTO production.brands(brand_id,brand_name, country) VALUES(1,'Electra', 'Viet Nam')
@@ -64,7 +40,7 @@ INSERT INTO production.brands(brand_id,brand_name, country) VALUES(9,'Trek', 'Ho
 SET IDENTITY_INSERT production.brands OFF;
 
 
---8. production.categories
+--7. production.categories
 SET IDENTITY_INSERT production.categories ON;
 
 INSERT INTO production.categories(category_id,category_name) VALUES(1,'Children Bicycles')
@@ -78,7 +54,7 @@ INSERT INTO production.categories(category_id,category_name) VALUES(7,'Road Bike
 SET IDENTITY_INSERT production.categories OFF;  
 
 
---9. production.products
+--8. production.products
 SET IDENTITY_INSERT production.products ON;
 
 INSERT INTO production.products(product_id, product_name, brand_id, category_id, price) VALUES(1,'Trek 820 - 2016',9,6,379.99)
@@ -111,3 +87,13 @@ INSERT INTO production.products(product_id, product_name, brand_id, category_id,
 INSERT INTO production.products(product_id, product_name, brand_id, category_id, price) VALUES(28,'Surly Karate Monkey 27.5+ Frameset - 2017',8,6,2499.99)
 
 SET IDENTITY_INSERT production.products OFF;
+
+--6. stocks
+insert into sales.goods values
+(1, '2021-01-01', '2022-02-02', 1, 10000.00, 10.00, 20),
+(1, '2021-01-01', '2022-11-01', 1, 15000.00, 20.00, 20),
+(1, '2021-01-01', '2022-11-01', 2, 15000.00, 20.00, 20),
+(2, '2021-01-01', '2022-01-01', 1, 15000.00, 20.00, 20),
+(3, '2021-01-01', '2022-01-01', 1, 21000.00, 20.00, 20),
+(3, '2021-01-01', '2022-01-01', 2, 21000.00, 5.00, 21),
+(2, '2021-01-01', '2022-01-01', 4, 15000.00, 20.00, 20);

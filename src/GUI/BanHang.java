@@ -114,20 +114,20 @@ public class BanHang extends javax.swing.JPanel {
             Connection con = a.getConnectDB();
             Vector row, column;
             column = new Vector();
-            PreparedStatement ps = con.prepareStatement("select sales.stocks.product_id, "
-                    + "production.products.product_name, "
-                    + "sales.stocks.created_at, "
-                    + "sales.stocks.good_till,"
-                    + "production.categories.category_name, "
-                    + "production.brands.brand_name, "
-                    + "production.brands.country, "
-                    + "sales.stocks.quantity, "
-                    + "sales.stocks.price, "
-                    + "sales.stocks.discount from sales.stocks\n" +
-                "inner join production.products on sales.stocks.product_id = production.products.product_id\n" +
+            PreparedStatement ps = con.prepareStatement("select vCurrentProduct.product_id,\n" +
+                "production.products.product_name,\n" +
+                "vCurrentProduct.created_at,\n" +
+                "vCurrentProduct.good_till,\n" +
+                "production.categories.category_name,\n" +
+                "production.brands.brand_name,\n" +
+                "production.brands.country,\n" +
+                "vCurrentProduct.quantity,\n" +
+                "vCurrentProduct.price,\n" +
+                "vCurrentProduct.discount from vCurrentProduct\n" +
+                "inner join production.products on vCurrentProduct.product_id = production.products.product_id\n" +
                 "inner join production.categories on production.categories.category_id = production.products.category_id\n" +
-                "inner join production.brands on production.brands.brand_id = production.products.brand_id "
-                    + "where store_id = ?");
+                "inner join production.brands on production.brands.brand_id = production.products.brand_id\n" +
+                "where store_id = ?");
             ps.setString(1, String.valueOf(store));
             ResultSet rs = ps.executeQuery();
             
@@ -686,20 +686,20 @@ public class BanHang extends javax.swing.JPanel {
         try {
             Connect a = new Connect();
             Connection con = a.getConnectDB();
-            String str = "select sales.stocks.product_id, "
-                    + "production.products.product_name, "
-                    + "sales.stocks.created_at, "
-                    + "sales.stocks.good_till,"
-                    + "production.categories.category_name, "
-                    + "production.brands.brand_name, "
-                    + "production.brands.country, "
-                    + "sales.stocks.quantity, "
-                    + "sales.stocks.price, "
-                    + "sales.stocks.discount from sales.stocks\n" +
-                "inner join production.products on sales.stocks.product_id = production.products.product_id\n" +
+            String str = "select vCurrentProduct.product_id,\n" +
+                "production.products.product_name,\n" +
+                "vCurrentProduct.created_at,\n" +
+                "vCurrentProduct.good_till,\n" +
+                "production.categories.category_name,\n" +
+                "production.brands.brand_name,\n" +
+                "production.brands.country,\n" +
+                "vCurrentProduct.quantity,\n" +
+                "vCurrentProduct.price,\n" +
+                "vCurrentProduct.discount from vCurrentProduct\n" +
+                "inner join production.products on vCurrentProduct.product_id = production.products.product_id\n" +
                 "inner join production.categories on production.categories.category_id = production.products.category_id\n" +
-                "inner join production.brands on production.brands.brand_id = production.products.brand_id\n"
-                    + "where ";
+                "inner join production.brands on production.brands.brand_id = production.products.brand_id\n" +
+                "where ";
             PreparedStatement ps = null;
             Vector row, column;
             column = new Vector();
@@ -714,7 +714,7 @@ public class BanHang extends javax.swing.JPanel {
                 ps.setString(2, txtSearchProduct.getText());
                 rs = ps.executeQuery();
             } else if (jComboBoxProductSearch.getSelectedItem().toString().equals("ID")) {
-                ps = con.prepareStatement(str + "store_id = ? and sales.stocks.product_id like ?");
+                ps = con.prepareStatement(str + "store_id = ? and vCurrentProduct.product_id like ?");
                 ps.setString(1, String.valueOf(store));
                 ps.setString(1, txtSearchProduct.getText());
                 rs = ps.executeQuery();
@@ -789,7 +789,7 @@ public class BanHang extends javax.swing.JPanel {
         try {
             Connect a = new Connect();
             Connection con = a.getConnectDB();
-            String str = "Select * from sales.customers where ";
+            String str = "Select * from vRealCustomer where ";
             PreparedStatement ps = null;
             int number;
             Vector row, column;
@@ -852,17 +852,17 @@ public class BanHang extends javax.swing.JPanel {
         try {
             Connect a = new Connect();
             Connection con = a.getConnectDB();
-            String str = "select sales.stocks.product_id, "
+            String str = "select vCurrentProduct.product_id, "
                     + "production.products.product_name, "
-                    + "sales.stocks.created_at, "
-                    + "sales.stocks.good_till,"
+                    + "vCurrentProduct.created_at, "
+                    + "vCurrentProduct.good_till,"
                     + "production.categories.category_name, "
                     + "production.brands.brand_name, "
                     + "production.brands.country, "
-                    + "sales.stocks.quantity, "
-                    + "sales.stocks.price, "
-                    + "sales.stocks.discount from sales.stocks\n" +
-                "inner join production.products on sales.stocks.product_id = production.products.product_id\n" +
+                    + "vCurrentProduct.quantity, "
+                    + "vCurrentProduct.price, "
+                    + "vCurrentProduct.discount from vCurrentProduct\n" +
+                "inner join production.products on vCurrentProduct.product_id = production.products.product_id\n" +
                 "inner join production.categories on production.categories.category_id = production.products.category_id\n" +
                 "inner join production.brands on production.brands.brand_id = production.products.brand_id\n"
                     + "where ";
@@ -879,7 +879,7 @@ public class BanHang extends javax.swing.JPanel {
                 ps.setString(2, str1);
                 rs = ps.executeQuery();
             } else if (jComboBoxProductSearch.getSelectedItem().toString().equals("ID")) {
-                ps = con.prepareStatement(str + "store_id = ? and sales.stocks.product_id like ?");
+                ps = con.prepareStatement(str + "store_id = ? and vCurrentProduct.product_id like ?");
                 ps.setString(1, String.valueOf(store));
                 str1 = "%" + txtSearchProduct.getText() + "%";
                 ps.setString(2, str1);
@@ -949,7 +949,7 @@ public class BanHang extends javax.swing.JPanel {
         try {
             Connect a = new Connect();
             Connection con = a.getConnectDB();
-            PreparedStatement ps = con.prepareStatement("select quantity from sales.stocks "
+            PreparedStatement ps = con.prepareStatement("select quantity from vCurrentProduct "
                     + "where product_id = ? and "
                     + "created_at = ? and "
                     + "good_till = ? and "
@@ -965,10 +965,10 @@ public class BanHang extends javax.swing.JPanel {
             if(countInStocks < buying) {
                 String str = "Hàng không đủ trong kho.";
                 
-                PreparedStatement ps1 = con.prepareStatement("select sales.stores.name, sum(quantity) from sales.stocks "
-                        + "inner join sales.stores on sales.stores.store_id = sales.stocks.store_id "
+                PreparedStatement ps1 = con.prepareStatement("select sales.stores.name, sum(quantity) from vCurrentProduct "
+                        + "inner join sales.stores on sales.stores.store_id = vCurrentProduct.store_id "
                         + "where product_id = ? and "
-                        + "sales.stocks.store_id != ? "
+                        + "vCurrentProduct.store_id != ? "
                         + "and sales.stores.state = 'Open' "
                         + "group by sales.stores.store_id, sales.stores.name;");
                 ps1.setString(1, jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 0) + "");
@@ -1032,6 +1032,7 @@ public class BanHang extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        totalBillPrice = 0;
         tbnBill.setRowCount(0);
         jTableBill.setModel(tbnBill);
         txtTotalBillPrice.setText("");
@@ -1042,19 +1043,6 @@ public class BanHang extends javax.swing.JPanel {
            JOptionPane.YES_NO_OPTION,
            JOptionPane.QUESTION_MESSAGE);
         if(result1 == JOptionPane.YES_OPTION){
-            String mess = JOptionPane.showInputDialog(this, "Tiền khách đưa:");
-            if(!isDouble(mess)) {
-                JOptionPane.showMessageDialog(this, "Không phải số, vui lòng bấm Thanh toán lại.");
-                return;
-            } else if (Double.parseDouble(mess) < Double.parseDouble(txtTotalBillPrice.getText())) {
-                JOptionPane.showMessageDialog(this, "Số tiền này không đủ, vui lòng bấm Thanh toán lại.");
-                return;
-            } else {
-                double change = Double.parseDouble(mess) - Double.parseDouble(txtTotalBillPrice.getText());
-                String strChange = String.valueOf(change);
-                JOptionPane.showMessageDialog(this, "Tiền thừa: " + strChange + "\nThanh toán thành công.");
-            }
-            
             int seed = 0;
             if(txtCustomerName.getText().equals("")){
                 int result = JOptionPane.showConfirmDialog(this ,"Chưa rõ khách hàng.\nBạn có muốn tiếp tục?", "Làm ơn xác nhận",
@@ -1067,6 +1055,19 @@ public class BanHang extends javax.swing.JPanel {
                 }else {
                    return;
                 }
+            }
+            
+            String mess = JOptionPane.showInputDialog(this, "Tiền khách đưa:");
+            if(!isDouble(mess)) {
+                JOptionPane.showMessageDialog(this, "Không phải số, vui lòng bấm Thanh toán lại.");
+                return;
+            } else if (Double.parseDouble(mess) < Double.parseDouble(txtTotalBillPrice.getText())) {
+                JOptionPane.showMessageDialog(this, "Số tiền này không đủ, vui lòng bấm Thanh toán lại.");
+                return;
+            } else {
+                double change = Double.parseDouble(mess) - Double.parseDouble(txtTotalBillPrice.getText());
+                String strChange = String.valueOf(change);
+                JOptionPane.showMessageDialog(this, "Tiền thừa: " + strChange + "\nThanh toán thành công.");
             }
 
             try {
@@ -1082,7 +1083,7 @@ public class BanHang extends javax.swing.JPanel {
                 }
 
                 if(!txtCustomerName.getText().equals("")) {
-                    PreparedStatement ps = con.prepareStatement("select customer_id from sales.customers "
+                    PreparedStatement ps = con.prepareStatement("select customer_id from vRealCustomer "
                             + "where "
                             + "phone like ? and "
                             + "email like ? ;");
@@ -1093,15 +1094,14 @@ public class BanHang extends javax.swing.JPanel {
                     customerID = rs.getString(1);
                 }
 
-                PreparedStatement ps1 = con.prepareStatement("insert into sales.orders values (?, ?, ?, ?);");
+                PreparedStatement ps1 = con.prepareStatement("insert into sales.orders values (?, ?, ?);");
                 ps1.setString(1, customerID);
                 ps1.setString(2, String.valueOf(staff));
                 ps1.setObject(3, new Date());
-                ps1.setString(4, String.valueOf(totalBillPrice));
                 int update = ps1.executeUpdate();
 
                 int update1 = 0, update2  = 0;
-                PreparedStatement ps2 = con.prepareStatement("insert into sales.order_items values (?, ?, ?, ?, ?, ?, ?, ?);");
+                PreparedStatement ps2 = con.prepareStatement("insert into sales.order_items values (?, ?, ?, ?, ?, ?, ?, ?, ?);");
                 for(int i=0; i < jTableBill.getRowCount(); i++) {
                     ps2.setString(1, String.valueOf(seed + 1));
                     ps2.setString(2, jTableBill.getValueAt(i, 0) + "");
@@ -1113,10 +1113,14 @@ public class BanHang extends javax.swing.JPanel {
                     ps2.setString(6, jTableBill.getValueAt(i, 5) + "");
                     ps2.setString(7, jTableBill.getValueAt(i, 7) + "");
                     ps2.setString(8, jTableBill.getValueAt(i, 6) + "");
+                    
+                    double profit = Profit(jTableBill.getValueAt(i, 0) + "", Double.parseDouble(jTableBill.getValueAt(i, 7) + ""), Double.parseDouble(jTableBill.getValueAt(i, 5) + ""));
+                    ps2.setString(9, String.valueOf(profit));
+                    
                     update1 = ps2.executeUpdate();
 
 
-                    PreparedStatement ps3 = con.prepareStatement("update sales.stocks set quantity = quantity - ? "
+                    PreparedStatement ps3 = con.prepareStatement("update vCurrentProduct set quantity = quantity - ? "
                             + "where product_id = ? "
                             + "and created_at = ? "
                             + "and good_till = ? "
@@ -1134,6 +1138,10 @@ public class BanHang extends javax.swing.JPanel {
 
                 if(update > 0 && update1 > 0 && update2 > 0) {
                     JOptionPane.showMessageDialog(this, "Chốt đơn thành công");
+                    totalBillPrice = 0;
+                    tbnBill.setRowCount(0);
+                    jTableBill.setModel(tbnBill);
+                    txtTotalBillPrice.setText("");
                 } else {
                     JOptionPane.showMessageDialog(this, "Chốt đơn không thành công");
                 }
@@ -1163,16 +1171,16 @@ public class BanHang extends javax.swing.JPanel {
                         + "production.products.product_name, "
                         + "sales.order_items.created_at, "
                         + "sales.order_items.good_till, "
-                        + "sales.stocks.price, "
+                        + "vCurrentProduct.price, "
                         + "sales.order_items.quantity, "
                         + "sales.order_items.discount, "
                         + "sales.order_items.price "
                         + "from sales.orders "
                         + "inner join sales.order_items on sales.orders.order_id = sales.order_items.order_id "
-                        + "inner join sales.stocks on sales.order_items.product_id = sales.stocks.product_id "
-                            + "and sales.order_items.created_at = sales.stocks.created_at "
-                            + "and sales.order_items.good_till = sales.stocks.good_till "
-                        + "inner join production.products on production.products.product_id = sales.stocks.product_id "
+                        + "inner join vCurrentProduct on sales.order_items.product_id = vCurrentProduct.product_id "
+                            + "and sales.order_items.created_at = vCurrentProduct.created_at "
+                            + "and sales.order_items.good_till = vCurrentProduct.good_till "
+                        + "inner join production.products on production.products.product_id = vCurrentProduct.product_id "
                         + "where sales.order_items.store_id = ? and sales.orders.order_id = ?;");
                 ps.setString(1, String.valueOf(store));
                 ps.setString(2, txtBillID.getText());
@@ -1201,7 +1209,7 @@ public class BanHang extends javax.swing.JPanel {
                 }
                 
                 PreparedStatement ps1 = con.prepareStatement("select name from sales.orders "
-                        + "inner join sales.customers on sales.orders.customer_id = sales.customers.customer_id "
+                        + "inner join vRealCustomer on sales.orders.customer_id = vRealCustomer.customer_id "
                         + "where sales.orders.order_id = ?;");
                 ps1.setString(1, txtBillID.getText());
                 ResultSet rs1 = ps1.executeQuery();
@@ -1245,7 +1253,7 @@ public class BanHang extends javax.swing.JPanel {
                 int update = ps.executeUpdate();
                 
                 int update1 = 0, update2  = 0;
-                PreparedStatement ps2 = con.prepareStatement("insert into sales.order_items values (?, ?, ?, ?, ?, ?, ?, ?);");
+                PreparedStatement ps2 = con.prepareStatement("insert into sales.order_items values (?, ?, ?, ?, ?, ?, ?, ?, ?);");
                 for(int i=0; i < jTableBill.getRowCount(); i++) {
                     ps2.setString(1, billID);
                     ps2.setString(2, jTableBill.getValueAt(i, 0) + "");
@@ -1257,10 +1265,12 @@ public class BanHang extends javax.swing.JPanel {
                     ps2.setString(6, jTableBill.getValueAt(i, 5) + "");
                     ps2.setString(7, jTableBill.getValueAt(i, 7) + "");
                     ps2.setString(8, jTableBill.getValueAt(i, 6) + "");
+                    double profit = Profit(jTableBill.getValueAt(i, 0) + "", Double.parseDouble(jTableBill.getValueAt(i, 7) + ""), Double.parseDouble(jTableBill.getValueAt(i, 5) + ""));
+                    ps2.setString(9, String.valueOf(profit));
                     update1 = ps2.executeUpdate();
 
                     if(jTableBill.getValueAt(i, 8).toString().equals("Mới")) {
-                        PreparedStatement ps3 = con.prepareStatement("update sales.stocks set quantity = quantity - ? "
+                        PreparedStatement ps3 = con.prepareStatement("update vCurrentProduct set quantity = quantity - ? "
                                 + "where product_id = ? "
                                 + "and created_at = ? "
                                 + "and good_till = ? "
@@ -1349,4 +1359,20 @@ public class BanHang extends javax.swing.JPanel {
     private javax.swing.JTextField txtStaff;
     private javax.swing.JTextField txtTotalBillPrice;
     // End of variables declaration//GEN-END:variables
+
+    private double Profit(String product_ID, double totalSinglePrice, double quantity) {
+        double primePrice = 0;
+        try {
+            Connect a = new Connect();
+            Connection con = a.getConnectDB();
+            PreparedStatement ps = con.prepareStatement("select price from production.products where product_id = ?");
+            ps.setString(1, product_ID);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            primePrice = rs.getDouble(1);
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
+        return totalSinglePrice - primePrice * quantity;
+    }
 }

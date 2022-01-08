@@ -139,7 +139,7 @@ public class StaffMain extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
-         QuanLyKhachHang frm = new QuanLyKhachHang();
+        QuanLyKhachHang frm = new QuanLyKhachHang();
         jcontent.removeAll();
         jcontent.add(frm, "Quản lý khách hàng");
     }//GEN-LAST:event_jMenuItem3ActionPerformed

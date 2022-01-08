@@ -5,14 +5,12 @@
  */
 package GUI;
 
-import java.awt.List;
 import java.awt.Window;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.event.ListSelectionEvent;
@@ -22,7 +20,6 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**

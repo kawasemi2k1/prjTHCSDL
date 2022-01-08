@@ -23,7 +23,10 @@ public class ManagerMain extends javax.swing.JFrame {
         Toolkit tk = Toolkit.getDefaultToolkit();
         int xsize = (int) tk.getScreenSize().getWidth();
         int ysize = (int) tk.getScreenSize().getHeight() - 50;
-        System.out.println(xsize + "va" + ysize);
+        System.out.println(xsize + " va " + ysize);
+        
+        AutoDelete ad = new AutoDelete();
+        ad.AutoDeleteOrder();
         //this.setSize(xsize, ysize);
     }
 
@@ -60,6 +63,7 @@ public class ManagerMain extends javax.swing.JFrame {
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem15 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
 
         jMenu4.setText("jMenu4");
@@ -82,7 +86,6 @@ public class ManagerMain extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1920, 1030));
-        setPreferredSize(new java.awt.Dimension(1877, 819));
 
         jcontent.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
         jcontent.setMinimumSize(new java.awt.Dimension(1530, 800));
@@ -180,6 +183,14 @@ public class ManagerMain extends javax.swing.JFrame {
             }
         });
         jMenu6.add(jMenuItem13);
+
+        jMenuItem15.setText("GuiMail");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem15);
 
         jMenuBar1.add(jMenu6);
 
@@ -291,6 +302,13 @@ public class ManagerMain extends javax.swing.JFrame {
         jcontent.add(frm, "Thống kê khách hàng");
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        // TODO add your handling code here:
+        Product_hethan_Guimail frm = new Product_hethan_Guimail();
+        jcontent.removeAll();
+        jcontent.add(frm, " Gửi Email");
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -343,6 +361,7 @@ public class ManagerMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

@@ -67,4 +67,45 @@ public class ValidateData {
         }
         return result;
 }
+    public String ChuanHoaChuoi (String s){
+        // Đây là hàm chuẩn hóa chuối. Ví dụ: " nGUYỄN     THỊ thúy   " -> "Nguyễn Thị Thúy"
+        s = s.trim();
+        String chuanHoa = "";
+        String a = "";
+        String arr[] = s.split(" ");
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = arr[i].trim();
+            if (!arr[i].isEmpty()) {
+                a = Character.toString(arr[i].charAt(0)).toUpperCase().concat(arr[i].substring(1).toLowerCase());
+                chuanHoa = chuanHoa.concat(a);
+                chuanHoa = chuanHoa.concat(" ");
+            }
+        }
+        System.out.println("Chuỗi sau khi chuẩn hóa: " + chuanHoa);
+        return chuanHoa = chuanHoa.trim();
+        
+    }
+    
+    public String DangTienTe (String number){
+        // Đây là hàm định dạng tiền tệ. Ví dụ: 123456789.25 -> 123,456,789.25
+        int x = number.length();
+        StringBuilder sb = new StringBuilder(number);
+        if(number.contains(".")){
+            while (x > 6) {
+                sb.insert(x - 6, ",");
+                x = x - 3;
+            }
+        
+        } else {
+            while (x > 3) {
+                sb.insert(x - 3, ",");
+                x = x - 3;
+            }
+        }
+        System.out.println("Dạng tiền tệ: " + sb);
+        return sb.toString();
+    }
+    
+    
+       
 }
