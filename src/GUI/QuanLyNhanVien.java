@@ -240,7 +240,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             }
         });
         jPanel1.add(txtTimkiem);
-        txtTimkiem.setBounds(490, 430, 250, 60);
+        txtTimkiem.setBounds(490, 440, 250, 40);
 
         btnThem.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         btnThem.setText("Thêm");
@@ -250,7 +250,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             }
         });
         jPanel1.add(btnThem);
-        btnThem.setBounds(1190, 110, 190, 70);
+        btnThem.setBounds(1190, 90, 200, 90);
 
         btnSua.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         btnSua.setText("Sửa");
@@ -308,19 +308,22 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         jPanel1.add(cbGender);
         cbGender.setBounds(490, 240, 144, 24);
 
+        btnSearch.setBackground(new java.awt.Color(51, 51, 255));
         btnSearch.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        btnSearch.setForeground(new java.awt.Color(255, 255, 255));
         btnSearch.setText("Tìm kiếm");
+        btnSearch.setBorderPainted(false);
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSearchActionPerformed(evt);
             }
         });
         jPanel1.add(btnSearch);
-        btnSearch.setBounds(780, 430, 130, 60);
+        btnSearch.setBounds(770, 440, 130, 40);
 
         BoxSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(BoxSearch);
-        BoxSearch.setBounds(340, 430, 100, 60);
+        BoxSearch.setBounds(360, 440, 100, 40);
 
         Btn_Reset.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         Btn_Reset.setText("Reset");
