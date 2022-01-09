@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Vector;
 import javax.swing.JComponent;
@@ -23,10 +23,10 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 
 public class ThongKe_Customer extends javax.swing.JPanel {
-    Map<String, Double> map = new HashMap<>();
+    Map<String, Double> map = new LinkedHashMap<>();
     
     public ThongKe_Customer() {
-        this.map = new HashMap<>();
+        this.map = new LinkedHashMap<>();
         initComponents();
         Toolkit tk = Toolkit.getDefaultToolkit();
         int xsize = (int) tk.getScreenSize().getWidth();

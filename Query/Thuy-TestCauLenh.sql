@@ -1,4 +1,4 @@
--- Thuy test
+﻿-- Thuy test
 use CSDL_Project
 
 select product_name, created_at, good_till, S.price, discount, quantity  from vCurrentProduct S
@@ -22,13 +22,42 @@ left join sales.order_items soi on soi.order_id = so.order_id
 where ss.store_id = 2 and (so.created_date between '2018-01-01' and '2022-01-31' or ss.staff_id not in (select staff_id from sales.orders))
 group by ss.staff_id
 
-select top (5) sc.customer_id as MaKH, sum(soi.profit) as DoanhThu from vRealCustomer sc
+select top(5) sc.customer_id as MaKH, sum(soi.profit) as DoanhThu from vRealCustomer sc
 left join sales.orders so on so.customer_id = sc.customer_id
 left join sales.order_items soi on soi.order_id = so.order_id 
-where soi.store_id = 2 and  created_date between '2018-01-01' and '2022-01-31' --or sc.customer_id not in (select customer_id from sales.orders))
+where created_date between '2018-01-01' and '2022-01-31'
 group by sc.customer_id
 order by DoanhThu desc
+----
+
+select datename(m,created_date)+' '+cast(datepart(yyyy,created_date) as varchar) as MonthYear from sales.orders
+select top (12) CONCAT(MONTH(created_date),'-',YEAR(created_date)) as MonthYear from sales.orders
+
+select top(12) CONCAT(MONTH(created_date),'-',YEAR(created_date)) as MonthYear, sum(soi.profit) as DoanhThu from sales.stores ss
+left join sales.order_items soi on soi.store_id = ss.store_id
+left join sales.orders so on so.order_id = soi.order_id
+where ss.store_id = 2
+group by created_date
+order by created_date desc
+
+-- nhờ Phong sửa
+select * from
+(select top(12) CONCAT(MONTH(created_date),'-',YEAR(created_date)) as MonthYear, sum(soi.profit) as DoanhThu from sales.stores ss
+left join sales.order_items soi on soi.store_id = ss.store_id
+left join sales.orders so on so.order_id = soi.order_id
+where ss.store_id = 2
+group by created_date
+order by created_date desc) as some
+order by some.MonthYear asc
+-- nhờ Phong sửa
 
 select * from sales.orders
+order by created_date desc
+
 select * from sales.order_items
 select * from sales.customers
+
+
+---
+select * from sales.staffs
+where store_id = 2

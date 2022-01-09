@@ -31,6 +31,8 @@ public class ThongKe_Panel extends javax.swing.JPanel {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         jpnView.setPreferredSize(new java.awt.Dimension(1500, 800));
         jpnView.setLayout(null);
@@ -42,7 +44,7 @@ public class ThongKe_Panel extends javax.swing.JPanel {
             }
         });
         jpnView.add(jButton1);
-        jButton1.setBounds(80, 50, 130, 25);
+        jButton1.setBounds(70, 50, 130, 25);
 
         jButton2.setText("TK KH");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -51,7 +53,7 @@ public class ThongKe_Panel extends javax.swing.JPanel {
             }
         });
         jpnView.add(jButton2);
-        jButton2.setBounds(80, 100, 65, 25);
+        jButton2.setBounds(100, 100, 65, 25);
 
         jButton3.setText("TK Cat");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -60,7 +62,7 @@ public class ThongKe_Panel extends javax.swing.JPanel {
             }
         });
         jpnView.add(jButton3);
-        jButton3.setBounds(90, 160, 110, 25);
+        jButton3.setBounds(460, 80, 110, 25);
 
         jButton4.setText("TK Product");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -70,6 +72,24 @@ public class ThongKe_Panel extends javax.swing.JPanel {
         });
         jpnView.add(jButton4);
         jButton4.setBounds(470, 30, 140, 25);
+
+        jButton5.setText("TK Staff by Time");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jpnView.add(jButton5);
+        jButton5.setBounds(70, 150, 130, 25);
+
+        jButton6.setText("TK Store by time");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jpnView.add(jButton6);
+        jButton6.setBounds(460, 150, 150, 25);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -107,12 +127,26 @@ public class ThongKe_Panel extends javax.swing.JPanel {
         tk.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        TK_Staff_byTime tk = new TK_Staff_byTime();
+        tk.setVisible(true);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        TK_Store_byTime tk = new TK_Store_byTime();
+        tk.setVisible(true);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JPanel jpnView;
     // End of variables declaration//GEN-END:variables
 }
