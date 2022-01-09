@@ -2,6 +2,7 @@ package GUI;
 
 
 
+import java.awt.Window;
 import javax.mail.PasswordAuthentication;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,8 +18,10 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.security.auth.kerberos.ServicePermission;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -46,21 +49,16 @@ public class ThongKeProducts extends javax.swing.JPanel {
         menuBar1 = new java.awt.MenuBar();
         menu1 = new java.awt.Menu();
         menu2 = new java.awt.Menu();
-        TKbancham = new javax.swing.JLabel();
         BtnBanchay = new javax.swing.JButton();
         BtnBancham = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         BoxBanchay = new javax.swing.JComboBox<>();
         BoxBancham = new javax.swing.JComboBox<>();
-        jCalendar1 = new com.toedter.calendar.JCalendar();
         datefrom = new com.toedter.calendar.JDateChooser();
         dateto = new com.toedter.calendar.JDateChooser();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bgtksp.png"))); // NOI18N
 
@@ -72,45 +70,25 @@ public class ThongKeProducts extends javax.swing.JPanel {
 
         setLayout(null);
 
-        TKbancham.setFont(new java.awt.Font("Sitka Text", 1, 36)); // NOI18N
-        TKbancham.setForeground(new java.awt.Color(0, 0, 153));
-        TKbancham.setText("THỐNG KÊ THEO SẢN PHẨM");
-        add(TKbancham);
-        TKbancham.setBounds(110, 10, 670, 100);
-
         BtnBanchay.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        BtnBanchay.setText("Thống kê");
+        BtnBanchay.setContentAreaFilled(false);
         BtnBanchay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnBanchayActionPerformed(evt);
             }
         });
         add(BtnBanchay);
-        BtnBanchay.setBounds(170, 150, 90, 30);
+        BtnBanchay.setBounds(610, 260, 150, 70);
 
         BtnBancham.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        BtnBancham.setText("Thống kê");
+        BtnBancham.setContentAreaFilled(false);
         BtnBancham.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnBanchamActionPerformed(evt);
             }
         });
         add(BtnBancham);
-        BtnBancham.setBounds(430, 150, 90, 30);
-
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel3.setText("TOP 5 SP BÁN CHẠY");
-        add(jLabel3);
-        jLabel3.setBounds(20, 160, 160, 17);
-
-        jButton3.setText("Thống kê");
-        add(jButton3);
-        jButton3.setBounds(170, 150, 90, 30);
-
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel4.setText("TOP 5 SP BÁN CHẬM");
-        add(jLabel4);
-        jLabel4.setBounds(270, 150, 150, 30);
+        BtnBancham.setBounds(1100, 260, 160, 60);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -126,7 +104,7 @@ public class ThongKeProducts extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTable1);
 
         add(jScrollPane1);
-        jScrollPane1.setBounds(10, 210, 770, 402);
+        jScrollPane1.setBounds(510, 380, 940, 350);
 
         BoxBanchay.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         BoxBanchay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -136,7 +114,7 @@ public class ThongKeProducts extends javax.swing.JPanel {
             }
         });
         add(BoxBanchay);
-        BoxBanchay.setBounds(170, 100, 90, 30);
+        BoxBanchay.setBounds(490, 280, 90, 40);
 
         BoxBancham.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         BoxBancham.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -146,23 +124,27 @@ public class ThongKeProducts extends javax.swing.JPanel {
             }
         });
         add(BoxBancham);
-        BoxBancham.setBounds(430, 100, 90, 30);
-        add(jCalendar1);
-        jCalendar1.setBounds(330, 340, 198, 150);
+        BoxBancham.setBounds(960, 270, 90, 50);
+
+        datefrom.setDate(new java.util.Date(1610103917000L));
         add(datefrom);
-        datefrom.setBounds(610, 100, 139, 30);
+        datefrom.setBounds(640, 140, 150, 40);
         add(dateto);
-        dateto.setBounds(610, 150, 139, 30);
+        dateto.setBounds(1150, 140, 160, 40);
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel1.setText("From");
-        add(jLabel1);
-        jLabel1.setBounds(550, 110, 50, 14);
+        jButton1.setContentAreaFilled(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        add(jButton1);
+        jButton1.setBounds(10, 690, 380, 110);
 
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel5.setText("To");
-        add(jLabel5);
-        jLabel5.setBounds(550, 160, 40, 17);
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/frame TK sp.png"))); // NOI18N
+        jLabel6.setText("jLabel6");
+        add(jLabel6);
+        jLabel6.setBounds(0, 0, 1540, 810);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnBanchamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBanchamActionPerformed
@@ -323,6 +305,13 @@ public class ThongKeProducts extends javax.swing.JPanel {
     private void BoxBanchamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoxBanchamActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BoxBanchamActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        JComponent comp = (JComponent) evt.getSource();
+        Window win = SwingUtilities.getWindowAncestor(comp);
+        win.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -330,16 +319,11 @@ public class ThongKeProducts extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> BoxBanchay;
     private javax.swing.JButton BtnBancham;
     private javax.swing.JButton BtnBanchay;
-    private javax.swing.JLabel TKbancham;
     private com.toedter.calendar.JDateChooser datefrom;
     private com.toedter.calendar.JDateChooser dateto;
-    private javax.swing.JButton jButton3;
-    private com.toedter.calendar.JCalendar jCalendar1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private java.awt.Menu menu1;
