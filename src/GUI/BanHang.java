@@ -1180,16 +1180,16 @@ public class BanHang extends javax.swing.JPanel {
                         + "production.products.product_name, "
                         + "sales.order_items.created_at, "
                         + "sales.order_items.good_till, "
-                        + "vCurrentProduct.price, "
+                        + "cast(sales.order_items.price / (1.00 - sales.order_items.discount/100.00) as decimal(10,2)), "
                         + "sales.order_items.quantity, "
                         + "sales.order_items.discount, "
                         + "sales.order_items.price "
                         + "from sales.orders "
                         + "inner join sales.order_items on sales.orders.order_id = sales.order_items.order_id "
-                        + "inner join vCurrentProduct on sales.order_items.product_id = vCurrentProduct.product_id "
-                            + "and sales.order_items.created_at = vCurrentProduct.created_at "
-                            + "and sales.order_items.good_till = vCurrentProduct.good_till "
-                        + "inner join production.products on production.products.product_id = vCurrentProduct.product_id "
+                        + "inner join sales.goods on sales.order_items.product_id = sales.goods.product_id "
+                            + "and sales.order_items.created_at = sales.goods.created_at "
+                            + "and sales.order_items.good_till = sales.goods.good_till "
+                        + "inner join production.products on production.products.product_id = sales.goods.product_id "
                         + "where sales.order_items.store_id = ? and sales.orders.order_id = ?;");
                 ps.setString(1, String.valueOf(store));
                 ps.setString(2, txtBillID.getText());
@@ -1221,20 +1221,20 @@ public class BanHang extends javax.swing.JPanel {
                 }
                 
                 PreparedStatement ps1 = con.prepareStatement("select name from sales.orders "
-                        + "inner join vRealCustomer on sales.orders.customer_id = vRealCustomer.customer_id "
+                        + "inner join sales.customers on sales.orders.customer_id = sales.customers.customer_id "
                         + "where sales.orders.order_id = ?;");
                 ps1.setString(1, txtBillID.getText());
                 ResultSet rs1 = ps1.executeQuery();
                 rs1.next();
                 txtCustomerName.setText(rs1.getString(1));
                 
-                PreparedStatement ps2 = con.prepareStatement("select price from sales.orders "
+                PreparedStatement ps2 = con.prepareStatement("select sum(price) from sales.order_items "
                         + "where order_id = ?;");
                 ps2.setString(1, txtBillID.getText());
                 ResultSet rs2 = ps2.executeQuery();
                 rs2.next();
                 txtTotalBillPrice.setText(rs2.getString(1));
-                totalBillPrice = Float.parseFloat(rs2.getString(1));
+                totalBillPrice = Double.parseDouble(rs2.getString(1));
                 
                 billID = txtBillID.getText();
                 
