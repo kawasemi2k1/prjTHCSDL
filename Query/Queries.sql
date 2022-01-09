@@ -47,16 +47,3 @@ inner join production.brands on production.brands.brand_id = production.products
 --where store_id = ?
 
 Select order_id from sales.orders order by order_id
-
--- Thuy test
-select ss.staff_id as StaffID, sum(soi.profit) as DoanhThu from sales.staffs ss
-left join sales.orders so on so.staff_id = ss.staff_id
-left join sales.order_items soi on soi.order_id = so.order_id 
-where ss.store_id = 2 and (so.created_date between '2018-01-01' and '2022-01-01' or ss.staff_id not in (select staff_id from sales.orders))
-group by ss.staff_id
-
-select sc.customer_id MaKH, sum(soi.profit) as DoanhThu from sales.customers sc
-left join sales.orders so on so.customer_id = sc.customer_id
-left join sales.order_items soi on soi.order_id = so.order_id 
-where sc.customer_id != 1 and so.created_date between '2018-01-01' and '2022-01-01'
-group by sc.customer_id

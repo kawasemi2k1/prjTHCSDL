@@ -22,7 +22,7 @@ public class TK_Staff extends javax.swing.JFrame {
         initComponents();
         Toolkit tk = Toolkit.getDefaultToolkit();
         int xsize = (int) tk.getScreenSize().getWidth();
-        int ysize = (int) tk.getScreenSize().getHeight() - 50;
+        int ysize = (int) tk.getScreenSize().getHeight();
         this.setSize(xsize, ysize);
         
         ThongKe_Staff frm = new ThongKe_Staff();

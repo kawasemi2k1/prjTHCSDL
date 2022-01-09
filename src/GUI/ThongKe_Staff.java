@@ -5,9 +5,12 @@ import java.awt.Window;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Statement;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -22,17 +25,16 @@ import org.jfree.data.category.DefaultCategoryDataset;
 public class ThongKe_Staff extends javax.swing.JPanel {
     
     Map<String, Double> map = new HashMap<>();
-    Map<String, Double> map2 = new HashMap<>();
     
     public ThongKe_Staff() {
-        this.map2 = new HashMap<>();
+        this.map = new HashMap<>();
         initComponents();
         Toolkit tk = Toolkit.getDefaultToolkit();
         int xsize = (int) tk.getScreenSize().getWidth();
-        int ysize = (int) tk.getScreenSize().getHeight() - 50;
+        int ysize = (int) tk.getScreenSize().getHeight();
         this.setSize(xsize, ysize);
-        createMap();
-        initFrame();
+//        createMap();
+//        initFrame();
     }
     
     public void createMap() {
@@ -49,22 +51,23 @@ public class ThongKe_Staff extends javax.swing.JPanel {
         try {
             Connect a = new Connect();
             Connection conn = a.getConnectDB();
-            String sql_doanhthu = "select top (5) ss.name as Ten, sum(so.price) as Tien from sales.staffs ss\n" +
+            String sql_doanhthu = "select ss.staff_id as StaffID, sum(soi.profit) as DoanhThu from sales.staffs ss\n" +
                                 "left join sales.orders so on so.staff_id = ss.staff_id\n" +
-                                "where so.created_date between (?) and (?) or ss.staff_id not in (select staff_id from sales.orders)\n" +
-                                "group by ss.name\n" +
-                                "order by Tien desc";
+                                "left join sales.order_items soi on soi.order_id = so.order_id \n" +
+                                "where ss.store_id = ? and (so.created_date between ? and ? or ss.staff_id not in (select staff_id from sales.orders))\n" +
+                                "group by ss.staff_id";
             PreparedStatement ps;
             ps = conn.prepareStatement(sql_doanhthu);
             java.sql.Date jdate1 = new java.sql.Date(tdate1.getTime());
             java.sql.Date jdate2 = new java.sql.Date(tdate2.getTime());
-            ps.setDate(1, jdate1);
-            ps.setDate(2, jdate2);
+            ps.setString(1, Login.Store_ID);
+            ps.setDate(2, jdate1);
+            ps.setDate(3, jdate2);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                String name = rs.getString("Ten");
-                Double tien = rs.getDouble("Tien");
-                map.put(name, tien);
+                String StaffID = rs.getString("StaffID");
+                Double DoanhThu = rs.getDouble("DoanhThu");
+                map.put(StaffID, DoanhThu);
             }
 
         } catch (Exception ex) {
@@ -73,18 +76,52 @@ public class ThongKe_Staff extends javax.swing.JPanel {
     }
      public JFreeChart createChart() {
         JFreeChart barChart = ChartFactory.createBarChart(
-                "Top 5 nhân viên đạt doanh thu cao nhất",
+                "Doanh thu các nhân viên đạt được",
                 "Tên nhân viên", "Doanh thu",
                 createDataset(), PlotOrientation.VERTICAL, false, false, false);
         return barChart;
     }
+     
+     public String GetNameFromStaffID(String StaffID) {
+        String Name = "";
+        try {
+            Connect a = new Connect();
+            Connection conn = a.getConnectDB();
+            int number;
+            Vector row, column;
+            column = new Vector();
+            Statement st = conn.createStatement();
+            String sql = "select name from sales.staffs\n" + "where staff_id = (?)";
+            PreparedStatement ps;
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, StaffID);
+            ResultSet rs = ps.executeQuery();
+            ResultSetMetaData metadata = rs.getMetaData();
+            number = metadata.getColumnCount();
 
+            for (int i = 1; i <= number; i++) {
+                column.add(metadata.getColumnName(i));
+            }
+            while (rs.next()) {
+                row = new Vector();
+                for (int i = 1; i <= number; i++) {
+                    row.addElement(rs.getString(i));
+                    Name = rs.getString(i);
+                }
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Loi o store" + ex.toString());
+        }
+        return Name;
+    }
+    
     private CategoryDataset createDataset() {
         final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         for (Map.Entry<String, Double> entry : map.entrySet()) {
             String key = entry.getKey();
             Double value = entry.getValue();
-            dataset.addValue(value, "Doanh thu", key);
+            dataset.addValue(value, "Doanh thu", GetNameFromStaffID(key)+"-"+key);
         }
         return dataset;
     }
@@ -96,68 +133,7 @@ public class ThongKe_Staff extends javax.swing.JPanel {
         jcontent.setVisible(true);
     }
       
-    public void createMap2() {
-        
-        try {
-            Date tdate1 = date1.getDate();
-            Date tdate2 = date2.getDate();
-            Date tdate = new Date();
-            if (tdate1.after(tdate2)) {
-                JOptionPane.showMessageDialog(this, "Ngày không hợp lệ");
-                return;
-            } else if (tdate1.after(tdate)) {
-                JOptionPane.showMessageDialog(this, "Ngày không hợp lệ");
-                return;
-            }
-            Connect a = new Connect();
-            Connection conn = a.getConnectDB();
-            String sql_doanhthu = "select top (5) ss.name as Ten, sum(so.price) as Tien from sales.staffs ss\n" +
-                                "left join sales.orders so on so.staff_id = ss.staff_id\n" +
-                                "where so.created_date between (?) and (?) or ss.staff_id not in (select staff_id from sales.orders)\n" +
-                                "group by ss.name\n" +
-                                "order by Tien asc";
-            PreparedStatement ps;
-            ps = conn.prepareStatement(sql_doanhthu);
-            java.sql.Date jdate1 = new java.sql.Date(tdate1.getTime());
-            java.sql.Date jdate2 = new java.sql.Date(tdate2.getTime());
-            ps.setDate(1, jdate1);
-            ps.setDate(2, jdate2);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                String name = rs.getString("Ten");
-                Double tien = rs.getDouble("Tien");
-                map2.put(name, tien);
-            }
-
-        } catch (Exception ex) {
-            System.out.println("Thong ke doanh thu "+ex.toString());
-        }
-    }
     
-        private CategoryDataset createDataset2() {
-        final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        for (Map.Entry<String, Double> entry : map2.entrySet()) {
-            String key = entry.getKey();
-            Double value = entry.getValue();
-            dataset.addValue(value, "Doanh thu", key);
-        }
-        return dataset;
-    }
-     public JFreeChart createChart2() {
-        JFreeChart barChart = ChartFactory.createBarChart(
-                "Top 5 nhân viên đạt doanh thu thấp nhất",
-                "Tên nhân viên", "Doanh thu",
-                createDataset2(), PlotOrientation.VERTICAL, false, false, false);
-        return barChart;
-    }
-
-       public void initFrame2() {
-        ChartPanel chartPanel = new ChartPanel(createChart2());
-        chartPanel.setPreferredSize(new java.awt.Dimension(1000, 600));
-        jcontent.removeAll();
-        jcontent.add(chartPanel);
-        jcontent.setVisible(true);
-    }
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -173,8 +149,12 @@ public class ThongKe_Staff extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
 
         jPanel1.setLayout(null);
+
+        date1.setDate(new java.util.Date(1578102937000L));
         jPanel1.add(date1);
         date1.setBounds(610, 140, 170, 50);
+
+        date2.setDate(new java.util.Date(1641693337000L));
         jPanel1.add(date2);
         date2.setBounds(1100, 130, 180, 60);
 
@@ -232,8 +212,7 @@ public class ThongKe_Staff extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        createMap2();
-        initFrame2();
+      
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

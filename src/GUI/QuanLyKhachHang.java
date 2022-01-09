@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import java.awt.Color;
 import java.awt.Window;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
@@ -227,7 +228,7 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             }
         });
         add(jButton1);
-        jButton1.setBounds(930, 170, 200, 90);
+        jButton1.setBounds(940, 180, 200, 90);
 
         jButton2.setContentAreaFilled(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -349,6 +350,7 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             
             int check = ps.executeUpdate();
             if(check > 0) {
+                Reset();
                 JOptionPane.showMessageDialog(this, "Thêm thành công.");
                 tbn.setRowCount(0);
                 loadData();
@@ -366,6 +368,7 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
         try {
             if(txtName.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Thiếu tên.");
@@ -408,6 +411,7 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             
             int check = ps.executeUpdate();
             if(check > 0) {
+                Reset();
                 JOptionPane.showMessageDialog(this, "Cập nhật thành công.");
                 tbn.setRowCount(0);
                 loadData();
@@ -524,8 +528,7 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    public void Reset(){
         tbn.setRowCount(0);
         txtID.setText("");
         txtName.setText("");
@@ -534,6 +537,9 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         txtEmail.setText("");
         loadData();
         jDateChooser1.setDate(new Date());
+    }
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+       Reset();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased

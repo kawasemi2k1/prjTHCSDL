@@ -129,6 +129,8 @@ public class ThongKeProducts extends javax.swing.JPanel {
         datefrom.setDate(new java.util.Date(1610103917000L));
         add(datefrom);
         datefrom.setBounds(640, 140, 150, 40);
+
+        dateto.setDate(new java.util.Date(1641261337000L));
         add(dateto);
         dateto.setBounds(1150, 140, 160, 40);
 

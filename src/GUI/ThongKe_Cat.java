@@ -53,12 +53,16 @@ public class ThongKe_Cat extends javax.swing.JPanel {
         Date tdate1 = date1.getDate();
         Date tdate2 = date2.getDate();
         Date tdate = new Date();
+        try{
         if (tdate1.after(tdate2)) {
             JOptionPane.showMessageDialog(this, "Ngày không hợp lệ");
             return;
         } else if (tdate1.after(tdate)) {
             JOptionPane.showMessageDialog(this, "Ngày không hợp lệ");
             return;
+        }
+        }catch(Exception ex){
+            System.out.println("* Loi ơ: "+ ex.toString());
         }
         try {
             Connect a = new Connect();
@@ -224,15 +228,15 @@ public class ThongKe_Cat extends javax.swing.JPanel {
 
         jcontent = new javax.swing.JTabbedPane();
         jButton1 = new javax.swing.JButton();
-        date1 = new com.toedter.calendar.JDateChooser();
         jButton2 = new javax.swing.JButton();
-        date2 = new com.toedter.calendar.JDateChooser();
         jButton3 = new javax.swing.JButton();
+        date1 = new com.toedter.calendar.JDateChooser();
+        date2 = new com.toedter.calendar.JDateChooser();
         jLabel1 = new javax.swing.JLabel();
 
         setLayout(null);
         add(jcontent);
-        jcontent.setBounds(390, 360, 1140, 450);
+        jcontent.setBounds(400, 360, 1140, 450);
 
         jButton1.setContentAreaFilled(false);
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -244,10 +248,6 @@ public class ThongKe_Cat extends javax.swing.JPanel {
         add(jButton1);
         jButton1.setBounds(610, 250, 160, 70);
 
-        date1.setDate(new java.util.Date(1578102937000L));
-        add(date1);
-        date1.setBounds(640, 130, 190, 60);
-
         jButton2.setContentAreaFilled(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -256,8 +256,6 @@ public class ThongKe_Cat extends javax.swing.JPanel {
         });
         add(jButton2);
         jButton2.setBounds(1110, 250, 150, 70);
-        add(date2);
-        date2.setBounds(1130, 130, 200, 60);
 
         jButton3.setContentAreaFilled(false);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -268,10 +266,18 @@ public class ThongKe_Cat extends javax.swing.JPanel {
         add(jButton3);
         jButton3.setBounds(0, 690, 370, 110);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/THỐNG KÊ loại hàng (1).png"))); // NOI18N
+        date1.setDate(new java.util.Date(1578102937000L));
+        add(date1);
+        date1.setBounds(620, 130, 180, 50);
+
+        date2.setDate(new java.util.Date(1641722768000L));
+        add(date2);
+        date2.setBounds(1110, 130, 160, 50);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/THỐNG KÊ loại hàng.png"))); // NOI18N
         jLabel1.setText("jLabel1");
         add(jLabel1);
-        jLabel1.setBounds(0, 0, 1550, 814);
+        jLabel1.setBounds(0, 0, 1530, 810);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

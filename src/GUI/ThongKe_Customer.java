@@ -5,9 +5,12 @@ import java.awt.Window;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Statement;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -29,60 +32,95 @@ public class ThongKe_Customer extends javax.swing.JPanel {
         int xsize = (int) tk.getScreenSize().getWidth();
         int ysize = (int) tk.getScreenSize().getHeight();
         this.setSize(xsize, ysize);
-        createMap();
-        initFrame();
     }
 
     public void createMap() {
         Date tdate1 = date1.getDate();
         Date tdate2 = date2.getDate();
         Date tdate = new Date();
+        System.out.println(tdate.toString());
         if (tdate1.after(tdate2)) {
             JOptionPane.showMessageDialog(this, "Ngày không hợp lệ");
             return;
         } else if (tdate1.after(tdate)) {
             JOptionPane.showMessageDialog(this, "Ngày không hợp lệ");
             return;
-        }
-        try {
-            Connect a = new Connect();
-            Connection conn = a.getConnectDB();
-            String sql_doanhthu = "select top (5) sc.name as Ten, sum(so.price) as Tien from sales.customers sc\n" +
-                                "left join sales.orders so on so.customer_id = sc.customer_id\n" +
-                                "where sc.customer_id != 1 and so.created_date between (?) and (?) or sc.customer_id not in (select staff_id from sales.orders) \n" +
-                                "group by sc.name\n" +
-                                "order by Tien desc";
-            PreparedStatement ps;
-            ps = conn.prepareStatement(sql_doanhthu);
-            java.sql.Date jdate1 = new java.sql.Date(tdate1.getTime());
-            java.sql.Date jdate2 = new java.sql.Date(tdate2.getTime());
-            ps.setDate(1, jdate1);
-            ps.setDate(2, jdate2);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                String name = rs.getString("Ten");
-                Double tien = rs.getDouble("Tien");
-                map.put(name, tien);
-            }
+        } else {
+            try {
+                Connect a = new Connect();
+                Connection conn = a.getConnectDB();
+                String sql_doanhthu = "select top(5) sc.customer_id as MaKH, sum(soi.profit) as DoanhThu from vRealCustomer sc\n" +
+                                    "left join sales.orders so on so.customer_id = sc.customer_id\n" +
+                                    "left join sales.order_items soi on soi.order_id = so.order_id \n" +
+                                    "where created_date between ? and ? \n" +
+                                    "group by sc.customer_id\n" +
+                                    "order by DoanhThu desc";
+                PreparedStatement ps;
+                ps = conn.prepareStatement(sql_doanhthu);
+                java.sql.Date jdate1 = new java.sql.Date(tdate1.getTime());
+                java.sql.Date jdate2 = new java.sql.Date(tdate2.getTime());
+                ps.setDate(1, jdate1);
+                ps.setDate(2, jdate2);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    String MaKH = rs.getString("MaKH");
+                    Double DoanhThu = rs.getDouble("DoanhThu");
+                    map.put(MaKH, DoanhThu);
+                }
 
-        } catch (Exception ex) {
-            System.out.println("Thong ke khach hang "+ex.toString());
+            } catch (Exception ex) {
+                System.out.println("Thong ke khach hang "+ex.toString());
+            }
         }
     }
      public JFreeChart createChart() {
         JFreeChart barChart = ChartFactory.createBarChart(
-                "Top 5 khách hàng quen thuộc",
+                "Top khách hàng quen thuộc",
                 "Tên khách hàng", "Doanh thu",
                 createDataset(), PlotOrientation.HORIZONTAL, false, false, false);
         return barChart;
     }
+     
+     public String GetNameFromMaKH(String customer_id) {
+        String Name = "";
+        try {
+            Connect a = new Connect();
+            Connection conn = a.getConnectDB();
+            int number;
+            Vector row, column;
+            column = new Vector();
+            Statement st = conn.createStatement();
+            String sql = "select name from sales.customers\n" + "where customer_id = (?)";
+            PreparedStatement ps;
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, customer_id);
+            ResultSet rs = ps.executeQuery();
+            ResultSetMetaData metadata = rs.getMetaData();
+            number = metadata.getColumnCount();
 
+            for (int i = 1; i <= number; i++) {
+                column.add(metadata.getColumnName(i));
+            }
+            while (rs.next()) {
+                row = new Vector();
+                for (int i = 1; i <= number; i++) {
+                    row.addElement(rs.getString(i));
+                    Name = rs.getString(i);
+                }
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Loi o store" + ex.toString());
+        }
+        return Name;
+    }
+     
     private CategoryDataset createDataset() {
         final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         for (Map.Entry<String, Double> entry : map.entrySet()) {
             String key = entry.getKey();
             Double value = entry.getValue();
-            dataset.addValue(value, "", key);
+            dataset.addValue(value, "", GetNameFromMaKH(key)+"-"+key);
         }
         return dataset;
     }
@@ -106,8 +144,12 @@ public class ThongKe_Customer extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
 
         jPanel1.setLayout(null);
+
+        date1.setDate(new java.util.Date(1578102937000L));
         jPanel1.add(date1);
         date1.setBounds(620, 140, 160, 50);
+
+        date2.setDate(new java.util.Date(1641261337000L));
         jPanel1.add(date2);
         date2.setBounds(1110, 140, 200, 40);
 
@@ -149,6 +191,7 @@ public class ThongKe_Customer extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        jcontent.removeAll();
         createMap();
         initFrame();
     }//GEN-LAST:event_jButton1ActionPerformed
