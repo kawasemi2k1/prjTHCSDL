@@ -106,6 +106,8 @@ public class ValidateData {
         return sb.toString();
     }
     
-    
+    public String ReverseDangTienTe (String number) {
+        return number.replace(",", "");
+    }
        
 }
