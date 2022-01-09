@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package View;
+package GUI;
 
-import Utils.Connect;
 import java.awt.Window;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
@@ -603,6 +602,8 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         JComponent comp = (JComponent) evt.getSource();
         Window win = SwingUtilities.getWindowAncestor(comp);
         win.dispose();
+//        ManagerMain main = new ManagerMain();
+//        main.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

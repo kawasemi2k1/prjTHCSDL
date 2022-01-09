@@ -1,6 +1,4 @@
-package View;
-import GUI.Login;
-import Utils.Connect;
+package GUI;
 import Utils.ValidateData;
 import java.awt.Color;
 import java.awt.Window;
@@ -42,7 +40,7 @@ public class QuanLySanPhamNgoaiQuay extends javax.swing.JPanel {
             conn = cn.getConnectDB();
             int number;
             Vector row;
-            String sql = "select product_name, created_at, good_till, S.price, discount, quantity  from sales.goods S\n" +
+            String sql = "select product_name, created_at, good_till, S.price, discount, quantity  from sales.stocks S\n" +
                         " inner join production.products P on S.product_id = P.product_id\n" +
                         " where store_id = " + Store_ID;
             Statement st = conn.createStatement();
@@ -349,7 +347,7 @@ public class QuanLySanPhamNgoaiQuay extends javax.swing.JPanel {
                     System.out.println(dc_hanSD.getDate().compareTo(dc_ngaySX.getDate()));
                     if(txt_giamGia.getText().equals("")) txt_giamGia.setText("0");
                     
-                    PreparedStatement ps = con.prepareStatement("insert into sales.goods values (?, ?, ?, ?, ?, ?, ?)");
+                    PreparedStatement ps = con.prepareStatement("insert into sales.stocks values (?, ?, ?, ?, ?, ?, ?)");
                     ps.setString(1, GetProduct_id(txt_TenSP.getText()));
                     ps.setObject(2, dc_ngaySX.getDate());
                     ps.setObject(3, dc_hanSD.getDate());
@@ -434,7 +432,7 @@ public class QuanLySanPhamNgoaiQuay extends javax.swing.JPanel {
                 Connect a = new Connect();
                 Connection con = a.getConnectDB();
                 PreparedStatement ps = con.prepareStatement(
-                        "Update sales.goods set price =  ? , discount = ?, quantity =  ? "
+                        "Update sales.stocks set price =  ? , discount = ?, quantity =  ? "
                         + "  where product_id =  ?  and created_at = ? and good_till = ? and store_id =  ?  ");
                 ps.setString(1, txt_gia.getText());
                 ps.setString(2, txt_giamGia.getText());
@@ -475,7 +473,7 @@ public class QuanLySanPhamNgoaiQuay extends javax.swing.JPanel {
                 Connect a = new Connect();
                 Connection con = a.getConnectDB();
                 PreparedStatement ps = con.prepareStatement(
-                "Delete from sales.goods where product_id =  ? and created_at = ? and good_till = ? and store_id = ? " );
+                "Delete from sales.stocks where product_id =  ? and created_at = ? and good_till = ? and store_id = ? " );
                 ps.setString(1, GetProduct_id(txt_TenSP.getText()));
                 ps.setObject(2, dc_ngaySX.getDate());
                 ps.setObject(3, dc_hanSD.getDate());
@@ -504,6 +502,8 @@ public class QuanLySanPhamNgoaiQuay extends javax.swing.JPanel {
         JComponent comp = (JComponent) evt.getSource();
         Window win = SwingUtilities.getWindowAncestor(comp);
         win.dispose();
+//        ManagerMain main = new ManagerMain();
+//        main.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void txt_TenSPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_TenSPKeyTyped
@@ -516,7 +516,7 @@ public class QuanLySanPhamNgoaiQuay extends javax.swing.JPanel {
         try {
             Connect a = new Connect();
             Connection con = a.getConnectDB();
-            String sql = "select product_name, created_at, good_till, S.price, discount, quantity  from sales.goods S\n" +
+            String sql = "select product_name, created_at, good_till, S.price, discount, quantity  from sales.stocks S\n" +
                         " inner join production.products P on S.product_id = P.product_id \n" +
                         "where store_id =  " + Store_ID + " and ";
             PreparedStatement ps = null;
@@ -576,7 +576,7 @@ public class QuanLySanPhamNgoaiQuay extends javax.swing.JPanel {
         try {
             Connect a = new Connect();
             Connection con = a.getConnectDB();
-            String sql = "select product_name, created_at, good_till, S.price, discount, quantity  from sales.goods S\n" +
+            String sql = "select product_name, created_at, good_till, S.price, discount, quantity  from sales.stocks S\n" +
                         "inner join production.products P on S.product_id = P.product_id\n" +
                         "where store_id =  " + Store_ID + " and ";
             PreparedStatement ps = null;

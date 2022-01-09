@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ThongKe;
+package GUI;
 
-import GUI.Login;
-import Utils.Connect;
 import com.toedter.calendar.JDateChooser;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

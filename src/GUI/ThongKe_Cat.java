@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ThongKe;
-import GUI.Login;
-import Utils.Connect;
+package GUI;
+
 //import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 import java.awt.Toolkit;
 import java.sql.Connection;

@@ -4,7 +4,6 @@
  */
 package GUI;
 
-import View.QuanLyKhachHang;
 import java.awt.Toolkit;
 
 /**

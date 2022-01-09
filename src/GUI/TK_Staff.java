@@ -4,7 +4,6 @@
  */
 package GUI;
 
-import ThongKe.ThongKe_Staff;
 import java.awt.Toolkit;
 
 /**

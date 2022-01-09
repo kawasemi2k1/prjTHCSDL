@@ -3,11 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package View;
+package GUI;
 
-import GUI.Login;
-import GUI.Main_QuanLy;
-import Utils.Connect;
 import java.awt.Window;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

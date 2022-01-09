@@ -1,9 +1,8 @@
-package ThongKe;
+package GUI;
 
 
-import GUI.Login;
-import GUI.sendMail;
-import Utils.Connect;
+
+import java.awt.Window;
 import javax.mail.PasswordAuthentication;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,8 +18,10 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.security.auth.kerberos.ServicePermission;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -132,6 +133,11 @@ public class ThongKeProducts extends javax.swing.JPanel {
         dateto.setBounds(1150, 140, 160, 40);
 
         jButton1.setContentAreaFilled(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         add(jButton1);
         jButton1.setBounds(10, 690, 380, 110);
 
@@ -299,6 +305,13 @@ public class ThongKeProducts extends javax.swing.JPanel {
     private void BoxBanchamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoxBanchamActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BoxBanchamActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        JComponent comp = (JComponent) evt.getSource();
+        Window win = SwingUtilities.getWindowAncestor(comp);
+        win.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

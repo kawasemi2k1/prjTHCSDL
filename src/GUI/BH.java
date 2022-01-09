@@ -4,7 +4,6 @@
  */
 package GUI;
 
-import View.BanHang;
 import java.awt.Toolkit;
 
 /**

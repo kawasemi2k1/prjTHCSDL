@@ -16,12 +16,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" pref="1542" max="32767" attributes="0"/>
+          <Component id="jPanel1" alignment="0" pref="1524" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" pref="788" max="32767" attributes="0"/>
+          <Component id="jPanel1" alignment="0" pref="815" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -35,14 +35,14 @@
         <Component class="com.toedter.calendar.JDateChooser" name="date1">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="620" y="140" width="160" height="50"/>
+              <AbsoluteConstraints x="610" y="140" width="170" height="50"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="date2">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="1110" y="140" width="200" height="40"/>
+              <AbsoluteConstraints x="1100" y="130" width="180" height="60"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -55,14 +55,14 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="911" y="210" width="150" height="70"/>
+              <AbsoluteConstraints x="590" y="250" width="150" height="70"/>
             </Constraint>
           </Constraints>
         </Component>
         <Container class="javax.swing.JTabbedPane" name="jcontent">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="400" y="310" width="1140" height="474"/>
+              <AbsoluteConstraints x="370" y="340" width="1150" height="460"/>
             </Constraint>
           </Constraints>
 
@@ -72,22 +72,38 @@
           <Properties>
             <Property name="contentAreaFilled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="10" y="690" width="350" height="90"/>
+              <AbsoluteConstraints x="1085" y="250" width="150" height="70"/>
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel1">
+        <Component class="javax.swing.JButton" name="jButton3">
+          <Properties>
+            <Property name="contentAreaFilled" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+          </Events>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="10" y="690" width="340" height="120"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/images/TH&#x1ed0;NG K&#xca; kh&#xe1;ch h&#xe0;ng.png"/>
+              <Image iconType="3" name="/images/TH&#x1ed0;NG K&#xca; nh&#xe2;n vi&#xea;n.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel1"/>
+            <Property name="text" type="java.lang.String" value="jLabel3"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="0" y="-10" width="1560" height="840"/>
+              <AbsoluteConstraints x="-20" y="0" width="1570" height="820"/>
             </Constraint>
           </Constraints>
         </Component>

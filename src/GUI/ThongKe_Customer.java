@@ -1,14 +1,16 @@
-package ThongKe;
-import GUI.Login;
-import Utils.Connect;
+package GUI;
+
 import java.awt.Toolkit;
+import java.awt.Window;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -121,6 +123,11 @@ public class ThongKe_Customer extends javax.swing.JPanel {
         jcontent.setBounds(400, 310, 1140, 474);
 
         jButton2.setContentAreaFilled(false);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton2);
         jButton2.setBounds(10, 690, 350, 90);
 
@@ -145,6 +152,13 @@ public class ThongKe_Customer extends javax.swing.JPanel {
         createMap();
         initFrame();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        JComponent comp = (JComponent) evt.getSource();
+        Window win = SwingUtilities.getWindowAncestor(comp);
+        win.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

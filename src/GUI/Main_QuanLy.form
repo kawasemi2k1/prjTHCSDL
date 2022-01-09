@@ -72,10 +72,12 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                           <Component id="jpnTrangChu" max="32767" attributes="0"/>
-                          <Component id="jButton2" max="32767" attributes="0"/>
-                          <Component id="jButton1" max="32767" attributes="0"/>
-                          <Component id="jpnThongKe" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jpnQuanLy" alignment="0" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="jButton2" max="32767" attributes="0"/>
+                              <Component id="jButton1" max="32767" attributes="0"/>
+                              <Component id="jpnThongKe" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jpnQuanLy" alignment="0" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace pref="25" max="32767" attributes="0"/>
                   </Group>
@@ -104,9 +106,6 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="&#x110;&#x103;ng xu&#x1ea5;t"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
-              </Events>
             </Component>
             <Container class="javax.swing.JPanel" name="jpnThongKe">
               <Properties>

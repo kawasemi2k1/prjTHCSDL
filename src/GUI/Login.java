@@ -3,7 +3,6 @@
 // size: 1536va814
 package GUI;
 
-import Utils.Connect;
 import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

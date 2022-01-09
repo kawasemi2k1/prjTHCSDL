@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package GUI;
-import Utils.Connect;
 import java.sql.*;
 import java.util.ArrayList;
 /**

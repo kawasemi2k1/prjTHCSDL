@@ -3,11 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package View;
+package GUI;
 
 
-import GUI.Login;
-import Utils.Connect;
 import Utils.ValidateData;
 import java.awt.Window;
 import java.sql.Connection;
@@ -430,7 +428,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
                     PreparedStatement ps = conn.prepareStatement(" insert into sales.staffs( name, email, phone, active, store_id, manager_state,gender,password) values(?,?,?,?,?,?,?,?)");
                     //ps.setString(1, txtStaffID.getText());
                     txtStaffID.setEnabled(false);
-                    ps.setString(1, validate.ChuanHoaChuoi(txtName.getText()));
+                    ps.setString(1, txtName.getText());
                     ps.setString(2, txtEmail.getText());
                     ps.setString(3, txtPhone.getText());
                     ps.setString(4, cbActive.getSelectedItem().toString().equals("Hoạt động") ? "1" : "0");
@@ -565,7 +563,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             PreparedStatement comm =conn.prepareStatement(" Update sales.staffs set name=?,email=?,phone=?,active=?,store_id=?,manager_state=?,gender=?,password=? where staff_id=?");
             //txtStaffID.setEnabled(true);
             comm.setString(9,txtStaffID.getText());
-            comm.setString(1, validate.ChuanHoaChuoi(txtName.getText()));
+            comm.setString(1, txtName.getText());
             comm.setString(2, txtEmail.getText());
             comm.setString(3, txtPhone.getText());
             comm.setString(4, cbActive.getSelectedItem().toString().equals("Hoạt động") ? "1" : "0");
@@ -589,8 +587,6 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         JComponent comp = (JComponent) evt.getSource();
         Window win = SwingUtilities.getWindowAncestor(comp);
         win.dispose();
-//        Main_QuanLy main = new Main_QuanLy();
-//        main.setVisible(true);
     }//GEN-LAST:event_btnThoatActionPerformed
    
     private void Btn_ResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_ResetActionPerformed

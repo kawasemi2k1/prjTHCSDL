@@ -1,9 +1,8 @@
-package ThongKe;
+package GUI;
 
 
 //import static com.sun.org.apache.xalan.internal.lib.ExsltDynamic.map;
-import GUI.Login;
-import Utils.Connect;
+import java.awt.Window;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +10,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -120,6 +121,11 @@ public class ThongKeBrands extends javax.swing.JPanel {
         dateto.setBounds(1120, 140, 140, 40);
 
         jButton1.setContentAreaFilled(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         add(jButton1);
         jButton1.setBounds(10, 680, 390, 120);
 
@@ -290,6 +296,14 @@ public class ThongKeBrands extends javax.swing.JPanel {
     private void BoxTKBrand_ChamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoxTKBrand_ChamActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BoxTKBrand_ChamActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        JComponent comp = (JComponent) evt.getSource();
+        Window win = SwingUtilities.getWindowAncestor(comp);
+        win.dispose();
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
