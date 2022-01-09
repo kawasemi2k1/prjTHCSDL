@@ -5,11 +5,14 @@
  */
 package GUI;
 
+import Utils.ValidateData;
 import java.awt.Window;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
@@ -37,6 +40,8 @@ public class BanHang extends javax.swing.JPanel {
     double totalBillPrice = 0;
     static int store = Integer.parseInt(Login.Store_ID);
     static int staff = Integer.parseInt(Login.Staff_ID); 
+    ValidateData vd = new ValidateData();
+    NumberFormat formatter = new DecimalFormat("#0.00");
     /**
      * Creates new form BanHang
      */
@@ -139,7 +144,11 @@ public class BanHang extends javax.swing.JPanel {
             while(rs.next()){
                 row = new Vector();
                 for(int i = 1; i <= jTableProduct.getColumnCount(); i++){
-                    row.addElement(rs.getString(i));
+                    if(i == 9) {
+                        row.addElement(vd.DangTienTe(rs.getString(i)));
+                    } else {
+                        row.addElement(rs.getString(i));
+                    }
                 }
                 tbnProduct.addRow(row);
                 jTableProduct.setModel(tbnProduct);
@@ -992,7 +1001,7 @@ public class BanHang extends javax.swing.JPanel {
         }
         
         String productName = jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 1) + "";
-        double singlePrice = Double.parseDouble(jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 8) + "");
+        double singlePrice = Double.parseDouble(vd.ReverseDangTienTe(jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 8) + ""));
         double productDiscount = Double.parseDouble(jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 9) + "");
         double totalSinglePrice = singlePrice * (1.00 - productDiscount/100.00) * (double)buying;
                
@@ -1007,22 +1016,22 @@ public class BanHang extends javax.swing.JPanel {
         row.add(productName);
         row.add(jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 2) + "");
         row.add(jTableProduct.getValueAt(jTableProduct.getSelectedRow(), 3) + "");
-        row.add(String.valueOf(singlePrice));
+        row.add(vd.DangTienTe(formatter.format(singlePrice)));
         row.add(String.valueOf(buying));
         row.add(String.valueOf(productDiscount));
-        row.add(String.valueOf(totalSinglePrice));
+        row.add(vd.DangTienTe(formatter.format(totalSinglePrice)));
         row.add("Mới");
         tbnBill.addRow(row);
         jTableBill.setModel(tbnBill);
         
         totalBillPrice += totalSinglePrice;
-        txtTotalBillPrice.setText(String.valueOf(totalBillPrice));
+        txtTotalBillPrice.setText(vd.DangTienTe(formatter.format(totalSinglePrice)));
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        float removedItem = Float.parseFloat(jTableBill.getValueAt(jTableBill.getSelectedRow(), 7) + "");
+        double removedItem = Double.parseDouble(vd.ReverseDangTienTe(jTableBill.getValueAt(jTableBill.getSelectedRow(), 7) + ""));
         totalBillPrice -= removedItem;
-        txtTotalBillPrice.setText(String.valueOf(totalBillPrice));
+        txtTotalBillPrice.setText(vd.DangTienTe(String.valueOf(totalBillPrice)));
         
         tbnBill.removeRow(jTableBill.getSelectedRow());
         jTableBill.setModel(tbnBill);
@@ -1105,16 +1114,16 @@ public class BanHang extends javax.swing.JPanel {
                 for(int i=0; i < jTableBill.getRowCount(); i++) {
                     ps2.setString(1, String.valueOf(seed + 1));
                     ps2.setString(2, jTableBill.getValueAt(i, 0) + "");
-                    System.out.println(jTableBill.getValueAt(i, 2) + "");
-                    System.out.println(jTableBill.getValueAt(i, 3) + "");
                     ps2.setString(3, jTableBill.getValueAt(i, 2) + "");
                     ps2.setString(4, jTableBill.getValueAt(i, 3) + "");
                     ps2.setString(5, String.valueOf(store));
                     ps2.setString(6, jTableBill.getValueAt(i, 5) + "");
-                    ps2.setString(7, jTableBill.getValueAt(i, 7) + "");
+                    ps2.setString(7, vd.ReverseDangTienTe(jTableBill.getValueAt(i, 7) + ""));
                     ps2.setString(8, jTableBill.getValueAt(i, 6) + "");
                     
-                    double profit = Profit(jTableBill.getValueAt(i, 0) + "", Double.parseDouble(jTableBill.getValueAt(i, 7) + ""), Double.parseDouble(jTableBill.getValueAt(i, 5) + ""));
+                    double profit = Profit(jTableBill.getValueAt(i, 0) + "", 
+                            Double.parseDouble(vd.ReverseDangTienTe(jTableBill.getValueAt(i, 7) + "")), 
+                            Double.parseDouble(jTableBill.getValueAt(i, 5) + ""));
                     ps2.setString(9, String.valueOf(profit));
                     
                     update1 = ps2.executeUpdate();
@@ -1171,16 +1180,16 @@ public class BanHang extends javax.swing.JPanel {
                         + "production.products.product_name, "
                         + "sales.order_items.created_at, "
                         + "sales.order_items.good_till, "
-                        + "vCurrentProduct.price, "
+                        + "cast(sales.order_items.price / (1.00 - sales.order_items.discount/100.00) as decimal(10,2)), "
                         + "sales.order_items.quantity, "
                         + "sales.order_items.discount, "
                         + "sales.order_items.price "
                         + "from sales.orders "
                         + "inner join sales.order_items on sales.orders.order_id = sales.order_items.order_id "
-                        + "inner join vCurrentProduct on sales.order_items.product_id = vCurrentProduct.product_id "
-                            + "and sales.order_items.created_at = vCurrentProduct.created_at "
-                            + "and sales.order_items.good_till = vCurrentProduct.good_till "
-                        + "inner join production.products on production.products.product_id = vCurrentProduct.product_id "
+                        + "inner join sales.goods on sales.order_items.product_id = sales.goods.product_id "
+                            + "and sales.order_items.created_at = sales.goods.created_at "
+                            + "and sales.order_items.good_till = sales.goods.good_till "
+                        + "inner join production.products on production.products.product_id = sales.goods.product_id "
                         + "where sales.order_items.store_id = ? and sales.orders.order_id = ?;");
                 ps.setString(1, String.valueOf(store));
                 ps.setString(2, txtBillID.getText());
@@ -1194,7 +1203,10 @@ public class BanHang extends javax.swing.JPanel {
                 while(rs.next()){
                     row = new Vector();
                     for(int i = 1; i <= jTableBill.getColumnCount() - 1; i++){
-                        row.addElement(rs.getString(i));
+                        if(i == 5 || i == 8) 
+                            row.addElement(vd.DangTienTe(rs.getString(i)));
+                        else
+                            row.addElement(rs.getString(i));
                     }
                     row.add("Cũ");
                     tbnBill.addRow(row);
@@ -1209,20 +1221,20 @@ public class BanHang extends javax.swing.JPanel {
                 }
                 
                 PreparedStatement ps1 = con.prepareStatement("select name from sales.orders "
-                        + "inner join vRealCustomer on sales.orders.customer_id = vRealCustomer.customer_id "
+                        + "inner join sales.customers on sales.orders.customer_id = sales.customers.customer_id "
                         + "where sales.orders.order_id = ?;");
                 ps1.setString(1, txtBillID.getText());
                 ResultSet rs1 = ps1.executeQuery();
                 rs1.next();
                 txtCustomerName.setText(rs1.getString(1));
                 
-                PreparedStatement ps2 = con.prepareStatement("select price from sales.orders "
+                PreparedStatement ps2 = con.prepareStatement("select sum(price) from sales.order_items "
                         + "where order_id = ?;");
                 ps2.setString(1, txtBillID.getText());
                 ResultSet rs2 = ps2.executeQuery();
                 rs2.next();
                 txtTotalBillPrice.setText(rs2.getString(1));
-                totalBillPrice = Float.parseFloat(rs2.getString(1));
+                totalBillPrice = Double.parseDouble(rs2.getString(1));
                 
                 billID = txtBillID.getText();
                 
@@ -1257,15 +1269,15 @@ public class BanHang extends javax.swing.JPanel {
                 for(int i=0; i < jTableBill.getRowCount(); i++) {
                     ps2.setString(1, billID);
                     ps2.setString(2, jTableBill.getValueAt(i, 0) + "");
-                    System.out.println(jTableBill.getValueAt(i, 2) + "");
-                    System.out.println(jTableBill.getValueAt(i, 3) + "");
                     ps2.setString(3, jTableBill.getValueAt(i, 2) + "");
                     ps2.setString(4, jTableBill.getValueAt(i, 3) + "");
                     ps2.setString(5, String.valueOf(store));
                     ps2.setString(6, jTableBill.getValueAt(i, 5) + "");
-                    ps2.setString(7, jTableBill.getValueAt(i, 7) + "");
+                    ps2.setString(7, vd.ReverseDangTienTe(jTableBill.getValueAt(i, 7) + ""));
                     ps2.setString(8, jTableBill.getValueAt(i, 6) + "");
-                    double profit = Profit(jTableBill.getValueAt(i, 0) + "", Double.parseDouble(jTableBill.getValueAt(i, 7) + ""), Double.parseDouble(jTableBill.getValueAt(i, 5) + ""));
+                    double profit = Profit(jTableBill.getValueAt(i, 0) + "", 
+                            Double.parseDouble(vd.ReverseDangTienTe(jTableBill.getValueAt(i, 7) + "")), 
+                            Double.parseDouble(jTableBill.getValueAt(i, 5) + ""));
                     ps2.setString(9, String.valueOf(profit));
                     update1 = ps2.executeUpdate();
 
