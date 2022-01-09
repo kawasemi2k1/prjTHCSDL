@@ -79,3 +79,5 @@ inner join production.products on production.products.product_id = vCurrentProdu
 where sales.order_items.store_id = 1 and sales.orders.order_id = 1;
 
 select sum(price) from sales.order_items where order_id = 1;
+
+Select order_id from sales.orders order by order_id

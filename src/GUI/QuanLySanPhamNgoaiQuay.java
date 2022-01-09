@@ -40,7 +40,7 @@ public class QuanLySanPhamNgoaiQuay extends javax.swing.JPanel {
             conn = cn.getConnectDB();
             int number;
             Vector row;
-            String sql = "select product_name, created_at, good_till, S.price, discount, quantity  from sales.stocks S\n" +
+            String sql = "select product_name, created_at, good_till, S.price, discount, quantity  from vCurrentProduct S\n" +
                         " inner join production.products P on S.product_id = P.product_id\n" +
                         " where store_id = " + Store_ID;
             Statement st = conn.createStatement();
@@ -239,8 +239,12 @@ public class QuanLySanPhamNgoaiQuay extends javax.swing.JPanel {
 
         add(jScrollPane1);
         jScrollPane1.setBounds(350, 510, 1140, 260);
+
+        dc_ngaySX.setDate(new java.util.Date(1578102937000L));
         add(dc_ngaySX);
         dc_ngaySX.setBounds(510, 210, 190, 22);
+
+        dc_hanSD.setDate(new java.util.Date(1641261337000L));
         add(dc_hanSD);
         dc_hanSD.setBounds(510, 260, 186, 22);
 
@@ -347,7 +351,7 @@ public class QuanLySanPhamNgoaiQuay extends javax.swing.JPanel {
                     System.out.println(dc_hanSD.getDate().compareTo(dc_ngaySX.getDate()));
                     if(txt_giamGia.getText().equals("")) txt_giamGia.setText("0");
                     
-                    PreparedStatement ps = con.prepareStatement("insert into sales.stocks values (?, ?, ?, ?, ?, ?, ?)");
+                    PreparedStatement ps = con.prepareStatement("insert into vCurrentProduct values (?, ?, ?, ?, ?, ?, ?)");
                     ps.setString(1, GetProduct_id(txt_TenSP.getText()));
                     ps.setObject(2, dc_ngaySX.getDate());
                     ps.setObject(3, dc_hanSD.getDate());
@@ -412,7 +416,7 @@ public class QuanLySanPhamNgoaiQuay extends javax.swing.JPanel {
             txt_TenSP.setEnabled(false);
             dc_hanSD.setEnabled(false);
             dc_ngaySX.setEnabled(false);
-            btn_them.setEnabled(false);
+            btn_them.setBackground(Color.gray);
         }
     }//GEN-LAST:event_tbl_sanPhamBanMouseClicked
 
@@ -432,7 +436,7 @@ public class QuanLySanPhamNgoaiQuay extends javax.swing.JPanel {
                 Connect a = new Connect();
                 Connection con = a.getConnectDB();
                 PreparedStatement ps = con.prepareStatement(
-                        "Update sales.stocks set price =  ? , discount = ?, quantity =  ? "
+                        "Update vCurrentProduct set price =  ? , discount = ?, quantity =  ? "
                         + "  where product_id =  ?  and created_at = ? and good_till = ? and store_id =  ?  ");
                 ps.setString(1, txt_gia.getText());
                 ps.setString(2, txt_giamGia.getText());
@@ -473,7 +477,7 @@ public class QuanLySanPhamNgoaiQuay extends javax.swing.JPanel {
                 Connect a = new Connect();
                 Connection con = a.getConnectDB();
                 PreparedStatement ps = con.prepareStatement(
-                "Delete from sales.stocks where product_id =  ? and created_at = ? and good_till = ? and store_id = ? " );
+                "Delete from vCurrentProduct where product_id =  ? and created_at = ? and good_till = ? and store_id = ? " );
                 ps.setString(1, GetProduct_id(txt_TenSP.getText()));
                 ps.setObject(2, dc_ngaySX.getDate());
                 ps.setObject(3, dc_hanSD.getDate());
@@ -516,7 +520,7 @@ public class QuanLySanPhamNgoaiQuay extends javax.swing.JPanel {
         try {
             Connect a = new Connect();
             Connection con = a.getConnectDB();
-            String sql = "select product_name, created_at, good_till, S.price, discount, quantity  from sales.stocks S\n" +
+            String sql = "select product_name, created_at, good_till, S.price, discount, quantity  from vCurrentProduct S\n" +
                         " inner join production.products P on S.product_id = P.product_id \n" +
                         "where store_id =  " + Store_ID + " and ";
             PreparedStatement ps = null;
@@ -576,7 +580,7 @@ public class QuanLySanPhamNgoaiQuay extends javax.swing.JPanel {
         try {
             Connect a = new Connect();
             Connection con = a.getConnectDB();
-            String sql = "select product_name, created_at, good_till, S.price, discount, quantity  from sales.stocks S\n" +
+            String sql = "select product_name, created_at, good_till, S.price, discount, quantity  from vCurrentProduct S\n" +
                         "inner join production.products P on S.product_id = P.product_id\n" +
                         "where store_id =  " + Store_ID + " and ";
             PreparedStatement ps = null;

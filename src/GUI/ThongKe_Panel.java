@@ -35,17 +35,32 @@ public class ThongKe_Panel extends javax.swing.JPanel {
         jpnView.setPreferredSize(new java.awt.Dimension(1500, 800));
         jpnView.setLayout(null);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("TK full Staff");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jpnView.add(jButton1);
-        jButton1.setBounds(80, 50, 77, 25);
+        jButton1.setBounds(80, 50, 130, 25);
 
-        jButton2.setText("jButton2");
+        jButton2.setText("TK KH");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jpnView.add(jButton2);
-        jButton2.setBounds(80, 100, 77, 25);
+        jButton2.setBounds(80, 100, 65, 25);
 
-        jButton3.setText("jButton3");
+        jButton3.setText("TK Cat");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jpnView.add(jButton3);
-        jButton3.setBounds(90, 160, 77, 25);
+        jButton3.setBounds(90, 160, 110, 25);
 
         jButton4.setText("TK Product");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -73,6 +88,24 @@ public class ThongKe_Panel extends javax.swing.JPanel {
         TK_Product tk = new TK_Product();
         tk.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        TK_Staff tk = new TK_Staff();
+        tk.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        TK_Cus tk = new TK_Cus();
+        tk.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        TK_Cat tk = new TK_Cat();
+        tk.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
