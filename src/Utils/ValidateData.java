@@ -24,6 +24,7 @@ public class ValidateData {
         // định trước hay không. hàm này trả về true , false nên mình khởi tạo 1 biến ktEmail rồi gán
         // cho nó. false thì báo lỗi.
     }
+    
     public boolean kiemTraTen(String ten){
         for (int i = 0; i < 10; i++) {
             if(ten.contains(i+"")){

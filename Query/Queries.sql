@@ -13,6 +13,7 @@ select * from vOutdatedProduct
 
 delete from sales.orders where order_id = 2;
 update sales.goods set quantity = 30 where product_id = 1;
+delete from sales.customers where customer_id = 7;
 
 --AutoDeleteOrder
 delete from sales.orders where year(getdate()) - year(created_date) = 50

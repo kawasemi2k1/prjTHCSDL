@@ -329,6 +329,9 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             } else if (!isValidPhone(txtPhone.getText())) {
                 JOptionPane.showMessageDialog(this, "Sai cú pháp SĐT.");
                 return;
+            } else if (vd.kiemTraTen(txtPhone.getText())) {
+                JOptionPane.showMessageDialog(this, "Sai cú pháp Tên.");
+                return;
             }
             
             Connect a = new Connect();
