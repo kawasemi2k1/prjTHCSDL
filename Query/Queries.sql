@@ -11,8 +11,8 @@ select * from vRealCustomer
 select * from vCurrentProduct
 select * from vOutdatedProduct
 
-delete from sales.orders where order_id = 2;
-update sales.goods set quantity = 30 where product_id = 1;
+delete from sales.orders where order_id = 0;
+update sales.goods set quantity = 30 where product_id = 1;s
 delete from sales.customers where customer_id = 7;
 
 --AutoDeleteOrder
@@ -82,3 +82,16 @@ where sales.order_items.store_id = 1 and sales.orders.order_id = 1;
 select sum(price) from sales.order_items where order_id = 1;
 
 Select order_id from sales.orders order by order_id
+
+select staff_id, 
+sales.staffs.name, 
+sales.staffs.email, 
+sales.staffs.phone, 
+active, 
+sales.stores.name, 
+manager_state, 
+gender, 
+password
+from sales.staffs 
+inner join sales.stores on sales.staffs.store_id = sales.stores.store_id
+where staff_id = 1
