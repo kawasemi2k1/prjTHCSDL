@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import Utils.ValidateData;
 import java.awt.Color;
 import java.awt.Window;
 import javax.swing.JComponent;
@@ -30,6 +31,7 @@ import java.util.regex.Pattern;
 public class QuanLyKhachHang extends javax.swing.JPanel {
     DefaultTableModel tbn = new DefaultTableModel();
     Date date = new Date();
+    ValidateData vd = new ValidateData();
     
     /**
      * Creates new form QuanLyKhachHang
@@ -342,7 +344,7 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             }
             
             PreparedStatement ps = con.prepareStatement("insert into sales.customers values (?, ?, ?, ?, ?)");
-            ps.setString(1, txtName.getText());
+            ps.setString(1, vd.ChuanHoaChuoi(txtName.getText()));
             ps.setObject(2, jDateChooser1.getDate());
             ps.setString(3, txtAddress.getText());
             ps.setString(4, txtPhone.getText());
@@ -402,7 +404,7 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                             + "phone = ?, "
                             + "email = ? "
                             + "where customer_id = ?");
-            ps.setString(1, txtName.getText());
+            ps.setString(1, vd.ChuanHoaChuoi(txtName.getText()));
             ps.setObject(2, jDateChooser1.getDate());
             ps.setString(3, txtAddress.getText());
             ps.setString(4, txtPhone.getText());
