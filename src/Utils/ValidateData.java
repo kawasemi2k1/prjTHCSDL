@@ -25,6 +25,8 @@ public class ValidateData {
         // cho nó. false thì báo lỗi.
     }
     public boolean kiemTraTen(String ten){
+        // Đây là hàm kiểm tra xem tên có số hay không. Ko chứa thì trả về True, có chứa thì trả về false
+        // ví dụ "Nguyễn Thị Thúy" trả về True, "Nguyễn 1 Thúy" trả về False
         for (int i = 0; i < 10; i++) {
             if(ten.contains(i+"")){
                 return false;
@@ -69,6 +71,7 @@ public class ValidateData {
 }
     public String ChuanHoaChuoi (String s){
         // Đây là hàm chuẩn hóa chuối. Ví dụ: " nGUYỄN     THỊ thúy   " -> "Nguyễn Thị Thúy"
+        // chuỗi "    " -> "" . Chuẩn hóa tên, email nhập vào, xong mới so xem nó bằng rỗng ko để đưa ra thông báo nhập vào ở thêm, sửa.
         s = s.trim();
         String chuanHoa = "";
         String a = "";
@@ -81,8 +84,10 @@ public class ValidateData {
                 chuanHoa = chuanHoa.concat(" ");
             }
         }
+        chuanHoa = chuanHoa.trim();
+        if(chuanHoa.equals(" ")) chuanHoa = "";
         System.out.println("Chuỗi sau khi chuẩn hóa: " + chuanHoa);
-        return chuanHoa = chuanHoa.trim();
+        return chuanHoa;
         
     }
     

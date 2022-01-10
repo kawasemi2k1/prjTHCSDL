@@ -33,7 +33,7 @@ public class TK_Staff_byTime extends javax.swing.JFrame {
     
     public void loadBang(){
         try {
-            
+            tbn_NV.setModel(tb);  
             conn = cn.getConnectDB();
             int number;
             Vector row;
