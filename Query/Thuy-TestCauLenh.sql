@@ -47,12 +47,25 @@ left join sales.order_items soi on soi.store_id = ss.store_id
 left join sales.orders so on so.order_id = soi.order_id
 where ss.store_id = 2
 group by created_date
-order by created_date desc) as some
-order by some.MonthYear asc
+order by created_date desc) some123
+order by MonthYear asc
+--order by MonthYear asc
+
+select top CONCAT(MONTH(created_date),'-',YEAR(created_date)) as MonthYear, DoanhThu from
+(
+	select created_date, sum(soi.profit) as DoanhThu from sales.stores ss
+	left join sales.order_items soi on soi.store_id = ss.store_id
+	left join sales.orders so on so.order_id = soi.order_id
+	where ss.store_id = 2
+	group by created_date
+	order by created_date desc ) bangTam
+order by creted_date
+
 -- nhờ Phong sửa
 
-select * from sales.orders
-order by created_date desc
+select created_date from sales.orders
+group by created_date
+order by created_date asc
 
 select * from sales.order_items
 select * from sales.customers

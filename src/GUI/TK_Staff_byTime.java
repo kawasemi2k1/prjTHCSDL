@@ -29,21 +29,26 @@ public class TK_Staff_byTime extends javax.swing.JFrame {
     Connect cn = new Connect();
     Connection conn = null;
     ResultSet rs;
-    String Store_ID = Login.Store_ID;
+    String Store_ID = "2";
     
     public void loadBang(){
         try {
-            tbn_NV.setModel(tb);  
+            //tbn_NV.setModel(tb);  
             conn = cn.getConnectDB();
             int number;
-            Vector row;
+            Vector row, column;
             String sql = "select staff_id, name, email, phone, active, gender  from sales.staffs \n" +
                         " where store_id = " + Store_ID;
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             ResultSetMetaData metaData = rs.getMetaData();
             number = metaData.getColumnCount();
-            tb.setRowCount(0);
+             column = new Vector();
+            for (int i = 1; i <= number; i++) {
+                column.add(metaData.getColumnName(i));
+            }
+            tb.setColumnIdentifiers(column);
+            //tb.setRowCount(0);
              while(rs.next()){
                 row = new Vector();
                 for(int i = 1;i <= number; i++){
@@ -58,11 +63,17 @@ public class TK_Staff_byTime extends javax.swing.JFrame {
                 tb.addRow(row);
                 tbn_NV.setModel(tb);  
             } 
+             //tbn_NV.setModel(tb);  
             st.close();
             rs.close();
             conn.close();
         } catch (Exception e) {
-            System.out.println(e.toString());
+           System.out.println("toString(): " + e.toString());          
+           System.out.println("getMessage(): " + e.getMessage());          
+           System.out.println("StackTrace: ");          
+           e.printStackTrace();
+            
+           // System.out.println("Loi o 1: "+ e.toString());
         }
     }
     
@@ -83,11 +94,14 @@ public class TK_Staff_byTime extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbn_NV = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbn_NV = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jButton1.setText("Thống kê doanh thu \n12 tháng gần nhất\n của nhân viên này");
 
         tbn_NV.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -100,32 +114,41 @@ public class TK_Staff_byTime extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tbn_NV);
+        jScrollPane2.setViewportView(tbn_NV);
 
-        jButton1.setText("Thống kê doanh thu \n12 tháng gần nhất\n của nhân viên này");
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(80, 80, 80)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 251, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(37, 37, 37))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(147, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 751, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addContainerGap(30, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(82, 82, 82)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(377, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -168,7 +191,8 @@ public class TK_Staff_byTime extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tbn_NV;
     // End of variables declaration//GEN-END:variables
 }

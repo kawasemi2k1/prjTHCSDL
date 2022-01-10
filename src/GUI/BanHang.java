@@ -1065,7 +1065,7 @@ public class BanHang extends javax.swing.JPanel {
                    return;
                 }
             }
-            
+
             String mess = JOptionPane.showInputDialog(this, "Tiền khách đưa:");
             if(!isDouble(mess)) {
                 JOptionPane.showMessageDialog(this, "Không phải số, vui lòng bấm Thanh toán lại.");
