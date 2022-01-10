@@ -392,7 +392,8 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         try{
             Connect a = new Connect();
             Connection conn = a.getConnectDB();
-            if(txtName.getText().equals("") ||txtEmail.getText().equals("") ||txtPhone.getText().equals("")
+            String Name = validate.ChuanHoaChuoi(txtName.getText()); 
+            if(Name.equals("") ||txtEmail.getText().equals("") ||txtPhone.getText().equals("")
                      || txtpass.getText().equals("") ){
                 JOptionPane.showMessageDialog(this, "Không được bỏ trống ");
             }else if( !validate.kiemTraTen(txtName.getText())){
@@ -429,7 +430,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
                     PreparedStatement ps = conn.prepareStatement(" insert into sales.staffs( name, email, phone, active, store_id, manager_state,gender,password) values(?,?,?,?,?,?,?,?)");
                     //ps.setString(1, txtStaffID.getText());
                     txtStaffID.setEnabled(false);
-                    ps.setString(1, txtName.getText());
+                    ps.setString(1, Name);
                     ps.setString(2, txtEmail.getText());
                     ps.setString(3, txtPhone.getText());
                     ps.setString(4, cbActive.getSelectedItem().toString().equals("Hoạt động") ? "1" : "0");
