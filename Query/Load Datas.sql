@@ -18,12 +18,10 @@ insert into sales.customers values
 
 --3. staffs
 insert into sales.staffs values
-(N'Trần Đức Mạnh', 'tranducmanh@gmail', '0357251858', 1, 1, 1, 'Nam', 'manh135792468')
-
-insert into sales.staffs values
-(N'Nguyễn Thị Thúy', 'thuy@gmail.com', '0123456789', 1, 2, 1, N'Nữ', '1')
-
-
+(N'Trần Đức Mạnh', 'manh@gmail.com', '0357251858', 1, 1, 1, N'Nam', '1'),
+(N'Nguyễn Thị Thúy', 'thuy@gmail.com', '0123456789', 1, 2, 1, N'Nữ', '1'),
+(N'Phạm Đức Huy', 'huy@gmail.com', '0123456780', 1, 2, 1, N'Nam', '1'),
+(N'Phạm Thành Chung', 'chung@gmail.com', '0123456781', 1, 2, 1, N'Nam', '1');
 
 --4. orders
 
