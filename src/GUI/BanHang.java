@@ -1070,11 +1070,11 @@ public class BanHang extends javax.swing.JPanel {
             if(!isDouble(mess)) {
                 JOptionPane.showMessageDialog(this, "Không phải số, vui lòng bấm Thanh toán lại.");
                 return;
-            } else if (Double.parseDouble(mess) < Double.parseDouble(txtTotalBillPrice.getText())) {
+            } else if (Double.parseDouble(mess) < Double.parseDouble(vd.ReverseDangTienTe(txtTotalBillPrice.getText()))) {
                 JOptionPane.showMessageDialog(this, "Số tiền này không đủ, vui lòng bấm Thanh toán lại.");
                 return;
             } else {
-                double change = Double.parseDouble(mess) - Double.parseDouble(txtTotalBillPrice.getText());
+                double change = Double.parseDouble(mess) - Double.parseDouble(vd.ReverseDangTienTe(txtTotalBillPrice.getText()));
                 String strChange = String.valueOf(change);
                 JOptionPane.showMessageDialog(this, "Tiền thừa: " + strChange + "\nThanh toán thành công.");
             }
