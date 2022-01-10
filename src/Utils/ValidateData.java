@@ -8,6 +8,7 @@ package Utils;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -24,6 +25,7 @@ public class ValidateData {
         // định trước hay không. hàm này trả về true , false nên mình khởi tạo 1 biến ktEmail rồi gán
         // cho nó. false thì báo lỗi.
     }
+    
     public boolean kiemTraTen(String ten){
         // Đây là hàm kiểm tra xem tên có số hay không. Ko chứa thì trả về True, có chứa thì trả về false
         // ví dụ "Nguyễn Thị Thúy" trả về True, "Nguyễn 1 Thúy" trả về False
@@ -114,5 +116,12 @@ public class ValidateData {
     public String ReverseDangTienTe (String number) {
         return number.replace(",", "");
     }
-       
+    
+    public boolean containsDigit(String s) {
+        String regex = "(.)*(\\d)(.)*";      
+        Pattern pattern = Pattern.compile(regex);
+        String msg = s;
+        boolean containsNumber = pattern.matcher(msg).matches();
+        return containsNumber;
+    }     
 }

@@ -329,6 +329,9 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             } else if (!isValidPhone(txtPhone.getText())) {
                 JOptionPane.showMessageDialog(this, "Sai cú pháp SĐT.");
                 return;
+            } else if (vd.containsDigit(txtName.getText())) {
+                JOptionPane.showMessageDialog(this, "Sai cú pháp Tên.");
+                return;
             }
             
             Connect a = new Connect();
@@ -346,7 +349,7 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             PreparedStatement ps = con.prepareStatement("insert into sales.customers values (?, ?, ?, ?, ?)");
             ps.setString(1, vd.ChuanHoaChuoi(txtName.getText()));
             ps.setObject(2, jDateChooser1.getDate());
-            ps.setString(3, txtAddress.getText());
+            ps.setString(3, vd.ChuanHoaChuoi(txtAddress.getText()));
             ps.setString(4, txtPhone.getText());
             ps.setString(5, txtEmail.getText());
             
@@ -393,6 +396,9 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
             } else if (!isValidPhone(txtPhone.getText())) {
                 JOptionPane.showMessageDialog(this, "Sai cú pháp SĐT.");
                 return;
+            } else if (vd.containsDigit(txtName.getText())) {
+                JOptionPane.showMessageDialog(this, "Sai cú pháp Tên.");
+                return;
             }
             
             Connect a = new Connect();
@@ -406,7 +412,7 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
                             + "where customer_id = ?");
             ps.setString(1, vd.ChuanHoaChuoi(txtName.getText()));
             ps.setObject(2, jDateChooser1.getDate());
-            ps.setString(3, txtAddress.getText());
+            ps.setString(3, vd.ChuanHoaChuoi(txtAddress.getText()));
             ps.setString(4, txtPhone.getText());
             ps.setString(5, txtEmail.getText());
             ps.setString(6, jTable1.getValueAt(jTable1.getSelectedRow(), 0) + "");
