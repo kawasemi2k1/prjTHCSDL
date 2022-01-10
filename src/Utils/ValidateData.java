@@ -8,6 +8,7 @@ package Utils;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -110,5 +111,12 @@ public class ValidateData {
     public String ReverseDangTienTe (String number) {
         return number.replace(",", "");
     }
-       
+    
+    public boolean containsDigit(String s) {
+        String regex = "(.)*(\\d)(.)*";      
+        Pattern pattern = Pattern.compile(regex);
+        String msg = s;
+        boolean containsNumber = pattern.matcher(msg).matches();
+        return containsNumber;
+    }     
 }
